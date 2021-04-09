@@ -138,7 +138,52 @@ void Session::admin_manage_products_start() {
 }
 
 void Session::start_as_user() {
+	int choise = 0;
+	bool is_exit = false;
+	while (!is_exit) {
+		choise = user_menu->get_choise();
+		switch (choise)
+		{
+		case 0: // просмотр всех записей
+			show_products();
+			break;
+		case 1: // индивидуалка
+			cout << "Работа с данными" << endl;
+			system("pause");
+			break;
+		case 2: // поиск по названию
+			find_by_name();
+			system("pause");
+			break;
+		case 3: // поиск по имени регистрировавшего
+			find_by_reg_name();
+			system("pause");
+			break;
+		case 4: // поиск 3
+			cout << "Работа с данными" << endl;
+			system("pause");
+			break;
+		case 5: // сортировка по имени
+			sort_by_name();
+			system("pause");
+			break;
+		case 6: // сортировка по цене
+			sort_by_price_to_higher();
+			system("pause");
+			break;
+		case 7: // сортировка количеству
+			sort_by_amount_to_higher();
+			system("pause");
+			break;
+		case 8: case -1: // выход
+			cout << "Выход" << endl;
+			is_exit = true;
+			break;
 
+		default:
+			break;
+		}
+	}
 }
 
 
@@ -191,12 +236,12 @@ void Session::init_user_menu() {
 	user_menu = new Menu("Работа с данными",
 		{ "Просмотр всех данных",
 		  "Индивидуалка",
-		  "Поиск по ...1",
-		  "Поиск по ...2",
+		  "Поиск по названию",
+		  "Поиск по ФИО зарегестрировавшего",
 		  "Поиск по ...3",
-		  "Сортировка по ...1",
-		  "Сортировка по ...2",
-		  "Сортировка по ...3",
+		  "Сортировка по названию товара",
+		  "Сортировка по цене (возрастание)",
+		  "Сортировка по количеству (возрастание)",
 		  "Выход из аккаунта" });
 
 }
