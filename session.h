@@ -56,7 +56,7 @@ private:
 	void edit_reg_name(string name);
 	void find_by_name();
 	void find_by_reg_name();
-
+	void find_by_data();
 	void sort_by_name();
 	void sort_by_price_to_higher();
 	void sort_by_amount_to_higher();

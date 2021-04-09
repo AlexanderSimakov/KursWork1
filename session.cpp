@@ -75,7 +75,6 @@ void Session::admin_manage_accounts_start() {
 	}
 }
 
-
 void Session::admin_manage_products_start() {
 	int choise = 0;
 	bool is_exit = false;
@@ -110,8 +109,8 @@ void Session::admin_manage_products_start() {
 			find_by_reg_name();
 			system("pause");
 			break;
-		case 7: // поиск 3
-			cout << "Работа с данными" << endl;
+		case 7: // поиск по дате
+			find_by_data();
 			system("pause");
 			break;
 		case 8: // сортировка по имени
@@ -137,6 +136,7 @@ void Session::admin_manage_products_start() {
 	}
 }
 
+
 void Session::start_as_user() {
 	int choise = 0;
 	bool is_exit = false;
@@ -159,8 +159,8 @@ void Session::start_as_user() {
 			find_by_reg_name();
 			system("pause");
 			break;
-		case 4: // поиск 3
-			cout << "Работа с данными" << endl;
+		case 4: // поиск по дате
+			find_by_data();
 			system("pause");
 			break;
 		case 5: // сортировка по имени
@@ -211,7 +211,7 @@ void Session::init_admin_menu() {
 		  "Индивидуалка ...",
 		  "Поиск по названию",
 		  "Поиск по ФИО зарегестрировавшего",
-		  "Поиск по ...3",
+		  "Поиск по дате",
 		  "Сортировка по названию товара",
 		  "Сортировка по цене (возрастание)",
 		  "Сортировка по количеству (возрастание)",
@@ -238,7 +238,7 @@ void Session::init_user_menu() {
 		  "Индивидуалка",
 		  "Поиск по названию",
 		  "Поиск по ФИО зарегестрировавшего",
-		  "Поиск по ...3",
+		  "Поиск по дате",
 		  "Сортировка по названию товара",
 		  "Сортировка по цене (возрастание)",
 		  "Сортировка по количеству (возрастание)",
@@ -482,6 +482,16 @@ void Session::find_by_reg_name() {
 	cout << "Введите ФИО зарегестрировавшего или его часть для поиска\n>";
 	cin >> name;
 	product_db->find_and_show("REG_NAME", "*" + name + "*",
+		{ "Название: ", "Количество: ", "Цена: ", "Дата поступления: ", "ФИО зарегестрировавшего: " }, { 0, 1, 2, 3, 4 });
+}
+
+void Session::find_by_data() {
+	string data;
+	cout << "Поиск по дате. Вы можете использовать знак * для обозначения неизвестных искомых (Пример: 12.05.*, *.*.2021)" << endl;
+	cout << "Дата: ";
+	cin >> data;
+	cout << endl;
+	product_db->find_and_show("DATE", data,
 		{ "Название: ", "Количество: ", "Цена: ", "Дата поступления: ", "ФИО зарегестрировавшего: " }, { 0, 1, 2, 3, 4 });
 }
 
