@@ -8,10 +8,9 @@ Registration::Registration(SQLWork *sql_db) {
 void Registration::start() {
 	cout << "Регистрация нового пользователя. (Для выхода введите 0 в любом из полей)" << endl;
 
-	cout << "Логин: ";
-	cin >> account.login;
+	account.login = console::get_free_login(sql_db);
 	cout << "Пароль: ";
-	cin >> account.salt;
+	account.salt = console::password_format_input();
 
 
 	add_to_data_base();

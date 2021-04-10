@@ -6,7 +6,7 @@
 string console::get_authorization_login(SQLWork* db) {
 	string login, user_pass;
 	while (true) {
-		cout << "ЛЛогин: ";
+		cout << "Логин: ";
 		cin >> login;
 		user_pass = db->get_text("LOGIN", login, 1);
 
@@ -14,16 +14,40 @@ string console::get_authorization_login(SQLWork* db) {
 			return "0";
 		}
 		else if (login.size() < 4) {
-			cout << "<-- Слишком маленький логин, попробуйте снова -->\n" << endl;
+			cout << "<-- Слишком маленький логин -->\n" << endl;
 		}
 		else if (!console::is_login_symbols_ok(login)) {
-			cout << "<-- Логин содержит недопустимые символы, попробуйте снова -->\n" << endl;
+			cout << "<-- Логин содержит недопустимые символы -->\n" << endl;
 		}
 		else if (user_pass == "") {
-			cout << "Аккаунта с таким логином не существует, попробуйте снова.\n" << endl;
+			cout << "Аккаунта с таким логином не существует\n" << endl;
 		}
 		else if (db->get_int("LOGIN", login, 4) == 0) {
 			cout << "В данный момент использование аккаунта невозможно, так как администратор еще не подтвердил его.\n" << endl;
+		}
+		else {
+			return login;
+		}
+	}
+}
+
+string console::get_free_login(SQLWork* db) {
+	string login;
+	while (true) {
+		cout << "Логин: ";
+		cin >> login;
+
+		if (login == "0") { // 0 - для выхода
+			return "0";
+		}
+		else if (login.size() < 4) {
+			cout << "<-- Слишком маленький логин -->\n" << endl;
+		}
+		else if (!console::is_login_symbols_ok(login)) {
+			cout << "<-- Логин содержит недопустимые символы -->\n" << endl;
+		}
+		else if (db->get_text("LOGIN", login, 1) != "") {
+			cout << "<-- Логин занят -->\n" << endl;
 		}
 		else {
 			return login;

@@ -64,7 +64,6 @@ int main() {
 			break;
 		case 1: // Регистрация
 			registration.start();
-			accounts_db.show({ "login: "}, { 0 });
 			system("pause");
 			break;
 		case 2: case -1: // Выход

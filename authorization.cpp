@@ -11,12 +11,12 @@ int Authorization::start() {
 
 	cout << "Авторизация. (Для выхода введите в любое из полей 0)" << endl;
 	
-	login = console::get_login(sql_db);
+	login = console::get_authorization_login(sql_db);
 	if (login == "0") return -1;
 	db_account_pass = sql_db->get_text("LOGIN", login, 1);
 	
 
-	input_password = console::get_password(db_account_pass);
+	input_password = console::get_authorization_password(db_account_pass);
 	if (input_password == "0") return -1;
 
 	
