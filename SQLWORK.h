@@ -30,7 +30,7 @@ public:
 	int get_int(string field_in_DB, string fing_field, int field_value);
 	double get_double(string field_in_DB, string fing_field, int field_value);
 	string get_text(string field_in_DB, string fing_field, int field_value);
-
+	bool doSQL(string sql);
 
 private:
 	vector<SQL_cell> fields;
@@ -45,7 +45,7 @@ private:
 	static int callback(void* data, int argc, char** argv, char** azColName);
 	string get_create_command();
 	string get_push_back_command(vector<string> field);
-	bool doSQL(string sql);
+	
 };
 
 
