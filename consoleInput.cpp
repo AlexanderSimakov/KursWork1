@@ -3,7 +3,7 @@
 
 
 
-string console::get_login(SQLWork* db) {
+string console::get_authorization_login(SQLWork* db) {
 	string login, user_pass;
 	while (true) {
 		cout << "ËËîãèí: ";
@@ -42,7 +42,7 @@ bool console::is_login_symbols_ok(string login) {
 	return true;
 }
 
-string console::get_password(string true_password) {
+string console::get_authorization_password(string true_password) {
 	string input_password;
 
 	while (true) {
