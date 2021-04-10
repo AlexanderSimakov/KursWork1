@@ -1,2 +1,4 @@
-﻿  authorization.cpp
+﻿  consoleInput.cpp
+D:\учеба\курсовая\program\Kurs_3\consoleInput.cpp(36,28): warning C4018: <: несоответствие типов со знаком и без знака
+D:\учеба\курсовая\program\Kurs_3\consoleInput.cpp(35,6): warning C4101: ch: неиспользованная локальная переменная
   Kurs_3.vcxproj -> D:\учеба\курсовая\program\Kurs_3\Debug\Kurs_3.exe

@@ -42,6 +42,49 @@ bool console::is_login_symbols_ok(string login) {
 	return true;
 }
 
+string console::get_password(string true_password) {
+	string input_password;
 
+	while (true) {
+		cout << "Пароль: ";
+		input_password = console::password_format_input();
+		if (input_password == "0") {
+			return "0";
+		}
+		else if (true_password != input_password) {
+			cout << "Вы ввели неправильный пароль, попробуйте снова.\n" << endl;
+		}
+		else break;
+	}
 
+	return input_password;
+}
 
+string console::password_format_input() {
+	string input_password;
+	unsigned char p;
+	do
+	{
+		p = _getch();
+
+		if (p == 13) {
+			cout << endl;
+			break;
+		}
+		if (p == '\b' && !input_password.empty())
+		{
+			cout << '\b' << ' ' << '\b';
+
+			input_password.pop_back();
+			continue;
+		}
+		if (isalnum((unsigned char)p))
+		{
+			cout << '*';
+			input_password.push_back(p);
+		}
+
+	} while (true);
+
+	return input_password;
+}

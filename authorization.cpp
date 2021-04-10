@@ -7,7 +7,7 @@ Authorization::Authorization(SQLWork* sql_db) {
 }
 
 int Authorization::start() {
-	string login, db_account_pass, user_input_pass;
+	string login, db_account_pass, input_password;
 
 	cout << "Авторизация. (Для выхода введите в любое из полей 0)" << endl;
 	
@@ -16,20 +16,9 @@ int Authorization::start() {
 	db_account_pass = sql_db->get_text("LOGIN", login, 1);
 	
 
-	while (true) {
-		cout << "Пароль: ";
-		cin >> user_input_pass;
-		if (user_input_pass == "0") {
-			return -1;
-		}
-		else if (db_account_pass != user_input_pass) {
-			cout << "Вы ввели неправильный пароль, попробуйте снова.\n" << endl;
-		}
-		else {
-			cout << "Вы вошли в систему.\n" << endl;
-			break;
-		}
-	}
+	input_password = console::get_password(db_account_pass);
+	if (input_password == "0") return -1;
+
 	
 	return sql_db->get_int("LOGIN", login, 3);
 }
