@@ -98,7 +98,7 @@ void Session::admin_manage_products_start() {
 			system("pause");
 			break;
 		case 4: // индивидуалка
-			cout << "Работа с данными" << endl;
+			individual_task();
 			system("pause");
 			break;
 		case 5: // поиск по названию
@@ -472,6 +472,23 @@ void Session::edit_reg_name(string name) {
 	cout << "Новое ФИО регестрировавшего: ";
 	cin >> reg_name;
 	product_db->update("REG_NAME", "'" + reg_name + "'", "NAME='" + name + "'");
+}
+
+void Session::individual_task() {
+	/*
+	вывести в алфавитном порядке список товаров, 
+	хранящихся более x месяцев, стоимость которых 
+	превышает y рублей (x, y вводятся с клавиатуры).
+	*/
+	int mounth_amount, price;
+	cout << "Количество месяцев: ";
+	cin >> mounth_amount;
+	cout << "Стоимость: ";
+	cin >> price;
+
+
+
+
 }
 
 void Session::find_by_name() {

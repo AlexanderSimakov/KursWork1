@@ -55,6 +55,7 @@ private:
 	void edit_price(string name);
 	void edit_data(string name);
 	void edit_reg_name(string name);
+	void individual_task();
 	void find_by_name();
 	void find_by_reg_name();
 	void find_by_data();
