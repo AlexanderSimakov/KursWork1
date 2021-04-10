@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "SQLWORK.h"
+#include "consoleInput.h"
 
 
 using namespace std;

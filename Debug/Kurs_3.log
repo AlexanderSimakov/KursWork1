@@ -1,14 +1,2 @@
-﻿  SQLWORK.cpp
-D:\учеба\курсовая\program\Kurs_3\SQLWORK.cpp(33,21): warning C4018: <: несоответствие типов со знаком и без знака
-D:\учеба\курсовая\program\Kurs_3\SQLWORK.cpp(71,21): warning C4018: <: несоответствие типов со знаком и без знака
-D:\учеба\курсовая\program\Kurs_3\SQLWORK.cpp(99,21): warning C4018: <: несоответствие типов со знаком и без знака
-D:\учеба\курсовая\program\Kurs_3\SQLWORK.cpp(152,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\учеба\курсовая\program\Kurs_3\SQLWORK.cpp(160,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\учеба\курсовая\program\Kurs_3\SQLWORK.cpp(173,20): warning C4018: <: несоответствие типов со знаком и без знака
-  Source.cpp
-  authorization.cpp
-  registration.cpp
-  session.cpp
-  Создание кода...
-  sqlite3.c
+﻿  authorization.cpp
   Kurs_3.vcxproj -> D:\учеба\курсовая\program\Kurs_3\Debug\Kurs_3.exe
