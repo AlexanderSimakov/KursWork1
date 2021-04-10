@@ -39,6 +39,22 @@ void SQLWork::show(vector<string> out_strings, vector<int> num_of_columns) {
 	sqlite3_finalize(stmt);
 }
 
+void SQLWork::show(string sql_befor_db_name, string sql_after_db_name, vector<string> out_strings, vector<int> num_of_columns) {
+	string sql = sql_befor_db_name + DATA_BASE_NAME + sql_after_db_name;
+	int rc;
+
+	sqlite3_prepare_v2(dataBase, sql.c_str(), -1, &stmt, NULL);
+
+	while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+		for (int i = 0; i < out_strings.size(); i++) {
+			cout << out_strings[i] << sqlite3_column_text(stmt, num_of_columns[i]) << endl;
+		}
+		cout << endl;
+	}
+
+	sqlite3_finalize(stmt);
+}
+
 void SQLWork::create(vector<SQL_cell> fields, string DATA_BASE_NAME) {
 	this->fields = fields;
 	this->DATA_BASE_NAME = DATA_BASE_NAME;
