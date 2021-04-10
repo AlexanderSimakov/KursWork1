@@ -1,14 +1,14 @@
 #pragma once
-#include "consoleInput.h"
+#include "helpFunctions.h"
 
 
 
 string console::get_authorization_login(SQLWork* db) {
-	string login, user_pass;
+	string login, user_hash;
 	while (true) {
 		cout << "Логин: ";
 		cin >> login;
-		user_pass = db->get_text("LOGIN", login, 1);
+		user_hash = db->get_text("LOGIN", login, 1);
 
 		if (login == "0") { // 0 - для выхода
 			return "0";
@@ -19,7 +19,7 @@ string console::get_authorization_login(SQLWork* db) {
 		else if (!console::is_login_symbols_ok(login)) {
 			cout << "<-- Логин содержит недопустимые символы -->\n" << endl;
 		}
-		else if (user_pass == "") {
+		else if (user_hash == "") {
 			cout << "Аккаунта с таким логином не существует\n" << endl;
 		}
 		else if (db->get_int("LOGIN", login, 4) == 0) {
@@ -66,7 +66,7 @@ bool console::is_login_symbols_ok(string login) {
 	return true;
 }
 
-string console::get_authorization_password(string true_password) {
+string console::get_authorization_password(string true_hash, string true_salt) {
 	string input_password;
 
 	while (true) {
@@ -75,7 +75,7 @@ string console::get_authorization_password(string true_password) {
 		if (input_password == "0") {
 			return "0";
 		}
-		else if (true_password != input_password) {
+		else if (true_hash != help::generate_hash(input_password, true_salt)) {
 			cout << "Вы ввели неправильный пароль, попробуйте снова.\n" << endl;
 		}
 		else break;
@@ -111,4 +111,21 @@ string console::password_format_input() {
 	} while (true);
 
 	return input_password;
+}
+
+
+string help::get_generated_salt() {
+	srand(time(0));
+	const char SYMBOLS[63] = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890";
+	string salt = "";
+
+	for (int i = 0; i < 30; i++) {
+		salt += SYMBOLS[rand() % 64];
+	}
+
+	return salt;
+}
+
+string help::generate_hash(string line, string salt) {
+	return to_string(hash<decltype(line)>{}(line + salt));
 }

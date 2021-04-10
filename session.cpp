@@ -261,15 +261,19 @@ void Session::add_new_account() {
 
 	
 	account.login = console::get_free_login(account_db);
+
 	cout << "Пароль: ";
-	account.salt = console::password_format_input();
+	string pass = console::password_format_input();
+	account.salt = help::get_generated_salt();
+	account.salted_hash_password = help::generate_hash(pass, account.salt);
+	
 	cout << "Роль: ";
 	cin >> account.role;
 	account.access = 1;
 
 	account_db->push_back({ "'" + account.login + "'",
+						"'" + account.salted_hash_password + "'",
 						"'" + account.salt + "'",
-						"'" + to_string(account.salted_hash_password) + "'",
 					   to_string(account.role),
 					   to_string(account.access) });
 
@@ -339,8 +343,12 @@ void Session::edit_login(string *login) {
 
 void Session::edit_password(string login) {
 	cout << "Пароль: ";
-	string new_pass = console::password_format_input();
-	account_db->update("HASH", "'" + new_pass + "'", "LOGIN='" + login + "'");
+	string pass = console::password_format_input();
+	string salt = help::get_generated_salt();
+	string hash = help::generate_hash(pass, salt);
+
+	account_db->update("HASH", "'" + hash + "'", "LOGIN='" + login + "'");
+	account_db->update("SALT", "'" + salt + "'", "LOGIN='" + login + "'");
 }
 
 void Session::edit_role(string login) {

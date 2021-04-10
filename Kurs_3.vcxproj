@@ -140,7 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="authorization.cpp" />
-    <ClCompile Include="consoleInput.cpp" />
+    <ClCompile Include="helpFunctions.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="registration.cpp" />
     <ClCompile Include="session.cpp" />
@@ -151,7 +151,7 @@
   <ItemGroup>
     <ClInclude Include="account.h" />
     <ClInclude Include="authorization.h" />
-    <ClInclude Include="consoleInput.h" />
+    <ClInclude Include="helpFunctions.h" />
     <ClInclude Include="product.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="registration.h" />

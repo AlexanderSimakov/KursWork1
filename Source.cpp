@@ -6,6 +6,7 @@
 #include "account.h"
 #include "session.h"
 #include "product.h"
+#include "helpFunctions.h"
 
 using namespace std;
 
@@ -42,9 +43,6 @@ int main() {
 				 { " Авторизация",
 				   " Регистрация",
 				   " Выход" });
-
-	//accounts_db.push_back({ "'admin'", "'admin'", "'admin'", "1", "1" });
-
 
 
 	int choise = 0, role = -1;

@@ -2,7 +2,7 @@
 #include <iostream>
 #include "account.h"
 #include "SQLWORK.h"
-#include "consoleInput.h"
+#include "helpFunctions.h"
 
 using namespace std;
 
