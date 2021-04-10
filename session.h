@@ -5,6 +5,7 @@
 #include "product.h"
 #include <string>
 #include "menu.h"
+#include "consoleInput.h"
 
 /*
 Сделать:

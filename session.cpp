@@ -259,10 +259,10 @@ void Session::add_new_account() {
 	
 	cout << "Создание нового аккаунта." << endl;
 
-	cout << "Логин: ";
-	cin >> account.login;
+	
+	account.login = console::get_free_login(account_db);
 	cout << "Пароль: ";
-	cin >> account.salt;
+	account.salt = console::password_format_input();
 	cout << "Роль: ";
 	cin >> account.role;
 	account.access = 1;
@@ -332,17 +332,14 @@ void Session::edit_account_menu_start() {
 }
 
 void Session::edit_login(string *login) {
-	string new_login;
-	cout << "Новый логин: ";
-	cin >> new_login;
+	string new_login = console::get_free_login(account_db);
 	account_db->update("LOGIN", "'" + new_login + "'", "LOGIN='" + *login + "'");
 	*login = new_login;
 }
 
 void Session::edit_password(string login) {
-	string new_pass;
-	cout << "Новый пароль: ";
-	cin >> new_pass;
+	cout << "Пароль: ";
+	string new_pass = console::password_format_input();
 	account_db->update("HASH", "'" + new_pass + "'", "LOGIN='" + login + "'");
 }
 

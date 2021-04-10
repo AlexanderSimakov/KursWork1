@@ -43,7 +43,7 @@ int main() {
 				   " Регистрация",
 				   " Выход" });
 
-	accounts_db.push_back({ "'admin'", "'admin'", "'admin'", "1", "1" });
+	//accounts_db.push_back({ "'admin'", "'admin'", "'admin'", "1", "1" });
 
 
 
