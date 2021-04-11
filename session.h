@@ -34,7 +34,7 @@ private:
 	void admin_manage_products_start();
 	bool confirm_menu_start(string title);
 
-	void show_accounts(); // -сделать вывод таблицей -красиво оформить
+	void show_accounts_table();
 	void add_new_account(); // -проверки ввода
 	void delete_account();
 	void confirm_account();

@@ -44,7 +44,8 @@ void Session::admin_manage_accounts_start() {
 		switch (choise)
 		{
 		case 0: // просмотр всех записей
-			show_accounts();
+			show_accounts_table();
+			system("pause");
 			break;
 		case 1: // добавление новой
 			add_new_account();
@@ -245,10 +246,11 @@ void Session::init_confirm_operation_menu() {
 }
 
 
-void Session::show_accounts() {
-	cout << "Все учетные записи:\n" << endl;
-	account_db->show({ "Логин: ", "Роль: ", "Доступ: " }, {0, 3, 4});
-	std::system("pause");
+void Session::show_accounts_table() {
+	cout << "    <- Все учетные записи: ->" << endl;
+	cout << "    Логин\t|  Роль\t| Доступ" << endl;
+	account_db->show({ " ", "\t\t|   ", "\t|   " }, {0, 3, 4});
+	cout << endl;
 }
 
 void Session::add_new_account() {
@@ -289,7 +291,8 @@ void Session::add_new_account() {
 
 void Session::delete_account() {
 	string login;
-	cout << "<- Удаление аккаунта (введите '0' для выхода) ->" << endl;
+	cout << "<- Удаление аккаунта (введите '0' для выхода) ->\n" << endl;
+	show_accounts_table();
 	cout << "Введите логин аккаунта, который хотите удалить." << endl;
 	
 	login = console::get_exists_login(account_db);
@@ -310,11 +313,9 @@ void Session::delete_account() {
 
 void Session::confirm_account() {
 	string login;
-	cout << "<- Подтверждение аккаунта ('0' для выхода) ->" << endl;
-	cout << "Аккаунты, ожидающие подтверждения: " << endl;
-	account_db->find_and_show("ACCESS", "0", { "Логин: " }, { 0 });
-
-	cout << endl;
+	cout << "<- Подтверждение аккаунта ('0' для выхода) ->\n" << endl;
+	show_accounts_table();
+	cout << "Введите логин аккаунта, который хотите подтвердить." << endl;
 	login = console::get_exists_login(account_db);
 
 	if (login == "0") return;
@@ -333,11 +334,10 @@ void Session::confirm_account() {
 
 void Session::block_account() {
 	string login;
-	cout << "<- Блокировка аккаунта ('0' для выхода) ->" << endl;
-	cout << "Аккаунты, у которых есть подтверждение: " << endl;
-	account_db->find_and_show("ACCESS", "1", { "Логин: " }, { 0 });
+	cout << "<- Блокировка аккаунта ('0' для выхода) ->\n" << endl;
+	show_accounts_table();
+	cout << "Введите логин аккаунта, который хотите заблокировать." << endl;
 
-	cout << endl;
 	login = console::get_exists_login(account_db);
 	
 	if (login == "0") return;
@@ -461,7 +461,7 @@ void Session::edit_role(string login) {
 
 void Session::show_products() {
 	cout << "Все товары:\n" << endl;
-	product_db->show({ "Название: ", "Количество: ", "Цена: ", "Дата поступления: ", "ФИО зарегестрировавшего: " }, { 0, 1, 2, 3, 4 });
+	product_db->show_endl({ "Название: ", "Количество: ", "Цена: ", "Дата поступления: ", "ФИО зарегестрировавшего: " }, { 0, 1, 2, 3, 4 });
 	std::system("pause");
 }
 

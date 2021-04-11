@@ -19,6 +19,7 @@ public:
 	void create(vector<SQL_cell> fields, string DATA_BASE_NAME);
 	void open();
 	void close();
+	void show_endl(vector<string> out_strings, vector<int> num_of_columns);
 	void show(vector<string> out_strings, vector<int> num_of_columns);
 	void show(string sql_befor_db_name, string sql_after_db_name, vector<string> out_strings, vector<int> num_of_columns);
 	void push_back(vector<string> field);

@@ -24,7 +24,7 @@ void SQLWork::close() {
 	}
 }
 
-void SQLWork::show(vector<string> out_strings, vector<int> num_of_columns) {
+void SQLWork::show_endl(vector<string> out_strings, vector<int> num_of_columns) {
 	string sql = "SELECT * FROM " + DATA_BASE_NAME + " ;";
 	int rc;
 	sqlite3_prepare_v2(dataBase, sql.c_str(), -1, &stmt, NULL);
@@ -36,6 +36,21 @@ void SQLWork::show(vector<string> out_strings, vector<int> num_of_columns) {
 		cout << endl;
 	}
 	
+	sqlite3_finalize(stmt);
+}
+
+void SQLWork::show(vector<string> out_strings, vector<int> num_of_columns) {
+	string sql = "SELECT * FROM " + DATA_BASE_NAME + " ;";
+	int rc;
+	sqlite3_prepare_v2(dataBase, sql.c_str(), -1, &stmt, NULL);
+
+	while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+		for (int i = 0; i < out_strings.size(); i++) {
+			cout << out_strings[i] << sqlite3_column_text(stmt, num_of_columns[i]);
+		}
+		cout << endl;
+	}
+
 	sqlite3_finalize(stmt);
 }
 
