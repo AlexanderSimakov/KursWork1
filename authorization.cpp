@@ -20,6 +20,10 @@ int Authorization::start() {
 	input_password = console::get_authorization_password(db_account_hash, db_account_salt);
 	if (input_password == "0") return -1;
 
-	
+	this->login = login;
 	return sql_db->get_int("LOGIN", login, 3);
+}
+
+string Authorization::get_login() {
+	return this->login;
 }

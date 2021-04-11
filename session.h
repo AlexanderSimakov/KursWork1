@@ -11,10 +11,11 @@ class Session
 {
 public:
 	Session(SQLWork *product_db, SQLWork *account_db);
-	void start_as_user();  // -сделать подтверждение выхода из аккаунта
-	void start_as_admin(); // -сделать подтверждение выхода из аккаунта
+	void start_as_user(string login);
+	void start_as_admin(string login);
 
 private:
+	string user_login = "";
 	SQLWork* product_db = nullptr;
 	SQLWork* account_db = nullptr;
 	Menu *main_menu = nullptr;
@@ -26,19 +27,19 @@ private:
 	Menu* confirm_operation_menu = nullptr;
 
 	void init_user_menu();
-	void init_admin_menu();
+	void init_admin_menu(); 
 	void init_confirm_operation_menu();
 
-	void admin_manage_accounts_start(); // -сделать нормальный выход из пунктов меню и из этого меню 
-	void admin_manage_products_start(); // -сделать нормальный выход из пунктов меню и из этого меню 
-	bool confirm_menu_start(); // -красивое оформление
+	void admin_manage_accounts_start();
+	void admin_manage_products_start();
+	bool confirm_menu_start(string title);
 
 	void show_accounts(); // -сделать вывод таблицей -красиво оформить
 	void add_new_account(); // -красивое оформление -проверки ввода
-	void delete_account(); // -вы уверены меню -находить аккаунт и выводит информацию о нем перед удалением -проверки ввода
-	void confirm_account(); // -вывести список аакаунтов ожидающих подтверждение -проверять аккаунт на существование перед подтверждением 
-	void block_account(); // -вывести список аакаунтов доступных блокировке -проверять аккаунт на существование перед блокировкой
-	void edit_account_menu_start(); // -сначала находить аккаунт -в менб каждой из операции показывать старый вариант
+	void delete_account();
+	void confirm_account();
+	void block_account();
+	void edit_account_menu_start(); 
 	void edit_login(string *login); // -показывать старый вариант -меню подтверждения -проверка ввода
 	void edit_password(string login); // -меню подтверждения -новый пароль не может быть таким же как и старый -проверка ввода
 	void edit_role(string login); // -показывать старый вариант -меню подтверждения проверка ввода

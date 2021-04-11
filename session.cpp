@@ -7,10 +7,12 @@ Session::Session(SQLWork* product_db, SQLWork* account_db) {
 	this->account_db = account_db;
 	init_admin_menu();
 	init_user_menu();
+	init_confirm_operation_menu();
 }
 
 
-void Session::start_as_admin() {
+void Session::start_as_admin(string login) {
+	this->user_login = login;
 	int choise = 0;
 	bool is_exit = false;
 	while (!is_exit) {
@@ -24,10 +26,10 @@ void Session::start_as_admin() {
 			admin_manage_products_start();
 			break;
 		case 2: case -1:
-			cout << "Выход из аккаунта" << endl;
-			is_exit = true;
+			if (confirm_menu_start("Вы уверены, что хотите выйти из аккаунта?")) {
+				is_exit = true;
+			}
 			break;
-
 		default:
 			break;
 		}
@@ -46,29 +48,22 @@ void Session::admin_manage_accounts_start() {
 			break;
 		case 1: // добавление новой
 			add_new_account();
-			system("pause");
 			break;
 		case 2: // редактирование 
 			edit_account_menu_start();
-			system("pause");
 			break;
 		case 3: // удаление учетной записи
 			delete_account();
-			system("pause");
 			break;
 		case 4: // подтверждение учетной записи
 			confirm_account();
-			system("pause");
 			break;
 		case 5: // блокировка учетной записи
 			block_account();
-			system("pause");
 			break;
 		case 6:	case -1: // выход
-			cout << "Выход." << endl;
 			is_exit = true;
 			break;
-
 		default:
 			break;
 		}
@@ -87,73 +82,62 @@ void Session::admin_manage_products_start() {
 			break;
 		case 1: // добавление новой
 			add_new_product();
-			system("pause");
 			break;
 		case 2: // удаление
 			delete_product();
-			system("pause");
 			break;
 		case 3: // редактирование
 			edit_product_menu_start();
-			system("pause");
 			break;
 		case 4: // индивидуалка
 			individual_task();
-			system("pause");
 			break;
 		case 5: // поиск по названию
 			find_by_name();
-			system("pause");
 			break;
 		case 6: // поиск по имени регистрировавшего
 			find_by_reg_name();
-			system("pause");
 			break;
 		case 7: // поиск по дате
 			find_by_data();
-			system("pause");
 			break;
 		case 8: // сортировка по имени
 			sort_by_name();
-			system("pause");
 			break;
 		case 9: // сортировка по цене
 			sort_by_price_to_higher();
-			system("pause");
 			break;
 		case 10: // сортировка количеству
 			sort_by_amount_to_higher();
-			system("pause");
 			break;
 		case 11: case -1: // выход
-			cout << "Выход" << endl;
 			is_exit = true;
 			break;
-
 		default:
 			break;
 		}
 	}
 }
 
-bool Session::confirm_menu_start() {
+bool Session::confirm_menu_start(string title) {
+	confirm_operation_menu->set_title(title);
 	int choise = 0;
-	bool is_exit = false;
-	while (!is_exit) {
+	while (true) {
 		choise = confirm_operation_menu->get_choise();
 		switch (choise)
 		{
 		case 0: // да
 			return true;
-		case 1: case -1: // нет
+		case 1: // нет
 			return false;
-		default:
+		case -1: default:
 			break;
 		}
 	}
 }
 
-void Session::start_as_user() {
+void Session::start_as_user(string login) {
+	this->user_login = login;
 	int choise = 0;
 	bool is_exit = false;
 	while (!is_exit) {
@@ -165,35 +149,29 @@ void Session::start_as_user() {
 			break;
 		case 1: // индивидуалка
 			individual_task();
-			system("pause");
 			break;
 		case 2: // поиск по названию
 			find_by_name();
-			system("pause");
 			break;
 		case 3: // поиск по имени регистрировавшего
 			find_by_reg_name();
-			system("pause");
 			break;
 		case 4: // поиск по дате
 			find_by_data();
-			system("pause");
 			break;
 		case 5: // сортировка по имени
 			sort_by_name();
-			system("pause");
 			break;
 		case 6: // сортировка по цене
 			sort_by_price_to_higher();
-			system("pause");
 			break;
 		case 7: // сортировка количеству
 			sort_by_amount_to_higher();
-			system("pause");
 			break;
 		case 8: case -1: // выход
-			cout << "Выход" << endl;
-			is_exit = true;
+			if (confirm_menu_start("Вы уверены, что хотите выйти из аккаунта?")) {
+				is_exit = true;
+			}
 			break;
 
 		default:
@@ -205,74 +183,72 @@ void Session::start_as_user() {
 
 
 void Session::init_admin_menu() {
-	main_menu = new Menu("Аккаунт Администратора",
+	main_menu = new Menu("<- Главное меню ->",
 		{ " Управление учетными записями",
-		  " Работа с данными",
+		  " Управление товарами",
 		  " Выход из аккаунта" });
 
-	manage_menu = new Menu("Управление учетными записями",
+	manage_menu = new Menu("<- Управление учетными записями ->",
 		{ " Просмотр всех учетных записей",
-		  " Добавление новой записи",
+		  " Добавление новой учетной записи",
 		  " Редактирование учетной записи",
 		  " Удаление учетной записи",
 		  " Подтверждение учетной записи",
 		  " Блокировка учетной записи",
 		  " Выход" });
 
-	data_menu = new Menu("Работа с данными",
-		{ " Просмотр всех данных",
-		  " Добавление новой записи",
-		  " Удаление записи",
-		  " Редактирование записи",
-		  " Индивидуалка ...",
+	data_menu = new Menu("<- Управление товарами ->",
+		{ " Просмотр всех товаров",
+		  " Добавление нового товара",
+		  " Удаление товара",
+		  " Редактирование информациии о товаре",
+		  " Просмотр товаров лежащих больше х месяцев, с ценой больше у",
 		  " Поиск по названию",
 		  " Поиск по ФИО зарегестрировавшего",
-		  " Поиск по дате",
+		  " Поиск по дате поступления на склад",
 		  " Сортировка по названию товара",
-		  " Сортировка по цене (возрастание)",
-		  " Сортировка по количеству (возрастание)",
+		  " Сортировка по цене товара (возрастание)",
+		  " Сортировка по количеству товара (возрастание)",
 		  " Выход" });
 
-	account_edit_menu = new Menu("Поле для редактирования", 
+	account_edit_menu = new Menu("<- Выбор пункта для редактирования аккаунта ->", 
 		{ " Логин",
 		  " Пароль",
 		  " Роль",
 		  " Выход" });
 
-	product_edit_menu = new Menu("Поле для редактирования",
+	product_edit_menu = new Menu("<- Выбор пункта для редактирования товара ->",
 		{ " Название",
 		  " Количество",
 		  " Цена",
-		  " Дата поступления товара",
+		  " Дата поступления на склад",
 		  " ФИО зарегестрировавшего",
 		  " Выход" });
 }
 
 void Session::init_user_menu() {
-	user_menu = new Menu("Работа с данными",
-		{ " Просмотр всех данных",
-		  " Индивидуалка",
+	user_menu = new Menu("<- Меню работы с товарами ->",
+		{ " Просмотр всех товаров",
+		  " Просмотр товаров лежащих больше х месяцев, с ценой больше у",
 		  " Поиск по названию",
 		  " Поиск по ФИО зарегестрировавшего",
-		  " Поиск по дате",
+		  " Поиск по дате поступления на склад",
 		  " Сортировка по названию товара",
-		  " Сортировка по цене (возрастание)",
-		  " Сортировка по количеству (возрастание)",
+		  " Сортировка по цене товара (возрастание)",
+		  " Сортировка по количеству товара (возрастание)",
 		  " Выход из аккаунта" });
 
 }
 
 void Session::init_confirm_operation_menu() {
-	user_menu = new Menu("Вы уверены?",
-		{ " Да",
-		  " Нет" });
+	confirm_operation_menu = new Menu("Вы уверены?", { " Да", " Нет" });
 }
 
 
 void Session::show_accounts() {
 	cout << "Все учетные записи:\n" << endl;
 	account_db->show({ "Логин: ", "Роль: ", "Доступ: " }, {0, 3, 4});
-	system("pause");
+	std::system("pause");
 }
 
 void Session::add_new_account() {
@@ -302,34 +278,77 @@ void Session::add_new_account() {
 
 void Session::delete_account() {
 	string login;
-	cout << "Удаление аккаунта" << endl;
-	cout << "Введите логин аккаунта, который хотите удалить.\n> ";
-	cin >> login;
-	account_db->delete_field("LOGIN='" + login + "'");
+	cout << "<- Удаление аккаунта (введите '0' для выхода) ->" << endl;
+	cout << "Введите логин аккаунта, который хотите удалить." << endl;
+	
+	login = console::get_exists_login(account_db);
+	
+	if (login == "0") return;
+	else if (login == user_login) {
+		cout << "\n*** Нельзя удалить свой аккаунт.***\n" << endl;
+	}
+	else if (confirm_menu_start("Вы уверены, что хотите удалить аккаунт '"+ login + "' ?")) {
+		account_db->delete_field("LOGIN='" + login + "'");
+		cout << "*** Аккаунт '" << login << "' был удален. ***\n" << endl;
+	}
+	else {
+		cout << "*** Изменения не были внесены.***\n" << endl;
+	}
+	system("pause");
 }
 
 void Session::confirm_account() {
 	string login;
-	cout << "Подтверждение аккаунта." << endl;
-	cout << "Введите логин\n>";
-	cin >> login;
-	account_db->update("ACCESS", "1", "LOGIN='" + login + "'");
+	cout << "<- Подтверждение аккаунта ('0' для выхода) ->" << endl;
+	cout << "Аккаунты, ожидающие подтверждения: " << endl;
+	account_db->find_and_show("ACCESS", "0", { "Логин: " }, { 0 });
+
+	cout << endl;
+	login = console::get_exists_login(account_db);
+
+	if (login == "0") return;
+	else if (login == user_login) {
+		cout << "\n*** Эту функцию нельзя использовать для своего аккаунта, он уже подтвержден. ***\n" << endl;
+	}
+	else if (account_db->get_int("LOGIN", login, 4) == 1) {
+		cout << "\n*** Этот аккаунт уже подтвержден. ***\n" << endl;
+	}
+	else {
+		account_db->update("ACCESS", "1", "LOGIN='" + login + "'");
+		cout << "\n*** Аккаунт '" + login + "' был подтвержден. ***\n" << endl;
+	}
+	system("pause");
 }
 
 void Session::block_account() {
 	string login;
-	cout << "Блокировка аккаунта." << endl;
-	cout << "Введите логин\n>";
-	cin >> login;
-	account_db->update("ACCESS", "0", "LOGIN='" + login + "'");
+	cout << "<- Блокировка аккаунта ('0' для выхода) ->" << endl;
+	cout << "Аккаунты, у которых есть подтверждение: " << endl;
+	account_db->find_and_show("ACCESS", "1", { "Логин: " }, { 0 });
+
+	cout << endl;
+	login = console::get_exists_login(account_db);
+	
+	if (login == "0") return;
+	else if (login == user_login) {
+		cout << "\n*** Эту функцию нельзя использовать для своего аккаунта. ***\n" << endl;
+	}
+	else if (account_db->get_int("LOGIN", login, 4) == 0) {
+		cout << "\n*** Этот аккаунт уже заблокирован. ***\n" << endl;
+	}
+	else {
+		account_db->update("ACCESS", "0", "LOGIN='" + login + "'");
+		cout << "\n*** Аккаунт '" + login + "' был заблокирован. ***\n" << endl;
+	}
+	system("pause");
 }
 
 void Session::edit_account_menu_start() {
 	string login;
-	cout << "Введите логин аккаунта для редактирования\n>";
-	cin >> login;
+	cout << "Введите логин аккаунта для редактирования." << endl;
+	login = console::get_exists_login(account_db);
 
-
+	account_edit_menu->set_title("<- Редактирование аккаунта '" + login + "' ->");
 	int choise = 0;
 	bool is_exit = false;
 	while (!is_exit) {
@@ -346,7 +365,6 @@ void Session::edit_account_menu_start() {
 			edit_role(login);
 			break;
 		case 3: case -1: // выход
-			cout << "Выход." << endl;
 			is_exit = true;
 			break;
 
@@ -386,7 +404,7 @@ void Session::edit_role(string login) {
 void Session::show_products() {
 	cout << "Все товары:\n" << endl;
 	product_db->show({ "Название: ", "Количество: ", "Цена: ", "Дата поступления: ", "ФИО зарегестрировавшего: " }, { 0, 1, 2, 3, 4 });
-	system("pause");
+	std::system("pause");
 }
 
 void Session::add_new_product() {

@@ -53,16 +53,14 @@ int main() {
 		case 0: // Авторизация
 			role = authorization.start();
 			if (role == 0) { // запуск пользователя
-				session.start_as_user();
+				session.start_as_user(authorization.get_login());
 			}
 			else if (role == 1) {//запуск админа
-				session.start_as_admin();
+				session.start_as_admin(authorization.get_login());
 			}
-			system("pause");
 			break;
 		case 1: // Регистрация
 			registration.start();
-			system("pause");
 			break;
 		case 2: case -1: // Выход
 			accounts_db.close();

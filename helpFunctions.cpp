@@ -31,6 +31,31 @@ string console::get_authorization_login(SQLWork* db) {
 	}
 }
 
+string console::get_exists_login(SQLWork* db) {
+	string login, user_hash;
+	while (true) {
+		cout << "Логин: ";
+		cin >> login;
+		user_hash = db->get_text("LOGIN", login, 1);
+
+		if (login == "0") { // 0 - для выхода
+			return "0";
+		}
+		else if (login.size() < 4) {
+			cout << "<-- Слишком маленький логин -->\n" << endl;
+		}
+		else if (!console::is_login_symbols_ok(login)) {
+			cout << "<-- Логин содержит недопустимые символы -->\n" << endl;
+		}
+		else if (user_hash == "") {
+			cout << "Аккаунта с таким логином не существует\n" << endl;
+		}
+		else {
+			return login;
+		}
+	}
+}
+
 string console::get_free_login(SQLWork* db) {
 	string login;
 	while (true) {
