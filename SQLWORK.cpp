@@ -93,6 +93,20 @@ void SQLWork::sort(string rule, vector<string> out_strings, vector<int> num_of_c
 	sqlite3_finalize(stmt);
 }
 
+string SQLWork::date_mounhth_befor(string mounth) {
+	string sql = "SELECT date('now', '-" + mounth + " month');";
+	string date = "";
+	int rc;
+	sqlite3_prepare_v2(dataBase, sql.c_str(), -1, &stmt, NULL);
+	while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+		date = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
+		break;
+	}
+	
+	sqlite3_finalize(stmt);
+	return date;
+}
+
 int SQLWork::get_size() {
 	int size = 0, rc;
 	string sql = "SELECT count(*) FROM " + DATA_BASE_NAME + " ;";

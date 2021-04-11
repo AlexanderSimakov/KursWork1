@@ -148,7 +148,7 @@ void Session::start_as_user() {
 			show_products();
 			break;
 		case 1: // индивидуалка
-			cout << "Работа с данными" << endl;
+			individual_task();
 			system("pause");
 			break;
 		case 2: // поиск по названию
@@ -475,28 +475,15 @@ void Session::edit_reg_name(string name) {
 }
 
 void Session::individual_task() {
-	/*
-	вывести в алфавитном порядке список товаров, 
-	хранящихся более x месяцев, стоимость которых 
-	превышает y рублей (x, y вводятся с клавиатуры).
-
-	надо по количеству месяцев сгенерировать дату в формте ГГГГ-ММ-ДД
-	после этого кинуть ее в форму show(уже сделано)
-
-
-	*/
 	int mounth_amount, price;
-	//cout << "Количество месяцев: ";
-	//cin >> mounth_amount;
-	cout << "дата: ";
-	string data;
-	cin >> data;
+	cout << "Количество месяцев: ";
+	cin >> mounth_amount;
 	cout << "Стоимость: ";
 	cin >> price;
-
-	product_db->show("SELECT * FROM ", " WHERE DATE > '" + data + "' ;",
+	string data =  product_db->date_mounhth_befor(to_string(mounth_amount));
+	cout << "\nДата: " << data << "\n" << endl;
+	product_db->show("SELECT * FROM ", " WHERE DATE > '" + data + "' AND PRICE > '" + to_string(price) + "' ORDER BY NAME ASC;",
 		{ "Название: ", "Цена: ", "Дата поступления: " }, { 0, 2, 3 });
-
 }
 
 void Session::find_by_name() {

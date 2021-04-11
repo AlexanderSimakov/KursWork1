@@ -7,12 +7,6 @@
 #include "menu.h"
 #include "helpFunctions.h"
 
-/*
-Сделать:
- - индивидулаку
- - сортировку по дате вместо количества
-*/
-
 class Session
 {
 public:

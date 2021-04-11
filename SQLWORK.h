@@ -26,7 +26,8 @@ public:
 	void delete_field(string rule);
 	void find_and_show(string field_in_BD, string field, vector<string> out_strings, vector<int> num_of_columns);
 	void sort(string rule, vector<string> out_strings, vector<int> num_of_columns);
-	
+	string date_mounhth_befor(string mounth);
+
 	int get_size();
 	int get_int(string field_in_DB, string fing_field, int field_value);
 	double get_double(string field_in_DB, string fing_field, int field_value);
