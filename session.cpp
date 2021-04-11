@@ -79,7 +79,8 @@ void Session::admin_manage_products_start() {
 		switch (choise)
 		{
 		case 0: // просмотр всех записей
-			show_products();
+			show_products_table();
+			system("pause");
 			break;
 		case 1: // добавление новой
 			add_new_product();
@@ -146,7 +147,8 @@ void Session::start_as_user(string login) {
 		switch (choise)
 		{
 		case 0: // просмотр всех записей
-			show_products();
+			show_products_table();
+			system("pause");
 			break;
 		case 1: // индивидуалка
 			individual_task();
@@ -246,10 +248,12 @@ void Session::init_confirm_operation_menu() {
 }
 
 
-void Session::show_accounts_table() {
+void Session::show_accounts_table(string sql_start, string sql_end) {
 	cout << "    <- Все учетные записи: ->" << endl;
-	cout << "    Логин\t|  Роль\t| Доступ" << endl;
-	account_db->show({ " ", "\t\t|   ", "\t|   " }, {0, 3, 4});
+	account_db->show_table(sql_start, sql_end,
+		{ "     Логин", "Роль", "Доступ" },
+		{ 0, 3, 4},
+		{ 18, 7, 9});
 	cout << endl;
 }
 
@@ -459,10 +463,13 @@ void Session::edit_role(string login) {
 
 
 
-void Session::show_products() {
-	cout << "Все товары:\n" << endl;
-	product_db->show_endl({ "Название: ", "Количество: ", "Цена: ", "Дата поступления: ", "ФИО зарегестрировавшего: " }, { 0, 1, 2, 3, 4 });
-	std::system("pause");
+void Session::show_products_table(string sql_start, string sql_end) {
+	cout << "                                       <- Все товары ->" << endl;
+	product_db->show_table(sql_start, sql_end,
+						{ "      Название", "Количество", "  Цена", "Дата поступления", "  ФИО зарегестрировавшего" }, 
+						{ 0, 1, 2, 3, 4 }, 
+						{22, 13, 12, 19, 30});
+	cout << endl;
 }
 
 void Session::add_new_product() {
@@ -587,40 +594,48 @@ void Session::find_by_name() {
 	string name;
 	cout << "Введите название или его часть для поиска\n>";
 	cin >> name;
-	product_db->find_and_show("NAME", "*" + name + "*",
-		{ "Название: ", "Количество: ", "Цена: ", "Дата поступления: ", "ФИО зарегестрировавшего: " }, { 0, 1, 2, 3, 4 });
+	
+	cout << endl;
+	show_products_table("SELECT * FROM ", " WHERE NAME GLOB '*" + name + "*';");
+	system("pause");
 }
 
 void Session::find_by_reg_name() {
 	string name;
 	cout << "Введите ФИО зарегестрировавшего или его часть для поиска\n>";
 	cin >> name;
-	product_db->find_and_show("REG_NAME", "*" + name + "*",
-		{ "Название: ", "Количество: ", "Цена: ", "Дата поступления: ", "ФИО зарегестрировавшего: " }, { 0, 1, 2, 3, 4 });
+
+	cout << endl;
+	show_products_table("SELECT * FROM ", " WHERE REG_NAME GLOB '*" + name + "*';");
+	system("pause");
 }
 
 void Session::find_by_data() {
 	string data;
-	cout << "Поиск по дате. Вы можете использовать знак * для обозначения неизвестных искомых (Пример: 12.05.*, *.*.2021)" << endl;
+	cout << "Поиск по дате. Вы можете использовать знак * для обозначения неизвестных искомых (Пример: *-12-05, 2021-*-*)" << endl;
 	cout << "Дата: ";
 	cin >> data;
+
 	cout << endl;
-	product_db->find_and_show("DATE", data,
-		{ "Название: ", "Количество: ", "Цена: ", "Дата поступления: ", "ФИО зарегестрировавшего: " }, { 0, 1, 2, 3, 4 });
+	show_products_table("SELECT * FROM ", " WHERE DATE GLOB '" + data + "';");
+	system("pause");
 }
 
 void Session::sort_by_name() {
-	product_db->sort("NAME ASC", 
-		{ "Название: ", "Количество: ", "Цена: ", "Дата поступления: ", "ФИО зарегестрировавшего: " }, { 0, 1, 2, 3, 4 });
+	cout << "Товары сортированы в алфавитном порядке." << endl;
+	show_products_table("SELECT * FROM ", " ORDER BY NAME ASC ;");
+	system("pause");
 }
 
 void Session::sort_by_price_to_higher() {
-	product_db->sort("PRICE ASC",
-		{ "Название: ", "Количество: ", "Цена: ", "Дата поступления: ", "ФИО зарегестрировавшего: " }, { 0, 1, 2, 3, 4 });
+	cout << "Товары сортированы по цене (от меньшей к большей)." << endl;
+	show_products_table("SELECT * FROM ", " ORDER BY PRICE ASC ;");
+	system("pause");
 }
 
 void Session::sort_by_amount_to_higher() {
-	product_db->sort("AMOUNT ASC",
-		{ "Название: ", "Количество: ", "Цена: ", "Дата поступления: ", "ФИО зарегестрировавшего: " }, { 0, 1, 2, 3, 4 });
+	cout << "Товары сортированы по количеству (от меньшего к большему)." << endl;
+	show_products_table("SELECT * FROM ", " ORDER BY AMOUNT ASC ;");
+	system("pause");
 }
 

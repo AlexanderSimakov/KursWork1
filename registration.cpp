@@ -25,3 +25,4 @@ void Registration::add_to_data_base() {
 					   to_string(account.role),
 					   to_string(account.access) });
 }
+

@@ -70,6 +70,38 @@ void SQLWork::show(string sql_befor_db_name, string sql_after_db_name, vector<st
 	sqlite3_finalize(stmt);
 }
 
+void SQLWork::print_spaces(int amount) {
+	for (int i = 0; i < amount; i++) {
+		cout << " ";
+	}
+}
+
+void SQLWork::show_table(string sql_befor_db_name, string sql_after_db_name, vector<string> out_strings, vector<int> num_of_columns, vector<int> lenght_of_columns) {
+	string sql = sql_befor_db_name + DATA_BASE_NAME + sql_after_db_name;
+	int rc;
+	sqlite3_prepare_v2(dataBase, sql.c_str(), -1, &stmt, NULL);
+
+	for (int i = 0; i < out_strings.size(); i++) {
+		cout << " " << out_strings[i];
+		print_spaces(lenght_of_columns[i] - out_strings[i].size() - 2);
+		cout << "|";
+	}
+	cout << endl;
+
+	string text;
+	while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+		for (int i = 0; i < out_strings.size(); i++) {
+			text = reinterpret_cast<const char*>(sqlite3_column_text(stmt, num_of_columns[i]));
+			cout << " " << text;
+			print_spaces(lenght_of_columns[i] - text.size() - 2);
+			cout << "|";
+		}
+		cout << endl;
+	}
+
+	sqlite3_finalize(stmt);
+}
+
 void SQLWork::create(vector<SQL_cell> fields, string DATA_BASE_NAME) {
 	this->fields = fields;
 	this->DATA_BASE_NAME = DATA_BASE_NAME;

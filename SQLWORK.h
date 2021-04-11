@@ -22,6 +22,7 @@ public:
 	void show_endl(vector<string> out_strings, vector<int> num_of_columns);
 	void show(vector<string> out_strings, vector<int> num_of_columns);
 	void show(string sql_befor_db_name, string sql_after_db_name, vector<string> out_strings, vector<int> num_of_columns);
+	void show_table(string sql_befor_db_name, string sql_after_db_name, vector<string> out_strings, vector<int> num_of_columns, vector<int> lenght_of_columns);
 	void push_back(vector<string> field);
 	void update(string fild_for_update, string new_value, string rule);
 	void delete_field(string rule);
@@ -48,6 +49,7 @@ private:
 	static int callback(void* data, int argc, char** argv, char** azColName);
 	string get_create_command();
 	string get_push_back_command(vector<string> field);
+	void print_spaces(int amount);
 	
 };
 

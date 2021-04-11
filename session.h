@@ -34,7 +34,7 @@ private:
 	void admin_manage_products_start();
 	bool confirm_menu_start(string title);
 
-	void show_accounts_table();
+	void show_accounts_table(string sql_start = "SELECT * FROM ", string sql_end = " ;"); // сделать роль администратор\пользователь?
 	void add_new_account(); 
 	void delete_account();
 	void confirm_account();
@@ -46,7 +46,7 @@ private:
 
 	void add_new_product(); // -проверки ввода -крсивое оформление -вывод получившейся информации о продукте и запрос о подтверждении -проверки ввода
 	void delete_product(); // -сначала найти продукт и вывести информацию о нем -запрос о подтверждении операции
-	void show_products(); // -красивое оформление -вывод в форме таблицы
+	void show_products_table(string sql_start = "SELECT * FROM ", string sql_end = " ;");
 	void edit_product_menu_start(); // -сначала находить продукт -в меню каждой из операции показывать старый вариант
 	void edit_name(string *name); // -показывать старый вариант -меню подтверждения -проверка ввода
 	void edit_amount(string name); // -показывать старый вариант -меню подтверждения -проверка ввода
@@ -54,10 +54,10 @@ private:
 	void edit_data(string name); // -показывать старый вариант -меню подтверждения -проверка ввода
 	void edit_reg_name(string name); // -показывать старый вариант -меню подтверждения -проверка ввода
 	void individual_task(); // -красивое оформление -проверки ввода -проверка ввода
-	void find_by_name(); // -проверки ввода -вывод в виде таблицы -провекра ввода
-	void find_by_reg_name(); // -проверки ввода -вывод в виде таблицы -проверка ввода
-	void find_by_data(); // -проверки ввода -вывод в виде таблицы -проверка ввода
-	void sort_by_name(); // -вывод в виде таблицы -красивое оформление
-	void sort_by_price_to_higher(); // -вывод в виде таблицы -красивое оформление
-	void sort_by_amount_to_higher(); // -вывод в виде таблицы -красивое оформление
+	void find_by_name(); // -проверки ввода
+	void find_by_reg_name(); // -проверки ввода
+	void find_by_data(); // -проверки ввода
+	void sort_by_name();
+	void sort_by_price_to_higher();
+	void sort_by_amount_to_higher();
 };
