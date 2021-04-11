@@ -35,14 +35,14 @@ private:
 	bool confirm_menu_start(string title);
 
 	void show_accounts(); // -сделать вывод таблицей -красиво оформить
-	void add_new_account(); // -красивое оформление -проверки ввода
+	void add_new_account(); // -проверки ввода
 	void delete_account();
 	void confirm_account();
 	void block_account();
 	void edit_account_menu_start(); 
-	void edit_login(string *login); // -показывать старый вариант -меню подтверждения -проверка ввода
-	void edit_password(string login); // -меню подтверждения -новый пароль не может быть таким же как и старый -проверка ввода
-	void edit_role(string login); // -показывать старый вариант -меню подтверждения проверка ввода
+	void edit_login(string *login);
+	void edit_password(string login);
+	void edit_role(string login); // добавить проверку ввода
 
 	void add_new_product(); // -проверки ввода -крсивое оформление -вывод получившейся информации о продукте и запрос о подтверждении -проверки ввода
 	void delete_product(); // -сначала найти продукт и вывести информацию о нем -запрос о подтверждении операции

@@ -254,26 +254,37 @@ void Session::show_accounts() {
 void Session::add_new_account() {
 	Account account;
 	
-	cout << "Создание нового аккаунта." << endl;
+	cout << "<- Создание нового аккаунта. (0 в любом из полей, кроме роли, для выхода) ->" << endl;
 
-	
 	account.login = console::get_free_login(account_db);
+	if (account.login == "0") return;
+
 
 	cout << "Пароль: ";
 	string pass = console::password_format_input();
-	account.salt = help::get_generated_salt();
-	account.salted_hash_password = help::generate_hash(pass, account.salt);
+	if (pass == "0") return;
 	
+
 	cout << "Роль: ";
 	cin >> account.role;
-	account.access = 1;
 
-	account_db->push_back({ "'" + account.login + "'",
-						"'" + account.salted_hash_password + "'",
-						"'" + account.salt + "'",
-					   to_string(account.role),
-					   to_string(account.access) });
+	if (confirm_menu_start("Вы уверены, что хотите создать аккаунт?")) {
+		account.access = 1;
+		account.salt = help::get_generated_salt();
+		account.salted_hash_password = help::generate_hash(pass, account.salt);
 
+		account_db->push_back({ "'" + account.login + "'",
+							"'" + account.salted_hash_password + "'",
+							"'" + account.salt + "'",
+						   to_string(account.role),
+						   to_string(account.access) });
+
+		cout << "*** Аккаунт был создан ***\n" << endl;
+	}
+	else {
+		cout << "*** Аккаунт не был создан ***\n" << endl;
+	}
+	system("pause");
 }
 
 void Session::delete_account() {
@@ -357,6 +368,7 @@ void Session::edit_account_menu_start() {
 		{
 		case 0: // Логин
 			edit_login(&login);
+			account_edit_menu->set_title("<- Редактирование аккаунта '" + login + "' ->");
 			break;
 		case 1: // пароль
 			edit_password(login);
@@ -375,26 +387,72 @@ void Session::edit_account_menu_start() {
 }
 
 void Session::edit_login(string *login) {
+	cout << "<- Изменение логина ('0' для выхода). ->" << endl;
+	cout << "Старый логин: " << *login << endl;
+	cout << "Введите новый логин." << endl;
+
 	string new_login = console::get_free_login(account_db);
-	account_db->update("LOGIN", "'" + new_login + "'", "LOGIN='" + *login + "'");
-	*login = new_login;
+	
+	if (new_login == "0") {
+		return;
+	}
+	else if (confirm_menu_start("Вы уверены, что хотите изменить логин на '" + new_login + "' ?")){
+		account_db->update("LOGIN", "'" + new_login + "'", "LOGIN='" + *login + "'");
+		*login = new_login;
+		cout << "*** Изменения были внесены. ***\n" << endl;
+	}
+	else {
+		cout << "*** Изменения не были внесены. ***\n" << endl;
+	}
+	system("pause");
 }
 
 void Session::edit_password(string login) {
+	cout << "<- Изменение пароля ('0' для выхода). ->" << endl;
+	cout << "Введите новый пароль." << endl;
 	cout << "Пароль: ";
 	string pass = console::password_format_input();
-	string salt = help::get_generated_salt();
-	string hash = help::generate_hash(pass, salt);
 
-	account_db->update("HASH", "'" + hash + "'", "LOGIN='" + login + "'");
-	account_db->update("SALT", "'" + salt + "'", "LOGIN='" + login + "'");
+	if (pass == "0") {
+		return;
+	}
+	else if (confirm_menu_start("Вы уверены, что хотите изменить пароль?")) {
+		string salt = help::get_generated_salt();
+		string hash = help::generate_hash(pass, salt);
+		account_db->update("HASH", "'" + hash + "'", "LOGIN='" + login + "'");
+		account_db->update("SALT", "'" + salt + "'", "LOGIN='" + login + "'");
+
+		cout << "*** Изменения были внесены. ***\n" << endl;
+	}
+	else {
+		cout << "*** Изменения не были внесены. ***\n" << endl;
+	}
+	system("pause");
 }
 
 void Session::edit_role(string login) {
-	string new_role;
-	cout << "Новая роль: ";
-	cin >> new_role;
-	account_db->update("ROLE", new_role, "LOGIN='" + login + "'");
+	if (login != user_login) {
+		int new_role;
+		cout << "<- Изменение Роли ('-1' для выхода). ->" << endl;
+		cout << "Введите новую роль." << endl;
+
+		cin >> new_role;
+
+		if (new_role == -1) {
+			return;
+		}
+		else if (confirm_menu_start("Вы уверены, что хотите изменить роль?")) {
+			account_db->update("ROLE", to_string(new_role), "LOGIN='" + login + "'");
+			cout << "*** Изменения были внесены. ***\n" << endl;
+		}
+		else {
+			cout << "*** Изменения не были внесены. ***\n" << endl;
+		}
+	}
+	else {
+		cout << "*** Эту функцию нельзя использовать для своего аккаунта. ***\n" << endl;
+	}
+	system("pause");
 
 }
 

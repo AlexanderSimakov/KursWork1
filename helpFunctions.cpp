@@ -141,11 +141,11 @@ string console::password_format_input() {
 
 string help::get_generated_salt() {
 	srand(time(0));
-	const char SYMBOLS[63] = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890";
+	const char SYMBOLS[] = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm";
 	string salt = "";
 
 	for (int i = 0; i < 30; i++) {
-		salt += SYMBOLS[rand() % 64];
+		salt += SYMBOLS[rand() % 53];
 	}
 
 	return salt;
