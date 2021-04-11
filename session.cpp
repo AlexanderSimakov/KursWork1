@@ -267,8 +267,8 @@ void Session::add_new_account() {
 	if (pass == "0") return;
 	
 
-	cout << "Роль: ";
-	cin >> account.role;
+	cout << "Роль";
+	account.role = console::get_number_from_range(0, 1);
 
 	if (confirm_menu_start("Вы уверены, что хотите создать аккаунт?")) {
 		account.access = 1;
@@ -434,9 +434,9 @@ void Session::edit_role(string login) {
 	if (login != user_login) {
 		int new_role;
 		cout << "<- Изменение Роли ('-1' для выхода). ->" << endl;
-		cout << "Введите новую роль." << endl;
+		cout << "Введите новую роль.";
 
-		cin >> new_role;
+		new_role = console::get_number_from_range(-1, 1);
 
 		if (new_role == -1) {
 			return;

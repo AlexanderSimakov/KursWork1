@@ -138,6 +138,33 @@ string console::password_format_input() {
 	return input_password;
 }
 
+int console::get_number() {
+	int number;
+	while (true) {
+		cout << "\n> ";
+		cin >> number;
+
+		if (cin.get() == '\n') {
+			break;
+		}
+		else {
+			cin.clear();
+			cin.ignore(256, '\n');
+			cout << "<-- Неправильный ввод -->" << endl;
+		}
+	}
+	return number;
+}
+
+int console::get_number_from_range(int min, int max) {
+	int number;
+
+	while (true) {
+		number = get_number();
+		if (number >= min && number <= max) return number;
+		else cout << "<-- Введенное значение должно принадлежать промежутку [" << min << ", " << max << "]... -->" << endl;
+	}
+}
 
 string help::get_generated_salt() {
 	srand(time(0));

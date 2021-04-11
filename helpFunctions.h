@@ -15,6 +15,8 @@ namespace console {
 	bool is_login_symbols_ok(string login);
 	string get_authorization_password(string true_hash, string true_salt);
 	string password_format_input();
+	int get_number();
+	int get_number_from_range(int min, int max);
 
 }
 
