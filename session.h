@@ -11,8 +11,8 @@ class Session
 {
 public:
 	Session(SQLWork *product_db, SQLWork *account_db);
-	void start_as_user();
-	void start_as_admin();
+	void start_as_user();  // -сделать подтверждение выхода из аккаунта
+	void start_as_admin(); // -сделать подтверждение выхода из аккаунта
 
 private:
 	SQLWork* product_db = nullptr;
@@ -23,37 +23,40 @@ private:
 	Menu *user_menu = nullptr;
 	Menu* account_edit_menu = nullptr;
 	Menu* product_edit_menu = nullptr;
+	Menu* confirm_operation_menu = nullptr;
 
 	void init_user_menu();
 	void init_admin_menu();
+	void init_confirm_operation_menu();
 
-	void admin_manage_accounts_start();
-	void admin_manage_products_start();
+	void admin_manage_accounts_start(); // -сделать нормальный выход из пунктов меню и из этого меню 
+	void admin_manage_products_start(); // -сделать нормальный выход из пунктов меню и из этого меню 
+	bool confirm_menu_start(); // -красивое оформление
 
-	void show_accounts();
-	void add_new_account();
-	void delete_account();
-	void confirm_account();
-	void block_account();
-	void edit_account_menu_start();
-	void edit_login(string *login);
-	void edit_password(string login);
-	void edit_role(string login);
+	void show_accounts(); // -сделать вывод таблицей -красиво оформить
+	void add_new_account(); // -красивое оформление -проверки ввода
+	void delete_account(); // -вы уверены меню -находить аккаунт и выводит информацию о нем перед удалением -проверки ввода
+	void confirm_account(); // -вывести список аакаунтов ожидающих подтверждение -проверять аккаунт на существование перед подтверждением 
+	void block_account(); // -вывести список аакаунтов доступных блокировке -проверять аккаунт на существование перед блокировкой
+	void edit_account_menu_start(); // -сначала находить аккаунт -в менб каждой из операции показывать старый вариант
+	void edit_login(string *login); // -показывать старый вариант -меню подтверждения -проверка ввода
+	void edit_password(string login); // -меню подтверждения -новый пароль не может быть таким же как и старый -проверка ввода
+	void edit_role(string login); // -показывать старый вариант -меню подтверждения проверка ввода
 
-	void add_new_product();
-	void delete_product();
-	void show_products();
-	void edit_product_menu_start();
-	void edit_name(string *name);
-	void edit_amount(string name);
-	void edit_price(string name);
-	void edit_data(string name);
-	void edit_reg_name(string name);
-	void individual_task();
-	void find_by_name();
-	void find_by_reg_name();
-	void find_by_data();
-	void sort_by_name();
-	void sort_by_price_to_higher();
-	void sort_by_amount_to_higher();
+	void add_new_product(); // -проверки ввода -крсивое оформление -вывод получившейся информации о продукте и запрос о подтверждении -проверки ввода
+	void delete_product(); // -сначала найти продукт и вывести информацию о нем -запрос о подтверждении операции
+	void show_products(); // -красивое оформление -вывод в форме таблицы
+	void edit_product_menu_start(); // -сначала находить продукт -в меню каждой из операции показывать старый вариант
+	void edit_name(string *name); // -показывать старый вариант -меню подтверждения -проверка ввода
+	void edit_amount(string name); // -показывать старый вариант -меню подтверждения -проверка ввода
+	void edit_price(string name); // -показывать старый вариант -меню подтверждения -проверка ввода
+	void edit_data(string name); // -показывать старый вариант -меню подтверждения -проверка ввода
+	void edit_reg_name(string name); // -показывать старый вариант -меню подтверждения -проверка ввода
+	void individual_task(); // -красивое оформление -проверки ввода -проверка ввода
+	void find_by_name(); // -проверки ввода -вывод в виде таблицы -провекра ввода
+	void find_by_reg_name(); // -проверки ввода -вывод в виде таблицы -проверка ввода
+	void find_by_data(); // -проверки ввода -вывод в виде таблицы -проверка ввода
+	void sort_by_name(); // -вывод в виде таблицы -красивое оформление
+	void sort_by_price_to_higher(); // -вывод в виде таблицы -красивое оформление
+	void sort_by_amount_to_higher(); // -вывод в виде таблицы -красивое оформление
 };
