@@ -474,19 +474,29 @@ void Session::show_products_table(string sql_start, string sql_end) {
 
 void Session::add_new_product() {
 	Product product;
-	cout << "Добавление нового продукта." << endl;
+	cout << "<- Добавление нового продукта. ('0' для выхода) ->" << endl;
 
 
 	cout << "Название товара: ";
-	cin >> product.name;
+	product.name = console::get_non_existent_field(product_db, "NAME");
+	if (product.name == "0") return;
+
 	cout << "Количество товаров: ";
-	cin >> product.amount;
+	product.amount = console::get_number(true);
+	if (product.amount == 0) return;
+
 	cout << "Цена товара: ";
-	cin >> product.price;
-	cout << "Дата поступления на склад: ";
+	product.price = console::get_number(true);
+	if (product.price == 0) return;
+
+
+	cout << "Дата поступления на склад (ГГГГ-ММ-ДД): ";
 	(cin >> product.date).get();
+	if (product.date == "0") return;
+
 	cout << "ФИО зарегестрировавшего: ";
 	getline(cin, product.reg_name);
+	if (product.reg_name == "0") return;
 
 	product_db->push_back({ "'" + product.name + "'",
 						to_string(product.amount),
@@ -494,14 +504,30 @@ void Session::add_new_product() {
 					    "'" + product.date + "'",
 					    "'" + product.reg_name + "'" });
 
+	cout << "\n*** Товар добавлен ***\n" << endl;
+	system("pause");
+
 }
 
 void Session::delete_product() {
 	string name;
-	cout << "Удаление продукта" << endl;
-	cout << "Введите название продукта, который хотите удалить.\n> ";
-	cin >> name;
-	product_db->delete_field("NAME='" + name + "'");
+	cout << "<- Удаление товара ->" << endl;
+	cout << "Введите название товара, который хотите удалить. ('0' для выхода)" << endl;
+	name = console::get_exists_field(product_db, "NAME");
+	
+	if (name == "0") {
+		return;
+	}
+	else if (confirm_menu_start("Вы уверены, что хотите удалить продукт '" + name + "' ?")) {
+		product_db->delete_field("NAME='" + name + "'");
+		cout << "*** Товар был удален. ***\n" << endl;
+	}
+	else {
+		cout << "*** Изменения не были внесены. ***\n" << endl;
+	}
+	system("pause");
+
+	
 }
 
 void Session::edit_product_menu_start() {

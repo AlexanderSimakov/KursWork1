@@ -57,22 +57,47 @@ string console::get_exists_login(SQLWork* db) {
 }
 
 string console::get_exists_field(SQLWork* db, string field) {
-	string name, reg_name;
+	string input, reg_name;
 	while (true) {
 		cout << "> ";
-		cin >> name;
-		reg_name = db->get_text(field, name, 4);
+		
+		cin >> input;
 
-		if (name == "0") { // 0 - для выхода
+		reg_name = db->get_text(field, input, 4);
+
+		if (input == "0") { // 0 - для выхода
 			return "0";
 		}
 		else if (reg_name == "") {
 			cout << "<- Ошибка, проверьте ввод ->\n" << endl;
 		}
 		else {
-			return name;
+			return input;
 		}
 	}
+}
+
+string console::get_non_existent_field(SQLWork* db, string field) {
+	string input, reg_name;
+	while (true) {
+		cout << "> ";
+		
+		cin >> input;
+		
+		reg_name = db->get_text(field, input, 4);
+
+		if (input == "0") { // 0 - для выхода
+			return "0";
+		}
+		else if (reg_name != "") {
+			cout << "<- Товар с таким названием уже существует ->\n" << endl;
+		}
+		else {
+			return input;
+		}
+	}
+
+	
 }
 
 string console::get_free_login(SQLWork* db) {
@@ -157,14 +182,22 @@ string console::password_format_input() {
 	return input_password;
 }
 
-int console::get_number() {
+int console::get_number(bool is_positive) {
 	int number;
 	while (true) {
 		cout << "\n> ";
 		cin >> number;
 
 		if (cin.get() == '\n') {
-			break;
+			if (is_positive && number >= 0) {
+				break;
+			}
+			else if (!is_positive) {
+				break;
+			}
+			else {
+				cout << "<-- Число должно быть положительным -->" << endl;
+			}
 		}
 		else {
 			cin.clear();

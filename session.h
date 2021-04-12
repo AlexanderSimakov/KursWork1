@@ -44,8 +44,8 @@ private:
 	void edit_password(string login);
 	void edit_role(string login);
 
-	void add_new_product(); // -проверки ввода -крсивое оформление -вывод получившейся информации о продукте и запрос о подтверждении -проверки ввода
-	void delete_product(); // -сначала найти продукт и вывести информацию о нем -запрос о подтверждении операции
+	void add_new_product(); // -проверки ввода
+	void delete_product(); 
 	void show_products_table(string sql_start = "SELECT * FROM ", string sql_end = " ;");
 	void edit_product_menu_start(); 
 	void edit_name(string *name); // -проверка ввода
