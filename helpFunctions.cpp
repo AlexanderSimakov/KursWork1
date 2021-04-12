@@ -56,6 +56,25 @@ string console::get_exists_login(SQLWork* db) {
 	}
 }
 
+string console::get_exists_field(SQLWork* db, string field) {
+	string name, reg_name;
+	while (true) {
+		cout << "> ";
+		cin >> name;
+		reg_name = db->get_text(field, name, 4);
+
+		if (name == "0") { // 0 - для выхода
+			return "0";
+		}
+		else if (reg_name == "") {
+			cout << "<- Ошибка, проверьте ввод ->\n" << endl;
+		}
+		else {
+			return name;
+		}
+	}
+}
+
 string console::get_free_login(SQLWork* db) {
 	string login;
 	while (true) {

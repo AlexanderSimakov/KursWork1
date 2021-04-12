@@ -464,7 +464,7 @@ void Session::edit_role(string login) {
 
 
 void Session::show_products_table(string sql_start, string sql_end) {
-	cout << "                                       <- Все товары ->" << endl;
+	cout << "                                         <- товары ->" << endl;
 	product_db->show_table(sql_start, sql_end,
 						{ "      Название", "Количество", "  Цена", "Дата поступления", "  ФИО зарегестрировавшего" }, 
 						{ 0, 1, 2, 3, 4 }, 
@@ -506,10 +506,11 @@ void Session::delete_product() {
 
 void Session::edit_product_menu_start() {
 	string name;
-	cout << "Введите название продукта для редактирования\n>";
-	cin >> name;
+	cout << "Введите название продукта для редактирования. (0 - для выхода)" << endl;
+	name = console::get_exists_field(product_db, "NAME");
+	if (name == "0") return;
 
-
+	product_edit_menu->set_title("<- Редактирование товара: " + name + " ->");
 	int choise = 0;
 	bool is_exit = false;
 	while (!is_exit) {
@@ -518,6 +519,7 @@ void Session::edit_product_menu_start() {
 		{
 		case 0: // название
 			edit_name(&name);
+			product_edit_menu->set_title("<- Редактирование товара: " + name + " ->");
 			break;
 		case 1: // количество
 			edit_amount(name);
@@ -540,42 +542,101 @@ void Session::edit_product_menu_start() {
 			break;
 		}
 	}
+
 }
 
 void Session::edit_name(string* name) {
 	string new_name;
-	cout << "Новое название: ";
+	cout << "<- Изменение названия ('0' для выхода). ->" << endl;
+	cout << "Старое название: " << *name << endl;
+	cout << "Введите новое название." << endl;
 	cin >> new_name;
-	product_db->update("NAME", "'" + new_name + "'", "NAME='" + *name + "'");
-	*name = new_name;
+	
+	if (new_name == "0") {
+		return;
+	}
+	else if (confirm_menu_start("Вы уверены, что хотите изменить название на '" + new_name + "' ?")) {
+		product_db->update("NAME", "'" + new_name + "'", "NAME='" + *name + "'");
+		*name = new_name;
+		cout << "*** Изменения были внесены. ***\n" << endl;
+	}
+	else {
+		cout << "*** Изменения не были внесены. ***\n" << endl;
+	}
+	system("pause");
+
 }
 
 void Session::edit_amount(string name) {
-	string amount;
-	cout << "Новое количество: ";
+	int amount;
+	cout << "<- Изменение количества ('-1' для выхода). ->" << endl;
+	cout << "Старое количество: " << product_db->get_int("NAME", name, 1) << endl;
+	cout << "Введите новое количество." << endl;
+	cout << "Количество: ";
 	cin >> amount;
-	product_db->update("AMOUNT", "'" + amount + "'", "NAME='" + name + "'");
+
+	if (amount == -1) {
+		return;
+	}
+	else  {
+		product_db->update("AMOUNT", "'" + to_string(amount) + "'", "NAME='" + name + "'");
+		cout << "*** Изменения были внесены. ***\n" << endl;
+	}
+	system("pause");
 }
 
 void Session::edit_price(string name) {
 	int price;
-	cout << "Новая цена: ";
+	cout << "<- Изменение цены ('-1' для выхода). ->" << endl;
+	cout << "Старая цена: " << product_db->get_int("NAME", name, 2) << endl;
+	cout << "Введите новую цену." << endl;
+	cout << "Цена: ";
 	cin >> price;
-	product_db->update("PRICE", "'" + to_string(price) + "'", "NAME='" + name + "'");
+
+	if (price == -1) {
+		return;
+	}
+	else {
+		product_db->update("PRICE", "'" + to_string(price) + "'", "NAME='" + name + "'");
+		cout << "*** Изменения были внесены. ***\n" << endl;
+	}
+	system("pause");
 }
 
 void Session::edit_data(string name) {
 	string data;
-	cout << "Новуая дата: ";
+	cout << "<- Изменение даты ('0' для выхода). ->" << endl;
+	cout << "Старая дата: " << product_db->get_text("NAME", name, 3) << endl;
+	cout << "Введите новую дату." << endl;
+	cout << "Дата: ";
 	cin >> data;
-	product_db->update("DATE", "'" + data + "'", "NAME='" + name + "'");
+
+	if (data == "0") {
+		return;
+	}
+	else {
+		product_db->update("DATE", "'" + data + "'", "NAME='" + name + "'");
+		cout << "*** Изменения были внесены. ***\n" << endl;
+	}
+	system("pause");
 }
 
 void Session::edit_reg_name(string name) {
 	string reg_name;
-	cout << "Новое ФИО регестрировавшего: ";
+	cout << "<- Изменение ФИО зарегестрировавшего ('0' для выхода). ->" << endl;
+	cout << "Старое ФИО: " << product_db->get_text("NAME", name, 4) << endl;
+	cout << "Введите новое ФИО." << endl;
+	cout << "ФИО: ";
 	cin >> reg_name;
-	product_db->update("REG_NAME", "'" + reg_name + "'", "NAME='" + name + "'");
+
+	if (reg_name == "0") {
+		return;
+	}
+	else {
+		product_db->update("REG_NAME", "'" + reg_name + "'", "NAME='" + name + "'");
+		cout << "*** Изменения были внесены. ***\n" << endl;
+	}
+	system("pause");
 }
 
 void Session::individual_task() {
@@ -586,8 +647,9 @@ void Session::individual_task() {
 	cin >> price;
 	string data =  product_db->date_mounhth_befor(to_string(mounth_amount));
 	cout << "\nДата: " << data << "\n" << endl;
-	product_db->show("SELECT * FROM ", " WHERE DATE > '" + data + "' AND PRICE > '" + to_string(price) + "' ORDER BY NAME ASC;",
-		{ "Название: ", "Цена: ", "Дата поступления: " }, { 0, 2, 3 });
+
+	show_products_table("SELECT * FROM ", " WHERE DATE > '" + data + "' AND PRICE > '" + to_string(price) + "' ORDER BY NAME ASC;");
+	system("pause");
 }
 
 void Session::find_by_name() {

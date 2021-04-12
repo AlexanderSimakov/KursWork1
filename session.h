@@ -47,13 +47,13 @@ private:
 	void add_new_product(); // -проверки ввода -крсивое оформление -вывод получившейся информации о продукте и запрос о подтверждении -проверки ввода
 	void delete_product(); // -сначала найти продукт и вывести информацию о нем -запрос о подтверждении операции
 	void show_products_table(string sql_start = "SELECT * FROM ", string sql_end = " ;");
-	void edit_product_menu_start(); // -сначала находить продукт -в меню каждой из операции показывать старый вариант
-	void edit_name(string *name); // -показывать старый вариант -меню подтверждения -проверка ввода
-	void edit_amount(string name); // -показывать старый вариант -меню подтверждения -проверка ввода
-	void edit_price(string name); // -показывать старый вариант -меню подтверждения -проверка ввода
-	void edit_data(string name); // -показывать старый вариант -меню подтверждения -проверка ввода
-	void edit_reg_name(string name); // -показывать старый вариант -меню подтверждения -проверка ввода
-	void individual_task(); // -красивое оформление -проверки ввода -проверка ввода
+	void edit_product_menu_start(); 
+	void edit_name(string *name); // -проверка ввода
+	void edit_amount(string name); // -проверка ввода
+	void edit_price(string name); // -проверка ввода
+	void edit_data(string name); // -проверка ввода
+	void edit_reg_name(string name); // -проверка ввода
+	void individual_task(); // -проверки ввода
 	void find_by_name(); // -проверки ввода
 	void find_by_reg_name(); // -проверки ввода
 	void find_by_data(); // -проверки ввода
