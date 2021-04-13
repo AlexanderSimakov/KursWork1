@@ -16,7 +16,7 @@ string console::get_authorization_login(SQLWork* db) {
 		else if (login.size() < 4) {
 			cout << "<-- Слишком маленький логин -->\n" << endl;
 		}
-		else if (!console::is_login_symbols_ok(login)) {
+		else if (!console::is_all_symbols_and_nums(login)) {
 			cout << "<-- Логин содержит недопустимые символы -->\n" << endl;
 		}
 		else if (user_hash == "") {
@@ -44,7 +44,7 @@ string console::get_exists_login(SQLWork* db) {
 		else if (login.size() < 4) {
 			cout << "<-- Слишком маленький логин -->\n" << endl;
 		}
-		else if (!console::is_login_symbols_ok(login)) {
+		else if (!console::is_all_symbols_and_nums(login)) {
 			cout << "<-- Логин содержит недопустимые символы -->\n" << endl;
 		}
 		else if (user_hash == "") {
@@ -90,7 +90,7 @@ string console::get_non_existent_field(SQLWork* db, string field) {
 			return "0";
 		}
 		else if (reg_name != "") {
-			cout << "<- Товар с таким названием уже существует ->\n" << endl;
+			cout << "<- Товар с таким полем уже существует ->\n" << endl;
 		}
 		else {
 			return input;
@@ -112,7 +112,7 @@ string console::get_free_login(SQLWork* db) {
 		else if (login.size() < 4) {
 			cout << "<-- Слишком маленький логин -->\n" << endl;
 		}
-		else if (!console::is_login_symbols_ok(login)) {
+		else if (!console::is_all_symbols_and_nums(login)) {
 			cout << "<-- Логин содержит недопустимые символы -->\n" << endl;
 		}
 		else if (db->get_text("LOGIN", login, 1) != "") {
@@ -124,10 +124,10 @@ string console::get_free_login(SQLWork* db) {
 	}
 }
 
-bool console::is_login_symbols_ok(string login) {
+bool console::is_all_symbols_and_nums(string line) {
 	int ch;
-	for (int ch = 0, i = 0; i < login.size(); i++) {
-		ch = (int)login[i];
+	for (int ch = 0, i = 0; i < line.size(); i++) {
+		ch = (int)line[i];
 		if (ch < 48 || ch > 57 && ch < 65 || ch > 90 && ch < 97 || ch > 122) {
 			return false;
 		}

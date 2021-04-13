@@ -576,7 +576,7 @@ void Session::edit_name(string* name) {
 	cout << "<- Изменение названия ('0' для выхода). ->" << endl;
 	cout << "Старое название: " << *name << endl;
 	cout << "Введите новое название." << endl;
-	cin >> new_name;
+	new_name = console::get_non_existent_field(product_db, "NAME");
 	
 	if (new_name == "0") {
 		return;
@@ -595,13 +595,13 @@ void Session::edit_name(string* name) {
 
 void Session::edit_amount(string name) {
 	int amount;
-	cout << "<- Изменение количества ('-1' для выхода). ->" << endl;
+	cout << "<- Изменение количества ('0' для выхода). ->" << endl;
 	cout << "Старое количество: " << product_db->get_int("NAME", name, 1) << endl;
 	cout << "Введите новое количество." << endl;
 	cout << "Количество: ";
-	cin >> amount;
+	amount = console::get_number(true);
 
-	if (amount == -1) {
+	if (amount == 0) {
 		return;
 	}
 	else  {
@@ -613,13 +613,13 @@ void Session::edit_amount(string name) {
 
 void Session::edit_price(string name) {
 	int price;
-	cout << "<- Изменение цены ('-1' для выхода). ->" << endl;
+	cout << "<- Изменение цены ('0' для выхода). ->" << endl;
 	cout << "Старая цена: " << product_db->get_int("NAME", name, 2) << endl;
 	cout << "Введите новую цену." << endl;
 	cout << "Цена: ";
-	cin >> price;
+	price = console::get_number(true);
 
-	if (price == -1) {
+	if (price == 0) {
 		return;
 	}
 	else {
@@ -668,9 +668,9 @@ void Session::edit_reg_name(string name) {
 void Session::individual_task() {
 	int mounth_amount, price;
 	cout << "Количество месяцев: ";
-	cin >> mounth_amount;
+	mounth_amount = console::get_number(true);
 	cout << "Стоимость: ";
-	cin >> price;
+	price = console::get_number(true);
 	string data =  product_db->date_mounhth_befor(to_string(mounth_amount));
 	cout << "\nДата: " << data << "\n" << endl;
 

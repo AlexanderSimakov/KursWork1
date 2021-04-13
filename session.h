@@ -48,14 +48,14 @@ private:
 	void delete_product(); 
 	void show_products_table(string sql_start = "SELECT * FROM ", string sql_end = " ;");
 	void edit_product_menu_start(); 
-	void edit_name(string *name); // -проверка ввода
-	void edit_amount(string name); // -проверка ввода
-	void edit_price(string name); // -проверка ввода
+	void edit_name(string *name);
+	void edit_amount(string name);
+	void edit_price(string name);
 	void edit_data(string name); // -проверка ввода
 	void edit_reg_name(string name); // -проверка ввода
-	void individual_task(); // -проверки ввода
+	void individual_task();
 	void find_by_name(); // -проверки ввода
-	void find_by_reg_name(); // -проверки ввода
+	void find_by_reg_name(); 
 	void find_by_data(); // -проверки ввода
 	void sort_by_name();
 	void sort_by_price_to_higher();
