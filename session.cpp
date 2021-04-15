@@ -249,7 +249,7 @@ void Session::init_confirm_operation_menu() {
 
 
 void Session::show_accounts_table(string sql_start, string sql_end) {
-	cout << "    <- Все учетные записи: ->" << endl;
+	console::show_title("Все учетные записи", "    ");
 	account_db->show_table(sql_start, sql_end,
 		{ "     Логин", "Роль", "Доступ" },
 		{ 0, 3, 4},
@@ -259,20 +259,16 @@ void Session::show_accounts_table(string sql_start, string sql_end) {
 
 void Session::add_new_account() {
 	Account account;
-	
-	cout << "<- Создание нового аккаунта. (0 в любом из полей, кроме роли, для выхода) ->" << endl;
+	console::show_title("Создание нового аккаунта. (0 в любом из полей, кроме роли, для выхода)");
 
-	account.login = console::get_free_login(account_db);
+	account.login = console::get_free_login(account_db, "Логин: ");
 	if (account.login == "0") return;
 
-
-	cout << "Пароль: ";
-	string pass = console::password_format_input();
+	string pass = console::password_format_input("Пароль: ");
 	if (pass == "0") return;
 	
+	account.role = console::get_number_from_range(0, 1, "Роль: ");
 
-	cout << "Роль";
-	account.role = console::get_number_from_range(0, 1);
 
 	if (confirm_menu_start("Вы уверены, что хотите создать аккаунт?")) {
 		account.access = 1;
@@ -295,7 +291,7 @@ void Session::add_new_account() {
 
 void Session::delete_account() {
 	string login;
-	cout << "<- Удаление аккаунта (введите '0' для выхода) ->\n" << endl;
+	console::show_title("Удаление аккаунта (введите '0' для выхода)", "", "\n\n");
 	show_accounts_table();
 	cout << "Введите логин аккаунта, который хотите удалить." << endl;
 	
@@ -317,7 +313,7 @@ void Session::delete_account() {
 
 void Session::confirm_account() {
 	string login;
-	cout << "<- Подтверждение аккаунта ('0' для выхода) ->\n" << endl;
+	console::show_title("Подтверждение аккаунта ('0' для выхода)", "", "\n\n");
 	show_accounts_table();
 	cout << "Введите логин аккаунта, который хотите подтвердить." << endl;
 	login = console::get_exists_login(account_db);
@@ -338,7 +334,7 @@ void Session::confirm_account() {
 
 void Session::block_account() {
 	string login;
-	cout << "<- Блокировка аккаунта ('0' для выхода) ->\n" << endl;
+	console::show_title("Блокировка аккаунта ('0' для выхода)", "", "\n\n");
 	show_accounts_table();
 	cout << "Введите логин аккаунта, который хотите заблокировать." << endl;
 
@@ -391,7 +387,7 @@ void Session::edit_account_menu_start() {
 }
 
 void Session::edit_login(string *login) {
-	cout << "<- Изменение логина ('0' для выхода). ->" << endl;
+	console::show_title("Изменение логина ('0' для выхода)", "\t", "\n\n");
 	cout << "Старый логин: " << *login << endl;
 	cout << "Введите новый логин." << endl;
 
@@ -403,16 +399,16 @@ void Session::edit_login(string *login) {
 	else if (confirm_menu_start("Вы уверены, что хотите изменить логин на '" + new_login + "' ?")){
 		account_db->update("LOGIN", "'" + new_login + "'", "LOGIN='" + *login + "'");
 		*login = new_login;
-		cout << "*** Изменения были внесены. ***\n" << endl;
+		console::show_title("Изменения были внесены", "\t", "\n\n");
 	}
 	else {
-		cout << "*** Изменения не были внесены. ***\n" << endl;
+		console::show_title("Изменения не были внесены", "\t", "\n\n");
 	}
 	system("pause");
 }
 
 void Session::edit_password(string login) {
-	cout << "<- Изменение пароля ('0' для выхода). ->" << endl;
+	console::show_title("Изменение пароля ('0' для выхода)", "\t", "\n\n");
 	cout << "Введите новый пароль." << endl;
 	cout << "Пароль: ";
 	string pass = console::password_format_input();
@@ -426,10 +422,10 @@ void Session::edit_password(string login) {
 		account_db->update("HASH", "'" + hash + "'", "LOGIN='" + login + "'");
 		account_db->update("SALT", "'" + salt + "'", "LOGIN='" + login + "'");
 
-		cout << "*** Изменения были внесены. ***\n" << endl;
+		console::show_title("Изменения были внесены", "\t", "\n\n");
 	}
 	else {
-		cout << "*** Изменения не были внесены. ***\n" << endl;
+		console::show_title("Изменения не были внесены", "\t", "\n\n");
 	}
 	system("pause");
 }
@@ -437,9 +433,9 @@ void Session::edit_password(string login) {
 void Session::edit_role(string login) {
 	if (login != user_login) {
 		int new_role;
-		cout << "<- Изменение Роли ('-1' для выхода). ->" << endl;
-		cout << "Введите новую роль.";
+		console::show_title("Изменение роли ('-1' для выхода)", "\t", "\n\n");
 
+		cout << "Введите новую роль.";
 		new_role = console::get_number_from_range(-1, 1);
 
 		if (new_role == -1) {
@@ -447,14 +443,14 @@ void Session::edit_role(string login) {
 		}
 		else if (confirm_menu_start("Вы уверены, что хотите изменить роль?")) {
 			account_db->update("ROLE", to_string(new_role), "LOGIN='" + login + "'");
-			cout << "*** Изменения были внесены. ***\n" << endl;
+			console::show_title("Изменения были внесены", "\t", "\n\n");
 		}
 		else {
-			cout << "*** Изменения не были внесены. ***\n" << endl;
+			console::show_title("Изменения не были внесены", "\t", "\n\n");
 		}
 	}
 	else {
-		cout << "*** Эту функцию нельзя использовать для своего аккаунта. ***\n" << endl;
+		console::show_error_message("Эту функцию нельзя использовать для своего аккаунта", "\t", "\n\n");
 	}
 	system("pause");
 
@@ -466,9 +462,9 @@ void Session::edit_role(string login) {
 void Session::show_products_table(string sql_start, string sql_end) {
 	cout << "                                         <- товары ->" << endl;
 	product_db->show_table(sql_start, sql_end,
-						{ "      Название", "Количество", "  Цена", "Дата поступления", "  ФИО зарегестрировавшего" }, 
+						{ "         Название", "Количество", "  Цена", "Дата поступления", "    ФИО зарегестрировавшего" }, 
 						{ 0, 1, 2, 3, 4 }, 
-						{22, 13, 12, 19, 30});
+						{28, 13, 12, 19, 35});
 	cout << endl;
 }
 

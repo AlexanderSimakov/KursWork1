@@ -15,16 +15,16 @@ string console::get_authorization_login(SQLWork* db) {
 			return "0";
 		}
 		else if (login.size() < 4) {
-			cout << "<-- Слишком маленький логин -->\n" << endl;
+			show_error_message("Слишком маленький логин");
 		}
 		else if (!console::is_all_symbols_and_nums(login)) {
-			cout << "<-- Логин содержит недопустимые символы -->\n" << endl;
+			show_error_message("Логин содержит недопустимые символы");
 		}
 		else if (user_hash == "") {
-			cout << "Аккаунта с таким логином не существует\n" << endl;
+			show_error_message("Аккаунта с таким логином не существует");
 		}
 		else if (db->get_int("LOGIN", login, 4) == 0) {
-			cout << "В данный момент использование аккаунта невозможно, так как администратор еще не подтвердил его.\n" << endl;
+			show_error_message("В данный момент использование аккаунта невозможно, так как администратор еще не подтвердил его");
 		}
 		else {
 			return login;
@@ -44,13 +44,13 @@ string console::get_exists_login(SQLWork* db) {
 			return "0";
 		}
 		else if (login.size() < 4) {
-			cout << "<-- Слишком маленький логин -->\n" << endl;
+			show_error_message("Слишком маленький логин");
 		}
 		else if (!console::is_all_symbols_and_nums(login)) {
-			cout << "<-- Логин содержит недопустимые символы -->\n" << endl;
+			show_error_message("Логин содержит недопустимые символы");
 		}
 		else if (user_hash == "") {
-			cout << "Аккаунта с таким логином не существует\n" << endl;
+			show_error_message("Аккаунта с таким логином не существует");
 		}
 		else {
 			return login;
@@ -70,7 +70,7 @@ string console::get_exists_field(SQLWork* db, string field) {
 			return "0";
 		}
 		else if (reg_name == "") {
-			cout << "<- Ошибка, проверьте ввод ->\n" << endl;
+			show_error_message("Ошибка, проверьте ввод");
 		}
 		else {
 			return input;
@@ -90,7 +90,7 @@ string console::get_non_existent_field(SQLWork* db, string field) {
 			return "0";
 		}
 		else if (reg_name != "") {
-			cout << "<- Товар с таким полем уже существует ->\n" << endl;
+			show_error_message("Товар с таким полем уже существует");
 		}
 		else {
 			return input;
@@ -109,20 +109,22 @@ string console::get_format_data() {
 		cin.ignore(256, '\n');
 
 		if (data == "0") return "0";
+		else if (data.size() < 10) {
+			show_error_message("Слишком маленькое введенное значение");
+		}
 		else if (data[4] == '-' && data[7] == '-') {
 			return data;
 		}
 		else {
-			cout << "<-- Ошибка, проверьте формат введенной даты (ГГГГ-ММ-ДД) -->\n" << endl;
+			show_error_message("Ошибка, проверьте формат введенной даты (ГГГГ-ММ-ДД)");
 		}
 	}
 }
 
-
-string console::get_free_login(SQLWork* db) {
+string console::get_free_login(SQLWork* db, string out_line) {
 	string login;
 	while (true) {
-		cout << "Логин: ";
+		cout << out_line;
 		cin >> login;
 		cin.ignore(256, '\n');
 
@@ -130,13 +132,13 @@ string console::get_free_login(SQLWork* db) {
 			return "0";
 		}
 		else if (login.size() < 4) {
-			cout << "<-- Слишком маленький логин -->\n" << endl;
+			show_error_message("Слишком маленький логин");
 		}
 		else if (!console::is_all_symbols_and_nums(login)) {
-			cout << "<-- Логин содержит недопустимые символы -->\n" << endl;
+			show_error_message("Логин содержит недопустимые символы");
 		}
 		else if (db->get_text("LOGIN", login, 1) != "") {
-			cout << "<-- Логин занят -->\n" << endl;
+			show_error_message("Логин занят");
 		}
 		else {
 			return login;
@@ -165,7 +167,7 @@ string console::get_authorization_password(string true_hash, string true_salt) {
 			return "0";
 		}
 		else if (true_hash != help::generate_hash(input_password, true_salt)) {
-			cout << "Вы ввели неправильный пароль, попробуйте снова.\n" << endl;
+			show_error_message("Вы ввели неправильный пароль, попробуйте снова");
 		}
 		else break;
 	}
@@ -173,9 +175,12 @@ string console::get_authorization_password(string true_hash, string true_salt) {
 	return input_password;
 }
 
-string console::password_format_input() {
+string console::password_format_input(string out_line) {
 	string input_password;
 	unsigned char p;
+
+	cout << out_line;
+
 	do
 	{
 		p = _getch();
@@ -202,12 +207,11 @@ string console::password_format_input() {
 	return input_password;
 }
 
-int console::get_number(bool is_positive) {
+int console::get_number(bool is_positive, string out_line) {
 	int number;
 	while (true) {
-		cout << "\n> ";
+		cout << out_line;
 		cin >> number;
-		cin.ignore(256, '\n');
 
 		if (cin.get() == '\n') {
 			if (is_positive && number >= 0) {
@@ -217,25 +221,25 @@ int console::get_number(bool is_positive) {
 				break;
 			}
 			else {
-				cout << "<-- Число должно быть положительным -->" << endl;
+				show_error_message("Число должно быть положительным");
 			}
 		}
 		else {
 			cin.clear();
 			cin.ignore(256, '\n');
-			cout << "<-- Неправильный ввод -->" << endl;
+			show_error_message("Неправильный ввод");
 		}
 	}
 	return number;
 }
 
-int console::get_number_from_range(int min, int max) {
+int console::get_number_from_range(int min, int max, string out_line) {
 	int number;
 
 	while (true) {
-		number = get_number();
+		number = get_number(false, out_line);
 		if (number >= min && number <= max) return number;
-		else cout << "<-- Введенное значение должно принадлежать промежутку [" << min << ", " << max << "]... -->" << endl;
+		else show_error_message("Введенное значение должно принадлежать промежутку [" + to_string(min) + ", " + to_string(max) + "]");
 	}
 }
 
@@ -254,3 +258,23 @@ string help::get_generated_salt() {
 string help::generate_hash(string line, string salt) {
 	return to_string(hash<decltype(line)>{}(line + salt));
 }
+
+void console::show_error_message(string message, string pref_line, string post_line) {
+	set_color(Color::LightRed);
+	cout << pref_line + "<-- " + message + " -->" + post_line;
+	set_color();
+}
+
+void console::show_title(string title, string pref_line, string post_line) {
+	set_color(Color::Yellow);
+	cout << pref_line + "<-- " + title + " -->" + post_line;
+	set_color();
+}
+
+void console::set_color(Color text_color, Color back_color) {
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)((back_color << 4) | text_color));
+}
+
+
+
+
