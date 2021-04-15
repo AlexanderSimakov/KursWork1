@@ -8,6 +8,7 @@ string console::get_authorization_login(SQLWork* db) {
 	while (true) {
 		cout << "Логин: ";
 		cin >> login;
+		cin.ignore(256, '\n');
 		user_hash = db->get_text("LOGIN", login, 1);
 
 		if (login == "0") { // 0 - для выхода
@@ -36,6 +37,7 @@ string console::get_exists_login(SQLWork* db) {
 	while (true) {
 		cout << "Логин: ";
 		cin >> login;
+		cin.ignore(256, '\n');
 		user_hash = db->get_text("LOGIN", login, 1);
 
 		if (login == "0") { // 0 - для выхода
@@ -60,8 +62,7 @@ string console::get_exists_field(SQLWork* db, string field) {
 	string input, reg_name;
 	while (true) {
 		cout << "> ";
-		
-		cin >> input;
+		getline(cin, input);
 
 		reg_name = db->get_text(field, input, 4);
 
@@ -81,8 +82,7 @@ string console::get_non_existent_field(SQLWork* db, string field) {
 	string input, reg_name;
 	while (true) {
 		cout << "> ";
-		
-		cin >> input;
+		getline(cin, input);
 		
 		reg_name = db->get_text(field, input, 4);
 
@@ -100,11 +100,31 @@ string console::get_non_existent_field(SQLWork* db, string field) {
 	
 }
 
+string console::get_format_data() {
+	string data;
+	
+	while (true) {
+		cout << "> ";
+		cin >> data;
+		cin.ignore(256, '\n');
+
+		if (data == "0") return "0";
+		else if (data[4] == '-' && data[7] == '-') {
+			return data;
+		}
+		else {
+			cout << "<-- Ошибка, проверьте формат введенной даты (ГГГГ-ММ-ДД) -->\n" << endl;
+		}
+	}
+}
+
+
 string console::get_free_login(SQLWork* db) {
 	string login;
 	while (true) {
 		cout << "Логин: ";
 		cin >> login;
+		cin.ignore(256, '\n');
 
 		if (login == "0") { // 0 - для выхода
 			return "0";
@@ -187,6 +207,7 @@ int console::get_number(bool is_positive) {
 	while (true) {
 		cout << "\n> ";
 		cin >> number;
+		cin.ignore(256, '\n');
 
 		if (cin.get() == '\n') {
 			if (is_positive && number >= 0) {

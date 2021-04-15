@@ -491,7 +491,7 @@ void Session::add_new_product() {
 
 
 	cout << "Дата поступления на склад (ГГГГ-ММ-ДД): ";
-	(cin >> product.date).get();
+	product.date = console::get_format_data();
 	if (product.date == "0") return;
 
 	cout << "ФИО зарегестрировавшего: ";
@@ -635,7 +635,7 @@ void Session::edit_data(string name) {
 	cout << "Старая дата: " << product_db->get_text("NAME", name, 3) << endl;
 	cout << "Введите новую дату." << endl;
 	cout << "Дата: ";
-	cin >> data;
+	data = console::get_format_data();
 
 	if (data == "0") {
 		return;
@@ -652,8 +652,7 @@ void Session::edit_reg_name(string name) {
 	cout << "<- Изменение ФИО зарегестрировавшего ('0' для выхода). ->" << endl;
 	cout << "Старое ФИО: " << product_db->get_text("NAME", name, 4) << endl;
 	cout << "Введите новое ФИО." << endl;
-	cout << "ФИО: ";
-	cin >> reg_name;
+	getline(cin, reg_name);
 
 	if (reg_name == "0") {
 		return;
@@ -667,10 +666,13 @@ void Session::edit_reg_name(string name) {
 
 void Session::individual_task() {
 	int mounth_amount, price;
+
 	cout << "Количество месяцев: ";
 	mounth_amount = console::get_number(true);
+
 	cout << "Стоимость: ";
 	price = console::get_number(true);
+
 	string data =  product_db->date_mounhth_befor(to_string(mounth_amount));
 	cout << "\nДата: " << data << "\n" << endl;
 
@@ -681,7 +683,7 @@ void Session::individual_task() {
 void Session::find_by_name() {
 	string name;
 	cout << "Введите название или его часть для поиска\n>";
-	cin >> name;
+	getline(cin, name);
 	
 	cout << endl;
 	show_products_table("SELECT * FROM ", " WHERE NAME GLOB '*" + name + "*';");
@@ -691,7 +693,7 @@ void Session::find_by_name() {
 void Session::find_by_reg_name() {
 	string name;
 	cout << "Введите ФИО зарегестрировавшего или его часть для поиска\n>";
-	cin >> name;
+	getline(cin, name);
 
 	cout << endl;
 	show_products_table("SELECT * FROM ", " WHERE REG_NAME GLOB '*" + name + "*';");
@@ -703,6 +705,7 @@ void Session::find_by_data() {
 	cout << "Поиск по дате. Вы можете использовать знак * для обозначения неизвестных искомых (Пример: *-12-05, 2021-*-*)" << endl;
 	cout << "Дата: ";
 	cin >> data;
+	cin.ignore(256, '\n');
 
 	cout << endl;
 	show_products_table("SELECT * FROM ", " WHERE DATE GLOB '" + data + "';");

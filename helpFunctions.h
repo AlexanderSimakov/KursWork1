@@ -19,6 +19,7 @@ namespace console {
 	string password_format_input();
 	int get_number(bool is_positive = false);
 	int get_number_from_range(int min, int max);
+	string get_format_data();
 
 }
 
