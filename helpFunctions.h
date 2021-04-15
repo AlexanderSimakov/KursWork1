@@ -30,7 +30,7 @@ namespace console {
 	};
 
 	string get_authorization_login(SQLWork *db);
-	string get_exists_login(SQLWork* db);
+	string get_exists_login(SQLWork* db, string out_line = "Логин: ");
 	string get_exists_field(SQLWork* db, string field);
 	string get_non_existent_field(SQLWork* db, string field);
 	string get_free_login(SQLWork* db, string out_line = "\n> ");
@@ -40,8 +40,10 @@ namespace console {
 	int get_number(bool is_positive = false, string out_line = "\n> ");
 	int get_number_from_range(int min, int max, string out_line = "\n> ");
 	string get_format_data();
-	void show_error_message(string message, string pref_line = "\t", string post_line = "\n");
+
+	void show_error(string message, string pref_line = "\t", string post_line = "\n");
 	void show_title(string title, string pref_line = "\t", string post_line = "\n");
+	void show_info(string info, string pref_line = "\t", string post_line = "\n");
 	void set_color(Color text_color = Color::White, Color back_color = Color::Black);
 }
 

@@ -281,10 +281,10 @@ void Session::add_new_account() {
 						   to_string(account.role),
 						   to_string(account.access) });
 
-		cout << "*** Аккаунт был создан ***\n" << endl;
+		console::show_info("Аккаунт был создан", "\t", "\n\n");
 	}
 	else {
-		cout << "*** Аккаунт не был создан ***\n" << endl;
+		console::show_info("Аккаунт не был создан", "\t", "\n\n");
 	}
 	system("pause");
 }
@@ -299,14 +299,14 @@ void Session::delete_account() {
 	
 	if (login == "0") return;
 	else if (login == user_login) {
-		cout << "\n*** Нельзя удалить свой аккаунт.***\n" << endl;
+		console::show_error("Нельзя удалить свой аккаунт", "\t", "\n");
 	}
 	else if (confirm_menu_start("Вы уверены, что хотите удалить аккаунт '"+ login + "' ?")) {
 		account_db->delete_field("LOGIN='" + login + "'");
-		cout << "*** Аккаунт '" << login << "' был удален. ***\n" << endl;
+		console::show_info("Аккаунт '" + login + "' был удален", "\t", "\n\n");
 	}
 	else {
-		cout << "*** Изменения не были внесены.***\n" << endl;
+		console::show_info("Изменения не были внесены", "\t", "\n\n");
 	}
 	system("pause");
 }
@@ -320,14 +320,14 @@ void Session::confirm_account() {
 
 	if (login == "0") return;
 	else if (login == user_login) {
-		cout << "\n*** Эту функцию нельзя использовать для своего аккаунта, он уже подтвержден. ***\n" << endl;
+		console::show_error("Эту функцию нельзя использовать для своего аккаунта", "\n\t", "\n\n");
 	}
 	else if (account_db->get_int("LOGIN", login, 4) == 1) {
-		cout << "\n*** Этот аккаунт уже подтвержден. ***\n" << endl;
+		console::show_info("Этот аккаунт уже подтвержден", "\n\t", "\n\n");
 	}
 	else {
 		account_db->update("ACCESS", "1", "LOGIN='" + login + "'");
-		cout << "\n*** Аккаунт '" + login + "' был подтвержден. ***\n" << endl;
+		console::show_info("Аккаунт '" + login + "' был подтвержден", "\n\t", "\n\n");
 	}
 	system("pause");
 }
@@ -342,22 +342,23 @@ void Session::block_account() {
 	
 	if (login == "0") return;
 	else if (login == user_login) {
-		cout << "\n*** Эту функцию нельзя использовать для своего аккаунта. ***\n" << endl;
+		console::show_error("Эту функцию нельзя использовать для своего аккаунта", "\n\t", "\n\n");
 	}
 	else if (account_db->get_int("LOGIN", login, 4) == 0) {
-		cout << "\n*** Этот аккаунт уже заблокирован. ***\n" << endl;
+		console::show_info("Этот аккаунт уже заблокирован", "\n\t", "\n\n");
 	}
 	else {
 		account_db->update("ACCESS", "0", "LOGIN='" + login + "'");
-		cout << "\n*** Аккаунт '" + login + "' был заблокирован. ***\n" << endl;
+		console::show_info("Аккаунт '" + login + "' был заблокирован", "\n\t", "\n\n");
 	}
 	system("pause");
 }
 
 void Session::edit_account_menu_start() {
 	string login;
-	cout << "Введите логин аккаунта для редактирования." << endl;
+	cout << "Введите логин аккаунта для редактирования ('0' для выхода)." << endl;
 	login = console::get_exists_login(account_db);
+	if (login == "0") return;
 
 	account_edit_menu->set_title("<- Редактирование аккаунта '" + login + "' ->");
 	int choise = 0;
@@ -391,7 +392,7 @@ void Session::edit_login(string *login) {
 	cout << "Старый логин: " << *login << endl;
 	cout << "Введите новый логин." << endl;
 
-	string new_login = console::get_free_login(account_db);
+	string new_login = console::get_free_login(account_db, "Логин: ");
 	
 	if (new_login == "0") {
 		return;
@@ -399,10 +400,10 @@ void Session::edit_login(string *login) {
 	else if (confirm_menu_start("Вы уверены, что хотите изменить логин на '" + new_login + "' ?")){
 		account_db->update("LOGIN", "'" + new_login + "'", "LOGIN='" + *login + "'");
 		*login = new_login;
-		console::show_title("Изменения были внесены", "\t", "\n\n");
+		console::show_info("Изменения были внесены", "\t", "\n\n");
 	}
 	else {
-		console::show_title("Изменения не были внесены", "\t", "\n\n");
+		console::show_info("Изменения не были внесены", "\t", "\n\n");
 	}
 	system("pause");
 }
@@ -410,8 +411,7 @@ void Session::edit_login(string *login) {
 void Session::edit_password(string login) {
 	console::show_title("Изменение пароля ('0' для выхода)", "\t", "\n\n");
 	cout << "Введите новый пароль." << endl;
-	cout << "Пароль: ";
-	string pass = console::password_format_input();
+	string pass = console::password_format_input("Пароль: ");
 
 	if (pass == "0") {
 		return;
@@ -422,10 +422,10 @@ void Session::edit_password(string login) {
 		account_db->update("HASH", "'" + hash + "'", "LOGIN='" + login + "'");
 		account_db->update("SALT", "'" + salt + "'", "LOGIN='" + login + "'");
 
-		console::show_title("Изменения были внесены", "\t", "\n\n");
+		console::show_info("Изменения были внесены", "\t", "\n\n");
 	}
 	else {
-		console::show_title("Изменения не были внесены", "\t", "\n\n");
+		console::show_info("Изменения не были внесены", "\t", "\n\n");
 	}
 	system("pause");
 }
@@ -435,22 +435,22 @@ void Session::edit_role(string login) {
 		int new_role;
 		console::show_title("Изменение роли ('-1' для выхода)", "\t", "\n\n");
 
-		cout << "Введите новую роль.";
-		new_role = console::get_number_from_range(-1, 1);
+		cout << "Введите новую роль." << endl;
+		new_role = console::get_number_from_range(-1, 1, "Роль: ");
 
 		if (new_role == -1) {
 			return;
 		}
 		else if (confirm_menu_start("Вы уверены, что хотите изменить роль?")) {
 			account_db->update("ROLE", to_string(new_role), "LOGIN='" + login + "'");
-			console::show_title("Изменения были внесены", "\t", "\n\n");
+			console::show_info("Изменения были внесены", "\t", "\n\n");
 		}
 		else {
-			console::show_title("Изменения не были внесены", "\t", "\n\n");
+			console::show_info("Изменения не были внесены", "\t", "\n\n");
 		}
 	}
 	else {
-		console::show_error_message("Эту функцию нельзя использовать для своего аккаунта", "\t", "\n\n");
+		console::show_error("Эту функцию нельзя использовать для своего аккаунта", "\t", "\n\n");
 	}
 	system("pause");
 
