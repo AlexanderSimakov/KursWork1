@@ -7,6 +7,8 @@
 #include "menu.h"
 #include "helpFunctions.h"
 
+using namespace std;
+
 class Session
 {
 public:
