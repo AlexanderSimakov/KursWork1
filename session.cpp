@@ -16,7 +16,7 @@ void Session::start_as_admin(string login) {
 	int choise = 0;
 	bool is_exit = false;
 	while (!is_exit) {
-		choise = main_menu->get_choise();
+		choise = main_menu->get_num_of_choisen_line();
 		switch (choise)
 		{
 		case 0:
@@ -40,7 +40,7 @@ void Session::admin_manage_accounts_start() {
 	int choise = 0;
 	bool is_exit = false;
 	while (!is_exit) {
-		choise = manage_menu->get_choise();
+		choise = manage_menu->get_num_of_choisen_line();
 		switch (choise)
 		{
 		case 0: // просмотр всех записей
@@ -75,7 +75,7 @@ void Session::admin_manage_products_start() {
 	int choise = 0;
 	bool is_exit = false;
 	while (!is_exit) {
-		choise = data_menu->get_choise();
+		choise = data_menu->get_num_of_choisen_line();
 		switch (choise)
 		{
 		case 0: // просмотр всех записей
@@ -125,7 +125,7 @@ bool Session::confirm_menu_start(string title) {
 	confirm_operation_menu->set_title(title);
 	int choise = 0;
 	while (true) {
-		choise = confirm_operation_menu->get_choise();
+		choise = confirm_operation_menu->get_num_of_choisen_line();
 		switch (choise)
 		{
 		case 0: // да
@@ -143,7 +143,7 @@ void Session::start_as_user(string login) {
 	int choise = 0;
 	bool is_exit = false;
 	while (!is_exit) {
-		choise = user_menu->get_choise();
+		choise = user_menu->get_num_of_choisen_line();
 		switch (choise)
 		{
 		case 0: // просмотр всех записей
@@ -364,7 +364,7 @@ void Session::edit_account_menu_start() {
 	int choise = 0;
 	bool is_exit = false;
 	while (!is_exit) {
-		choise = account_edit_menu->get_choise();
+		choise = account_edit_menu->get_num_of_choisen_line();
 		switch (choise)
 		{
 		case 0: // Логин
@@ -491,14 +491,14 @@ void Session::add_new_product() {
 	if (product.date == "0") return;
 
 	cout << "ФИО зарегестрировавшего: ";
-	getline(cin, product.reg_name);
-	if (product.reg_name == "0") return;
+	getline(cin, product.name_of_registrant);
+	if (product.name_of_registrant == "0") return;
 
 	product_db->push_back({ "'" + product.name + "'",
 						to_string(product.amount),
 						"'" + to_string(product.price) + "'",
 					    "'" + product.date + "'",
-					    "'" + product.reg_name + "'" });
+					    "'" + product.name_of_registrant + "'" });
 
 	console::show_info("Товар добавлен", "\n\t", "\n\n");
 	system("pause");
@@ -537,7 +537,7 @@ void Session::edit_product_menu_start() {
 	int choise = 0;
 	bool is_exit = false;
 	while (!is_exit) {
-		choise = product_edit_menu->get_choise();
+		choise = product_edit_menu->get_num_of_choisen_line();
 		switch (choise)
 		{
 		case 0: // название

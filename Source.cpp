@@ -47,7 +47,7 @@ int main() {
 
 	int choise = 0, role = -1;
 	while (true) {
-		choise = main_menu.get_choise();
+		choise = main_menu.get_num_of_choisen_line();
 		switch (choise)
 		{
 		case 0: // Авторизация

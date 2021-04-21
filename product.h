@@ -12,7 +12,7 @@ struct Product
 	int amount = 0;
 	int price = 0;
 	string date = "";
-	string reg_name = "";
+	string name_of_registrant = "";
 };
 
 
