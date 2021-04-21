@@ -12,6 +12,7 @@ struct SQL_cell
 	string TYPE = "";
 };
 
+
 class SQLWork
 {
 public:

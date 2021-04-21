@@ -85,19 +85,39 @@ string console::get_free_login(SQLWork* db, string line_for_user) {
 	}
 }
 
-string console::get_exists_field(SQLWork* db, string field) {
+// возвращает пароль, подходящий к введенному хешу и соли. '0' - для выхода
+string console::get_suitable_password(string true_hash, string true_salt) {
+	string input_password;
+
+	while (true) {
+		cout << "Пароль: ";
+		input_password = console::password_format_input();
+		if (input_password == "0") {
+			return "0";
+		}
+		else if (true_hash != help_functions::get_generated_hash(input_password, true_salt)) {
+			show_error("Вы ввели неправильный пароль, попробуйте снова");
+		}
+		else break;
+	}
+
+	return input_password;
+}
+
+// возвращет название существующего товара. '0' - для выхода
+string console::get_exists_product_name(SQLWork* db, string line_for_user) {
 	string input, reg_name;
 	while (true) {
-		cout << "> ";
+		cout << line_for_user;
 		getline(cin, input);
 
-		reg_name = db->get_text(field, input, 4);
+		reg_name = db->get_text("NAME", input, 4);
 
 		if (input == "0") { // 0 - для выхода
 			return "0";
 		}
 		else if (reg_name == "") {
-			show_error("Ошибка, проверьте ввод");
+			show_error("Товар с таким названием не найден");
 		}
 		else {
 			return input;
@@ -105,19 +125,20 @@ string console::get_exists_field(SQLWork* db, string field) {
 	}
 }
 
-string console::get_non_existent_field(SQLWork* db, string field) {
+// возвращет название не существующего товара. '0' - для выхода
+string console::get_non_existent_product_name(SQLWork* db, string line_for_user) {
 	string input, reg_name;
 	while (true) {
-		cout << "> ";
+		cout << line_for_user;
 		getline(cin, input);
 		
-		reg_name = db->get_text(field, input, 4);
+		reg_name = db->get_text("NAME", input, 4);
 
 		if (input == "0") { // 0 - для выхода
 			return "0";
 		}
 		else if (reg_name != "") {
-			show_error("Товар с таким полем уже существует");
+			show_error("Товар с таким названием уже существует");
 		}
 		else {
 			return input;
@@ -127,6 +148,7 @@ string console::get_non_existent_field(SQLWork* db, string field) {
 	
 }
 
+// возвращает дату с проверкой ввода
 string console::get_format_date() {
 	string date;
 	
@@ -148,60 +170,27 @@ string console::get_format_date() {
 	}
 }
 
-bool console::is_all_symbols_and_nums(string line) {
-	int ch;
-	for (int ch = 0, i = 0; i < line.size(); i++) {
-		ch = (int)line[i];
-		if (ch < 48 || ch > 57 && ch < 65 || ch > 90 && ch < 97 || ch > 122) {
-			return false;
-		}
-	}
-	return true;
-}
-
-string console::get_authorization_password(string true_hash, string true_salt) {
+// возвращает введенный звездочками пароль
+string console::password_format_input(string line_for_user) {
 	string input_password;
+	unsigned char symbol;
 
-	while (true) {
-		cout << "Пароль: ";
-		input_password = console::password_format_input();
-		if (input_password == "0") {
-			return "0";
-		}
-		else if (true_hash != help_functions::get_generated_hash(input_password, true_salt)) {
-			show_error("Вы ввели неправильный пароль, попробуйте снова");
-		}
-		else break;
-	}
-
-	return input_password;
-}
-
-string console::password_format_input(string out_line) {
-	string input_password;
-	unsigned char p;
-
-	cout << out_line;
-
+	cout << line_for_user;
 	do
 	{
-		p = _getch();
+		symbol = _getch();
 
-		if (p == 13) {
+		if (symbol == 13) {
 			cout << endl;
 			break;
 		}
-		if (p == '\b' && !input_password.empty())
-		{
+		else if (symbol == '\b' && !input_password.empty()){
 			cout << '\b' << ' ' << '\b';
-
 			input_password.pop_back();
-			continue;
 		}
-		if (isalnum((unsigned char)p))
-		{
+		else if (isalnum((unsigned char)symbol)){
 			cout << '*';
-			input_password.push_back(p);
+			input_password.push_back(symbol);
 		}
 
 	} while (true);
@@ -209,10 +198,22 @@ string console::password_format_input(string out_line) {
 	return input_password;
 }
 
-int console::get_number(bool is_positive, string out_line) {
+// возвращает true, если строка состоит только из букв и цифр
+bool console::is_all_symbols_and_nums(string line) {
+	for (int symbol = 0, i = 0; i < line.size(); i++) {
+		symbol = (int)line[i];
+		if (symbol < 48 || symbol > 57 && symbol < 65 || symbol > 90 && symbol < 97 || symbol > 122) {
+			return false;
+		}
+	}
+	return true;
+}
+
+// возвращает целое число с проверкой ввода
+int console::get_number(bool is_positive, string line_for_user) {
 	int number;
 	while (true) {
-		cout << out_line;
+		cout << line_for_user;
 		cin >> number;
 
 		if (cin.get() == '\n') {
@@ -235,54 +236,60 @@ int console::get_number(bool is_positive, string out_line) {
 	return number;
 }
 
-int console::get_number_from_range(int min, int max, string out_line) {
+// возвращает целое число с проверкой ввода из интервала
+int console::get_number_from_range(int min, int max, string line_for_user) {
 	int number;
 
 	while (true) {
-		number = get_number(false, out_line);
+		number = get_number(false, line_for_user);
 		if (number >= min && number <= max) return number;
 		else show_error("Введенное значение должно принадлежать промежутку [" + to_string(min) + ", " + to_string(max) + "]");
 	}
 }
 
-string help_functions::get_generated_salt() {
-	srand(time(0));
-	const char SYMBOLS[] = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm";
-	string salt = "";
-
-	for (int i = 0; i < 30; i++) {
-		salt += SYMBOLS[rand() % 53];
-	}
-
-	return salt;
-}
-
-string help_functions::get_generated_hash(string line, string salt) {
-	return to_string(hash<decltype(line)>{}(line + salt));
-}
-
+// выводит сообщение в формате ошибки
 void console::show_error(string message, string pref_line, string post_line) {
 	set_color(Color::LightRed);
 	cout << pref_line + "<-- " + message + " -->" + post_line;
 	set_color();
 }
 
+// выводит сообщение в формате заголовка
 void console::show_title(string title, string pref_line, string post_line) {
 	set_color(Color::Yellow);
 	cout << pref_line + "<-- " + title + " -->" + post_line;
 	set_color();
 }
 
+// выводит сообщение в формате информации
 void console::show_info(string info, string pref_line, string post_line) {
 	set_color(Color::Green);
 	cout << pref_line + "<-- " + info + " -->" + post_line;
 	set_color();
 }
 
+// устанавливает цвет и фон последующего текста
 void console::set_color(Color text_color, Color back_color) {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)((back_color << 4) | text_color));
 }
 
 
+// возвращает сгенерированную рандомно соль
+string help_functions::get_generated_salt() {
+	srand(time(0));
+	const char SYMBOLS[] = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890";
+	string salt = "";
+
+	for (int i = 0; i < 30; i++) {
+		salt += SYMBOLS[rand() % 63];
+	}
+
+	return salt;
+}
+
+// возвращает хешированную солью строку
+string help_functions::get_generated_hash(string line, string salt) {
+	return to_string(hash<decltype(line)>{}(line + salt));
+}
 
 

@@ -470,19 +470,16 @@ void Session::show_products_table(string sql_start, string sql_end) {
 
 void Session::add_new_product() {
 	Product product;
-	console::show_title("Добавление нового продукта. ('0' для выхода)");
+	console::show_title("Добавление нового товара. ('0' для выхода)");
 
 
-	cout << "Название товара: ";
-	product.name = console::get_non_existent_field(product_db, "NAME");
+	product.name = console::get_non_existent_product_name(product_db);
 	if (product.name == "0") return;
 
-	cout << "Количество товаров: ";
-	product.amount = console::get_number(true);
+	product.amount = console::get_number(true, "Количество товаров: ");
 	if (product.amount == 0) return;
 
-	cout << "Цена товара: ";
-	product.price = console::get_number(true);
+	product.price = console::get_number(true, "Цена товара: ");
 	if (product.price == 0) return;
 
 
@@ -510,7 +507,7 @@ void Session::delete_product() {
 	console::show_title("Удаление товара. ('0' для выхода)", "", "\n\n");
 	show_products_table();
 	cout << "Введите название товара, который хотите удалить" << endl;
-	name = console::get_exists_field(product_db, "NAME");
+	name = console::get_exists_product_name(product_db);
 	
 	if (name == "0") {
 		return;
@@ -530,7 +527,7 @@ void Session::delete_product() {
 void Session::edit_product_menu_start() {
 	string name;
 	cout << "Введите название продукта для редактирования. (0 - для выхода)" << endl;
-	name = console::get_exists_field(product_db, "NAME");
+	name = console::get_exists_product_name(product_db);
 	if (name == "0") return;
 
 	product_edit_menu->set_title("<- Редактирование товара: " + name + " ->");
@@ -572,8 +569,7 @@ void Session::edit_name(string* name) {
 	string new_name;
 	console::show_title("Изменение названия ('0' для выхода)", "\t", "\n\n");
 	cout << "Старое название: " << *name << endl;
-	cout << "Введите новое название." << endl;
-	new_name = console::get_non_existent_field(product_db, "NAME");
+	new_name = console::get_non_existent_product_name(product_db, "Новое название");
 	
 	if (new_name == "0") {
 		return;
@@ -595,8 +591,7 @@ void Session::edit_amount(string name) {
 	console::show_title("Изменение количества ('0' для выхода)", "\t", "\n\n");
 	cout << "Старое количество: " << product_db->get_int("NAME", name, 1) << endl;
 	cout << "Введите новое количество." << endl;
-	cout << "Количество: ";
-	amount = console::get_number(true);
+	amount = console::get_number(true, "Количество: ");
 
 	if (amount == 0) {
 		return;
@@ -613,8 +608,7 @@ void Session::edit_price(string name) {
 	console::show_title("Изменение цены ('0' для выхода)", "\t", "\n\n");
 	cout << "Старая цена: " << product_db->get_int("NAME", name, 2) << endl;
 	cout << "Введите новую цену." << endl;
-	cout << "Цена: ";
-	price = console::get_number(true);
+	price = console::get_number(true, "Цена: ");
 
 	if (price == 0) {
 		return;
