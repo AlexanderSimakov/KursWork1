@@ -15,8 +15,8 @@ public:
 
 private:
 	Account account;
-	SQLWork *sql_db;
+	SQLWork *sql_db = nullptr;
 
-	void add_to_data_base();
+	void add_account_to_data_base();
 
 };

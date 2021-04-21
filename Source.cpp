@@ -10,23 +10,9 @@
 
 using namespace std;
 
-void init_accounts_db(SQLWork *db) {
-	db->open();
-	db->create({ SQL_cell{ "LOGIN",  "TEXT PRIMARY KEY NOT NULL"},
-			   SQL_cell{ "HASH",     "TEXT NOT NULL"},
-			   SQL_cell{ "SALT",     "TEXT NOT NULL"},
-			   SQL_cell{ "ROLE",     "INT NOT NULL"},
-			   SQL_cell{ "ACCESS",   "INT NOT NULL"} }, ACCOUNTS_DATABASE_NAME);
-}
+void init_accounts_db(SQLWork* db);
+void init_product_db(SQLWork* db);
 
-void init_product_db(SQLWork* db) {
-	db->open();
-	db->create({ SQL_cell{ "NAME",   "TEXT PRIMARY KEY NOT NULL"},
-			   SQL_cell{ "AMOUNT",   "INT NOT NULL"},
-			   SQL_cell{ "PRICE",    "INT NOT NULL"},
-			   SQL_cell{ "DATE",     "TEXT NOT NULL"},
-			   SQL_cell{ "REG_NAME", "TEXT NOT NULL"} }, PRODUCT_DATABASE_NAME);
-}
 
 int main() {
 	setlocale(LC_ALL, "rus");
@@ -39,10 +25,12 @@ int main() {
 	Registration registration(&accounts_db);
 	Authorization authorization(&accounts_db);
 	Session session(&product_db, &accounts_db);
-	Menu main_menu(" ---  Главное меню  --- ",
+
+	Menu main_menu("<- Главное меню ->",
 				 { " Авторизация",
 				   " Регистрация",
 				   " Выход" });
+	main_menu.set_start_with_first_line(true);
 
 
 	int choise = 0, role = -1;
@@ -55,7 +43,7 @@ int main() {
 			if (role == 0) { // запуск пользователя
 				session.start_as_user(authorization.get_login());
 			}
-			else if (role == 1) {//запуск админа
+			else if (role == 1) {//запуск администратора
 				session.start_as_admin(authorization.get_login());
 			}
 			break;
@@ -73,3 +61,27 @@ int main() {
 
 	return 0;
 }
+
+
+// открывает и инициализирует базу данных аккаунтов, если она не инициализированна до этого
+void init_accounts_db(SQLWork* db) {
+	db->open();
+	db->create({ SQL_cell{ "LOGIN",  "TEXT PRIMARY KEY NOT NULL"},
+				 SQL_cell{ "HASH",   "TEXT NOT NULL"},
+				 SQL_cell{ "SALT",   "TEXT NOT NULL"},
+				 SQL_cell{ "ROLE",   "INT NOT NULL"},
+				 SQL_cell{ "ACCESS", "INT NOT NULL"} },
+		ACCOUNTS_DATABASE_NAME);
+}
+
+// открывает и инициализирует базу данных продуктов, если она не инициализированна до этого
+void init_product_db(SQLWork* db) {
+	db->open();
+	db->create({ SQL_cell{ "NAME",     "TEXT PRIMARY KEY NOT NULL"},
+				 SQL_cell{ "AMOUNT",   "INT NOT NULL"},
+				 SQL_cell{ "PRICE",    "INT NOT NULL"},
+				 SQL_cell{ "DATE",     "TEXT NOT NULL"},
+				 SQL_cell{ "REG_NAME", "TEXT NOT NULL"} },
+		PRODUCT_DATABASE_NAME);
+}
+

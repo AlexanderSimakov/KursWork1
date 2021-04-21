@@ -5,6 +5,7 @@
 #include <string>
 
 
+
 using namespace std;
 
 
@@ -16,7 +17,7 @@ public:
 	string get_login();
 
 private:
-	SQLWork *sql_db;
+	SQLWork *sql_db = nullptr;
 	string login = "";
 
 };

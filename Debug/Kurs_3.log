@@ -1,8 +1,2 @@
-﻿  Source.cpp
-  menu.cpp
-D:\учеба\курсовая\program\Kurs_3\menu.cpp(41,73): warning C4018: <: несоответствие типов со знаком и без знака
-D:\учеба\курсовая\program\Kurs_3\menu.cpp(72,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\учеба\курсовая\program\Kurs_3\menu.cpp(85,20): warning C4018: <: несоответствие типов со знаком и без знака
-  session.cpp
-  Создание кода...
+﻿  registration.cpp
   Kurs_3.vcxproj -> D:\учеба\курсовая\program\Kurs_3\Debug\Kurs_3.exe
