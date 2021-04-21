@@ -22,8 +22,8 @@ public:
 
 	int get_num_of_choisen_line();
 	void add_line(string line);
-	void set_title(string title);
 	void set_lines(vector<string> lines);
+	void set_title(string title);
 	void set_start_with_first_line(bool is_start_with_first_line);
 
 private:

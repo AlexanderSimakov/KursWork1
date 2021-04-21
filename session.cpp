@@ -272,8 +272,8 @@ void Session::add_new_account() {
 
 	if (confirm_menu_start("Вы уверены, что хотите создать аккаунт?")) {
 		account.access = 1;
-		account.salt = help::get_generated_salt();
-		account.salted_hash_password = help::generate_hash(pass, account.salt);
+		account.salt = help_functions::get_generated_salt();
+		account.salted_hash_password = help_functions::get_generated_hash(pass, account.salt);
 
 		account_db->push_back({ "'" + account.login + "'",
 							"'" + account.salted_hash_password + "'",
@@ -417,8 +417,8 @@ void Session::edit_password(string login) {
 		return;
 	}
 	else if (confirm_menu_start("Вы уверены, что хотите изменить пароль?")) {
-		string salt = help::get_generated_salt();
-		string hash = help::generate_hash(pass, salt);
+		string salt = help_functions::get_generated_salt();
+		string hash = help_functions::get_generated_hash(pass, salt);
 		account_db->update("HASH", "'" + hash + "'", "LOGIN='" + login + "'");
 		account_db->update("SALT", "'" + salt + "'", "LOGIN='" + login + "'");
 
@@ -487,7 +487,7 @@ void Session::add_new_product() {
 
 
 	cout << "Дата поступления на склад (ГГГГ-ММ-ДД): ";
-	product.date = console::get_format_data();
+	product.date = console::get_format_date();
 	if (product.date == "0") return;
 
 	cout << "ФИО зарегестрировавшего: ";
@@ -551,7 +551,7 @@ void Session::edit_product_menu_start() {
 			edit_price(name);
 			break;
 		case 3: // дата
-			edit_data(name);
+			edit_date(name);
 			break;
 		case 4: // ФИО
 			edit_reg_name(name);
@@ -626,19 +626,19 @@ void Session::edit_price(string name) {
 	system("pause");
 }
 
-void Session::edit_data(string name) {
-	string data;
+void Session::edit_date(string name) {
+	string date;
 	console::show_title("Изменение даты ('0' для выхода)", "\t", "\n\n");
 	cout << "Старая дата: " << product_db->get_text("NAME", name, 3) << endl;
 	cout << "Введите новую дату." << endl;
 	cout << "Дата: ";
-	data = console::get_format_data();
+	date = console::get_format_date();
 
-	if (data == "0") {
+	if (date == "0") {
 		return;
 	}
 	else {
-		product_db->update("DATE", "'" + data + "'", "NAME='" + name + "'");
+		product_db->update("DATE", "'" + date + "'", "NAME='" + name + "'");
 		console::show_info("Изменения были внесены.", "\t", "\n\n");
 	}
 	system("pause");

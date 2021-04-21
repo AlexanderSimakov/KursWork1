@@ -50,9 +50,30 @@ int Menu::get_num_of_choisen_line() {
 	}
 }
 
-// true, и указатель выбранной строки будет всегда при запуске меню стоять на первом месте
-void Menu::set_start_with_first_line(bool is_start_with_first_line) {
-	this->is_start_with_first_line = is_start_with_first_line;
+// выводит на экран заголовок, если он задан
+void Menu::print_title() {
+	if (title.size()) cout << title << std::endl;
+}
+
+// выводит на экран строки меню
+void Menu::print_lines() {
+	for (int i = 0; i < lines.size(); i++) {
+		cout << " " << lines[i] << endl;
+	}
+}
+
+// выводит указатель на выбранную строку
+void Menu::print_pointer() {
+	int add = 0;
+	if (title.size()) add = 1;
+	for (int i = 0; i < lines.size(); i++) {
+		if (num_of_choisen_line == i) {
+			FillConsoleOutputCharacter(std_handle, (TCHAR)'>', 1, { 0, (SHORT)(i + add) }, &cWrittenChars);
+		}
+		else {
+			FillConsoleOutputCharacter(std_handle, (TCHAR)' ', 1, { 0, (SHORT)(i + add) }, &cWrittenChars);
+		}
+	}
 }
 
 // добавляет строку в меню
@@ -70,28 +91,9 @@ void Menu::set_title(string title) {
 	this->title = title;
 }
 
-// выводит на экран строки меню
-void Menu::print_lines() {
-	for (int i = 0; i < lines.size(); i++) {
-		cout << " " << lines[i] << endl;
-	}
+// true, и указатель выбранной строки будет всегда при запуске меню стоять на первом месте
+void Menu::set_start_with_first_line(bool is_start_with_first_line) {
+	this->is_start_with_first_line = is_start_with_first_line;
 }
 
-// выводит на экран заголовок, если он задан
-void Menu::print_title() {
-	if (title.size()) cout << title << std::endl;
-}
 
-// выводит указатель на выбранную строку
-void Menu::print_pointer() {
-	int add = 0;
-	if (title.size()) add = 1;
-	for (int i = 0; i < lines.size(); i++) {
-		if (num_of_choisen_line == i) {
-			FillConsoleOutputCharacter(std_handle, (TCHAR)'>', 1, { 0, (SHORT)(i + add) }, &cWrittenChars);
-		}
-		else {
-			FillConsoleOutputCharacter(std_handle, (TCHAR)' ', 1, { 0, (SHORT)(i + add) }, &cWrittenChars);
-		}
-	}
-}

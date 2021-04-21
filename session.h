@@ -36,7 +36,7 @@ private:
 	void admin_manage_products_start();
 	bool confirm_menu_start(string title);
 
-	void show_accounts_table(string sql_start = "SELECT * FROM ", string sql_end = " ;"); // сделать роль администратор\пользователь?
+	void show_accounts_table(string sql_start = "SELECT * FROM ", string sql_end = " ;");
 	void add_new_account(); 
 	void delete_account();
 	void confirm_account();
@@ -53,7 +53,7 @@ private:
 	void edit_name(string *name); 
 	void edit_amount(string name);
 	void edit_price(string name);
-	void edit_data(string name); 
+	void edit_date(string name); 
 	void edit_reg_name(string name);
 	void individual_task();
 	void find_by_name(); 

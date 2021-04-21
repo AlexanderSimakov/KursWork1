@@ -2,58 +2,85 @@
 #include "helpFunctions.h"
 
 
-
-string console::get_authorization_login(SQLWork* db) {
-	string login, user_hash;
+// возвращает логин с проверкой ввода и только тогда, когда аккаунт подтвержден. '0' - для выхода
+string console::get_true_confirmed_login(SQLWork* db) {
+	string input_login, account_hash;
 	while (true) {
 		cout << "Логин: ";
-		cin >> login;
+		cin >> input_login;
 		cin.ignore(256, '\n');
-		user_hash = db->get_text("LOGIN", login, 1);
+		account_hash = db->get_text("LOGIN", input_login, 1);
 
-		if (login == "0") { // 0 - для выхода
+		if (input_login == "0") { // 0 - для выхода
 			return "0";
 		}
-		else if (login.size() < 4) {
+		else if (input_login.size() < 4) {
 			show_error("Слишком маленький логин");
 		}
-		else if (!console::is_all_symbols_and_nums(login)) {
+		else if (!console::is_all_symbols_and_nums(input_login)) {
 			show_error("Логин содержит недопустимые символы");
 		}
-		else if (user_hash == "") {
+		else if (account_hash == "") {
 			show_error("Аккаунта с таким логином не существует");
 		}
-		else if (db->get_int("LOGIN", login, 4) == 0) {
+		else if (db->get_int("LOGIN", input_login, 4) == 0) {
 			show_error("В данный момент использование аккаунта невозможно, так как администратор еще не подтвердил его");
 		}
 		else {
-			return login;
+			return input_login;
 		}
 	}
 }
 
-string console::get_exists_login(SQLWork* db, string out_line) {
-	string login, user_hash;
+// возвращает существующий логин. '0' - для выхода
+string console::get_exists_login(SQLWork* db, string line_for_user) {
+	string input_login, account_hash;
 	while (true) {
-		cout << out_line;
-		cin >> login;
+		cout << line_for_user;
+		cin >> input_login;
 		cin.ignore(256, '\n');
-		user_hash = db->get_text("LOGIN", login, 1);
+		account_hash = db->get_text("LOGIN", input_login, 1);
 
-		if (login == "0") { // 0 - для выхода
+		if (input_login == "0") { // 0 - для выхода
 			return "0";
 		}
-		else if (login.size() < 4) {
+		else if (input_login.size() < 4) {
 			show_error("Слишком маленький логин");
 		}
-		else if (!console::is_all_symbols_and_nums(login)) {
+		else if (!console::is_all_symbols_and_nums(input_login)) {
 			show_error("Логин содержит недопустимые символы");
 		}
-		else if (user_hash == "") {
+		else if (account_hash == "") {
 			show_error("Аккаунта с таким логином не существует");
 		}
 		else {
-			return login;
+			return input_login;
+		}
+	}
+}
+
+// возвращает логин, которого нет в базе данных. '0' - для выхода
+string console::get_free_login(SQLWork* db, string line_for_user) {
+	string input_login;
+	while (true) {
+		cout << line_for_user;
+		cin >> input_login;
+		cin.ignore(256, '\n');
+
+		if (input_login == "0") { // 0 - для выхода
+			return "0";
+		}
+		else if (input_login.size() < 4) {
+			show_error("Слишком маленький логин");
+		}
+		else if (!console::is_all_symbols_and_nums(input_login)) {
+			show_error("Логин содержит недопустимые символы");
+		}
+		else if (db->get_text("LOGIN", input_login, 1) != "") {
+			show_error("Логин занят");
+		}
+		else {
+			return input_login;
 		}
 	}
 }
@@ -100,48 +127,23 @@ string console::get_non_existent_field(SQLWork* db, string field) {
 	
 }
 
-string console::get_format_data() {
-	string data;
+string console::get_format_date() {
+	string date;
 	
 	while (true) {
 		cout << "> ";
-		cin >> data;
+		cin >> date;
 		cin.ignore(256, '\n');
 
-		if (data == "0") return "0";
-		else if (data.size() < 10) {
+		if (date == "0") return "0";
+		else if (date.size() < 10) {
 			show_error("Слишком маленькое введенное значение");
 		}
-		else if (data[4] == '-' && data[7] == '-') {
-			return data;
+		else if (date[4] == '-' && date[7] == '-') {
+			return date;
 		}
 		else {
 			show_error("Ошибка, проверьте формат введенной даты (ГГГГ-ММ-ДД)");
-		}
-	}
-}
-
-string console::get_free_login(SQLWork* db, string out_line) {
-	string login;
-	while (true) {
-		cout << out_line;
-		cin >> login;
-		cin.ignore(256, '\n');
-
-		if (login == "0") { // 0 - для выхода
-			return "0";
-		}
-		else if (login.size() < 4) {
-			show_error("Слишком маленький логин");
-		}
-		else if (!console::is_all_symbols_and_nums(login)) {
-			show_error("Логин содержит недопустимые символы");
-		}
-		else if (db->get_text("LOGIN", login, 1) != "") {
-			show_error("Логин занят");
-		}
-		else {
-			return login;
 		}
 	}
 }
@@ -166,7 +168,7 @@ string console::get_authorization_password(string true_hash, string true_salt) {
 		if (input_password == "0") {
 			return "0";
 		}
-		else if (true_hash != help::generate_hash(input_password, true_salt)) {
+		else if (true_hash != help_functions::get_generated_hash(input_password, true_salt)) {
 			show_error("Вы ввели неправильный пароль, попробуйте снова");
 		}
 		else break;
@@ -243,7 +245,7 @@ int console::get_number_from_range(int min, int max, string out_line) {
 	}
 }
 
-string help::get_generated_salt() {
+string help_functions::get_generated_salt() {
 	srand(time(0));
 	const char SYMBOLS[] = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm";
 	string salt = "";
@@ -255,7 +257,7 @@ string help::get_generated_salt() {
 	return salt;
 }
 
-string help::generate_hash(string line, string salt) {
+string help_functions::get_generated_hash(string line, string salt) {
 	return to_string(hash<decltype(line)>{}(line + salt));
 }
 

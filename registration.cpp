@@ -11,8 +11,8 @@ void Registration::start() {
 
 	account.login = console::get_free_login(sql_db, "Логин: ");
 	string pass = console::password_format_input("Пароль: ");
-	account.salt = help::get_generated_salt();
-	account.salted_hash_password = help::generate_hash(pass, account.salt);
+	account.salt = help_functions::get_generated_salt();
+	account.salted_hash_password = help_functions::get_generated_hash(pass, account.salt);
 
 
 	add_account_to_data_base();
