@@ -20,20 +20,14 @@ public:
 	void create(vector<SQL_cell> fields, string DATA_BASE_NAME);
 	void open();
 	void close();
-	void show_endl(vector<string> out_strings, vector<int> num_of_columns);
-	void show(vector<string> out_strings, vector<int> num_of_columns);
-	void show(string sql_befor_db_name, string sql_after_db_name, vector<string> out_strings, vector<int> num_of_columns);
 	void show_table(string sql_befor_db_name, string sql_after_db_name, vector<string> out_strings, vector<int> num_of_columns, vector<int> lenght_of_columns);
 	void push_back(vector<string> field);
 	void update(string fild_for_update, string new_value, string rule);
 	void delete_field(string rule);
-	void find_and_show(string field_in_BD, string field, vector<string> out_strings, vector<int> num_of_columns);
 	void sort(string rule, vector<string> out_strings, vector<int> num_of_columns);
 	string date_mounhth_befor(string mounth);
 
-	int get_size();
 	int get_int(string field_in_DB, string fing_field, int field_value);
-	double get_double(string field_in_DB, string fing_field, int field_value);
 	string get_text(string field_in_DB, string fing_field, int field_value);
 	bool doSQL(string sql);
 

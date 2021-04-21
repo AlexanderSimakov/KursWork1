@@ -24,52 +24,6 @@ void SQLWork::close() {
 	}
 }
 
-void SQLWork::show_endl(vector<string> out_strings, vector<int> num_of_columns) {
-	string sql = "SELECT * FROM " + DATA_BASE_NAME + " ;";
-	int rc;
-	sqlite3_prepare_v2(dataBase, sql.c_str(), -1, &stmt, NULL);
-
-	while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
-		for (int i = 0; i < out_strings.size(); i++) {
-			cout << out_strings[i] << sqlite3_column_text(stmt, num_of_columns[i]) << endl;
-		}
-		cout << endl;
-	}
-	
-	sqlite3_finalize(stmt);
-}
-
-void SQLWork::show(vector<string> out_strings, vector<int> num_of_columns) {
-	string sql = "SELECT * FROM " + DATA_BASE_NAME + " ;";
-	int rc;
-	sqlite3_prepare_v2(dataBase, sql.c_str(), -1, &stmt, NULL);
-
-	while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
-		for (int i = 0; i < out_strings.size(); i++) {
-			cout << out_strings[i] << sqlite3_column_text(stmt, num_of_columns[i]);
-		}
-		cout << endl;
-	}
-
-	sqlite3_finalize(stmt);
-}
-
-void SQLWork::show(string sql_befor_db_name, string sql_after_db_name, vector<string> out_strings, vector<int> num_of_columns) {
-	string sql = sql_befor_db_name + DATA_BASE_NAME + sql_after_db_name;
-	int rc;
-
-	sqlite3_prepare_v2(dataBase, sql.c_str(), -1, &stmt, NULL);
-
-	while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
-		for (int i = 0; i < out_strings.size(); i++) {
-			cout << out_strings[i] << sqlite3_column_text(stmt, num_of_columns[i]) << endl;
-		}
-		cout << endl;
-	}
-
-	sqlite3_finalize(stmt);
-}
-
 void SQLWork::print_spaces(int amount) {
 	for (int i = 0; i < amount; i++) {
 		cout << " ";
@@ -154,34 +108,6 @@ string SQLWork::date_mounhth_befor(string mounth) {
 	return date;
 }
 
-int SQLWork::get_size() {
-	int size = 0, rc;
-	string sql = "SELECT count(*) FROM " + DATA_BASE_NAME + " ;";
-	sqlite3_prepare_v2(dataBase, sql.c_str(), -1, &stmt, NULL);
-
-	if ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
-		size = sqlite3_column_int(stmt, 0);
-	}
-	
-	sqlite3_finalize(stmt);
-	return size;
-}
-
-void SQLWork::find_and_show(string field_in_BD, string field, vector<string> out_strings, vector<int> num_of_columns) {
-	int rc;
-	string sql = "SELECT * FROM " + DATA_BASE_NAME + " WHERE " + field_in_BD + " GLOB '" + field + "';";
-	sqlite3_prepare_v2(dataBase, sql.c_str(), -1, &stmt, NULL);
-
-	while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
-		for (int i = 0; i < out_strings.size(); i++) {
-			cout << out_strings[i] << sqlite3_column_text(stmt, num_of_columns[i]) << endl;
-		}
-		cout << endl;
-	}
-
-	sqlite3_finalize(stmt);
-}
-
 int SQLWork::get_int(string field_in_DB, string find_field, int field_num) {
 	string sql = "SELECT * FROM " + DATA_BASE_NAME + " WHERE " + field_in_DB + " GLOB '" + find_field + "';";
 
@@ -190,20 +116,6 @@ int SQLWork::get_int(string field_in_DB, string find_field, int field_num) {
 	int rc, value = 0;
 	if ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {   
 		value = sqlite3_column_int(stmt, field_num);
-	}
-
-	sqlite3_finalize(stmt);
-	return value;
-}
-
-double SQLWork::get_double(string field_in_DB, string find_field, int field_num) {
-	string sql = "SELECT * FROM " + DATA_BASE_NAME + " WHERE " + field_in_DB + " GLOB '" + find_field + "';";
-
-	sqlite3_prepare_v2(dataBase, sql.c_str(), -1, &stmt, NULL);
-	double value = 0;
-	int rc;
-	if ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
-		value = sqlite3_column_double(stmt, field_num);
 	}
 
 	sqlite3_finalize(stmt);

@@ -1,6 +1,16 @@
-﻿  helpFunctions.cpp
+﻿  SQLWORK.cpp
+D:\учеба\курсовая\program\Kurs_3\SQLWORK.cpp(38,20): warning C4018: <: несоответствие типов со знаком и без знака
+D:\учеба\курсовая\program\Kurs_3\SQLWORK.cpp(47,21): warning C4018: <: несоответствие типов со знаком и без знака
+D:\учеба\курсовая\program\Kurs_3\SQLWORK.cpp(88,21): warning C4018: <: несоответствие типов со знаком и без знака
+D:\учеба\курсовая\program\Kurs_3\SQLWORK.cpp(168,20): warning C4018: <: несоответствие типов со знаком и без знака
+D:\учеба\курсовая\program\Kurs_3\SQLWORK.cpp(176,20): warning C4018: <: несоответствие типов со знаком и без знака
+D:\учеба\курсовая\program\Kurs_3\SQLWORK.cpp(189,20): warning C4018: <: несоответствие типов со знаком и без знака
+  Source.cpp
+  authorization.cpp
+  helpFunctions.cpp
 D:\учеба\курсовая\program\Kurs_3\helpFunctions.cpp(203,32): warning C4018: <: несоответствие типов со знаком и без знака
 D:\учеба\курсовая\program\Kurs_3\helpFunctions.cpp(279,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  registration.cpp
   session.cpp
   Создание кода...
   Kurs_3.vcxproj -> D:\учеба\курсовая\program\Kurs_3\Debug\Kurs_3.exe
