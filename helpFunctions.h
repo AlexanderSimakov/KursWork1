@@ -6,6 +6,7 @@
 #include <conio.h>
 #include <time.h>
 #include <Windows.h>
+#include "sha256.h"
 
 using namespace std;
 
@@ -30,10 +31,10 @@ namespace console {
 		White = 15
 	};
 
-	string get_true_confirmed_login(SQLWork *db);
+	string get_login(SQLWork *db);
 	string get_exists_login(SQLWork* db, string line_for_user = "Логин: ");
 	string get_free_login(SQLWork* db, string line_for_user = "\n> ");
-	string get_suitable_password(string true_hash, string true_salt);
+	string get_password(string true_hash, string true_salt);
 
 	string get_exists_product_name(SQLWork* db, string line_for_user = "Название: ");
 	string get_non_existent_product_name(SQLWork* db, string line_for_user = "Название: ");
@@ -52,8 +53,13 @@ namespace console {
 }
 
 namespace help_functions {
+	const int SALT_SIZE = 16; 
+	const int SYMBOLS_SIZE = 62;
 	string get_generated_salt();
 	string get_generated_hash(string line, string salt);
+	string get_symbols_for_salt();
+	string generate_salt(int salt_size);
+	bool is_symbol_right_for_password(char symbol);
 }
 
 

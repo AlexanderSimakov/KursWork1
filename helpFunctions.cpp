@@ -1,16 +1,14 @@
 #pragma once
 #include "helpFunctions.h"
 
-
-// возвращает логин с проверкой ввода и только тогда, когда аккаунт подтвержден. '0' - для выхода
-string console::get_true_confirmed_login(SQLWork* db) {
-	string input_login, account_hash;
+// возвращает логин с проверкой ввода. '0' - для выхода
+string console::get_login(SQLWork* db) {
+	string input_login;
 	while (true) {
 		cout << "Логин: ";
 		cin >> input_login;
 		cin.ignore(256, '\n');
-		account_hash = db->get_text("LOGIN", input_login, 1);
-
+		
 		if (input_login == "0") { // 0 - для выхода
 			return "0";
 		}
@@ -19,12 +17,6 @@ string console::get_true_confirmed_login(SQLWork* db) {
 		}
 		else if (!console::is_all_symbols_and_nums(input_login)) {
 			show_error("Логин содержит недопустимые символы");
-		}
-		else if (account_hash == "") {
-			show_error("Аккаунта с таким логином не существует");
-		}
-		else if (db->get_int("LOGIN", input_login, 4) == 0) {
-			show_error("В данный момент использование аккаунта невозможно, так как администратор еще не подтвердил его");
 		}
 		else {
 			return input_login;
@@ -85,23 +77,18 @@ string console::get_free_login(SQLWork* db, string line_for_user) {
 	}
 }
 
-// возвращает пароль, подходящий к введенному хешу и соли. '0' - для выхода
-string console::get_suitable_password(string true_hash, string true_salt) {
-	string input_password;
-
-	while (true) {
-		cout << "Пароль: ";
-		input_password = console::password_format_input();
-		if (input_password == "0") {
-			return "0";
-		}
-		else if (true_hash != help_functions::get_generated_hash(input_password, true_salt)) {
-			show_error("Вы ввели неправильный пароль, попробуйте снова");
-		}
-		else break;
+// возвращает пароль, подходящий к введенному хешу и соли. '0' - выхода. '-1' - неправильный логин или пароль
+string console::get_password(string true_hash, string true_salt) {
+	string input_password = console::password_format_input("Пароль: ");
+	if (input_password == "0") { // выход
+		return "0";
 	}
-
-	return input_password;
+	else if (true_hash != help_functions::get_generated_hash(input_password, true_salt)) { // неправильный логин или пароль
+		return "-1";
+	}
+	else { // все хорошо
+		return input_password;
+	}
 }
 
 // возвращет название существующего товара. '0' - для выхода
@@ -188,7 +175,7 @@ string console::password_format_input(string line_for_user) {
 			cout << '\b' << ' ' << '\b';
 			input_password.pop_back();
 		}
-		else if (isalnum((unsigned char)symbol)){
+		else if (help_functions::is_symbol_right_for_password(symbol)){
 			cout << '*';
 			input_password.push_back(symbol);
 		}
@@ -196,6 +183,15 @@ string console::password_format_input(string line_for_user) {
 	} while (true);
 
 	return input_password;
+}
+
+// возвращает true, если символ подходит для пароля
+bool help_functions::is_symbol_right_for_password(char symbol) {
+	string right_symbols = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
+	for (int i = 0; i < right_symbols.size(); i++) {
+		if (symbol == right_symbols[i]) return true;
+	}
+	return false;
 }
 
 // возвращает true, если строка состоит только из букв и цифр
@@ -273,23 +269,45 @@ void console::set_color(Color text_color, Color back_color) {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)((back_color << 4) | text_color));
 }
 
-
 // возвращает сгенерированную рандомно соль
 string help_functions::get_generated_salt() {
-	srand(time(0));
-	const char SYMBOLS[] = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890";
-	string salt = "";
-
-	for (int i = 0; i < 30; i++) {
-		salt += SYMBOLS[rand() % 63];
-	}
-
-	return salt;
+	return generate_salt(SALT_SIZE);
 }
 
 // возвращает хешированную солью строку
 string help_functions::get_generated_hash(string line, string salt) {
-	return to_string(hash<decltype(line)>{}(line + salt));
+	return sha1(sha1(line + salt) + sha1(line));
 }
 
+// генерирует строку из символов и чисел для соли
+string help_functions::get_symbols_for_salt(){
+	string symbols;
+	symbols.reserve(SYMBOLS_SIZE);
 
+	char little_letter = 'a';
+	char big_letter = 'A';
+	char number = '0';
+	for (int k = 0; k < 26; k++){
+		symbols.push_back(little_letter++);
+		symbols.push_back(big_letter++);
+		if (k < 10) symbols.push_back(number++);
+	}
+
+	return symbols;
+}
+
+// возвращает сгенерированную соль
+string help_functions::generate_salt(int salt_size){
+	string symbols = get_symbols_for_salt();
+
+	srand(time(NULL));
+
+	string salt;
+	salt.reserve(salt_size);
+
+	for (int i = 0; i < salt_size; i++){
+		salt.push_back(symbols[rand() % SYMBOLS_SIZE]);
+	}
+
+	return salt;
+}

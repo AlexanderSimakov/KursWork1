@@ -144,6 +144,7 @@
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="registration.cpp" />
     <ClCompile Include="session.cpp" />
+    <ClCompile Include="sha256.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="sqlite3.c" />
     <ClCompile Include="SQLWORK.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="menu.h" />
     <ClInclude Include="registration.h" />
     <ClInclude Include="session.h" />
+    <ClInclude Include="sha256.h" />
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="SQLWORK.h" />
   </ItemGroup>

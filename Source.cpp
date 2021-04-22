@@ -12,6 +12,7 @@ using namespace std;
 
 void init_accounts_db(SQLWork* db);
 void init_product_db(SQLWork* db);
+void add_admin_account_if_not_exists(SQLWork* db);
 
 
 int main() {
@@ -21,6 +22,7 @@ int main() {
 	SQLWork product_db(PRODUCT_DATABASE_FILENAME);
 	init_accounts_db(&accounts_db);
 	init_product_db(&product_db);
+	add_admin_account_if_not_exists(&accounts_db);
 
 	Registration registration(&accounts_db);
 	Authorization authorization(&accounts_db);
@@ -83,5 +85,15 @@ void init_product_db(SQLWork* db) {
 				 SQL_cell{ "DATE",     "TEXT NOT NULL"},
 				 SQL_cell{ "REG_NAME", "TEXT NOT NULL"} },
 		PRODUCT_DATABASE_NAME);
+}
+
+// добавляет аккаунт администратора(admin, admin), если он не существует до этого
+void add_admin_account_if_not_exists(SQLWork* db) {
+	if (db->get_text("LOGIN", "admin", 2) == "") {
+		string salt = help_functions::get_generated_salt();
+		string salted_hash_password = help_functions::get_generated_hash("admin", salt);
+
+		db->push_back({ "'admin'", "'" + salted_hash_password + "'", "'" + salt + "'", "1", "1" });
+	}
 }
 

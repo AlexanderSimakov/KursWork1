@@ -10,7 +10,9 @@ void Registration::start() {
 	console::show_title("Регистрация. (Для выхода введите 0 в любом из полей)");
 
 	account.login = console::get_free_login(sql_db, "Логин: ");
+	if (account.login == "0") return;
 	string pass = console::password_format_input("Пароль: ");
+	if (pass == "0") return;
 	account.salt = help_functions::get_generated_salt();
 	account.salted_hash_password = help_functions::get_generated_hash(pass, account.salt);
 
