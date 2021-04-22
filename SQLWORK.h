@@ -17,33 +17,29 @@ class SQLWork
 {
 public:
 	SQLWork(string FILE_NAME);
-	void create(vector<SQL_cell> fields, string DATA_BASE_NAME);
+	void create_table_if_not_exists(vector<SQL_cell> table_fields, string DATA_BASE_NAME);
 	void open();
 	void close();
-	void show_table(string sql_befor_db_name, string sql_after_db_name, vector<string> out_strings, vector<int> num_of_columns, vector<int> lenght_of_columns);
 	void push_back(vector<string> field);
 	void update(string fild_for_update, string new_value, string rule);
 	void delete_field(string rule);
-	void sort(string rule, vector<string> out_strings, vector<int> num_of_columns);
-	string date_mounhth_befor(string mounth);
+	
+	void show_table(string sql_befor_db_name, string sql_after_db_name, vector<string> out_strings, vector<int> num_of_columns, vector<int> lenght_of_columns);
+	string get_date_mounth_ago(string mounth_amount);
 
-	int get_int(string field_in_DB, string fing_field, int field_value);
-	string get_text(string field_in_DB, string fing_field, int field_value);
-	bool doSQL(string sql);
+	int get_int(string db_field, string field_for_search, int num_of_value);
+	string get_text(string db_field, string field_for_search, int num_of_value);
 
 private:
-	vector<SQL_cell> fields;
+	vector<SQL_cell> table_fields;
 	string FILE_NAME = "";
 	string DATA_BASE_NAME = "";
 	sqlite3* dataBase = 0;
 	sqlite3_stmt* stmt;
-	char* error = 0;
-	bool is_open = false;
 
-
-	static int callback(void* data, int argc, char** argv, char** azColName);
-	string get_create_command();
-	string get_push_back_command(vector<string> field);
+	bool do_sql(string sql);
+	string get_created_table_sql_command();
+	string get_push_back_sql_command(vector<string> field);
 	void print_spaces(int amount);
 	
 };

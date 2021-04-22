@@ -1,11 +1,4 @@
-﻿  SQLWORK.cpp
-D:\учеба\курсовая\program\Kurs_3\SQLWORK.cpp(38,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\учеба\курсовая\program\Kurs_3\SQLWORK.cpp(47,21): warning C4018: <: несоответствие типов со знаком и без знака
-D:\учеба\курсовая\program\Kurs_3\SQLWORK.cpp(88,21): warning C4018: <: несоответствие типов со знаком и без знака
-D:\учеба\курсовая\program\Kurs_3\SQLWORK.cpp(168,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\учеба\курсовая\program\Kurs_3\SQLWORK.cpp(176,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\учеба\курсовая\program\Kurs_3\SQLWORK.cpp(189,20): warning C4018: <: несоответствие типов со знаком и без знака
-  Source.cpp
+﻿  Source.cpp
   authorization.cpp
   helpFunctions.cpp
 D:\учеба\курсовая\program\Kurs_3\helpFunctions.cpp(203,32): warning C4018: <: несоответствие типов со знаком и без знака

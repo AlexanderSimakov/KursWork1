@@ -38,7 +38,7 @@ namespace console {
 	string get_exists_product_name(SQLWork* db, string line_for_user = "Название: ");
 	string get_non_existent_product_name(SQLWork* db, string line_for_user = "Название: ");
 	
-	string get_format_date();
+	string get_format_date(string line_for_user = "\n> ");
 
 	string password_format_input(string line_for_user = "");
 	bool is_all_symbols_and_nums(string line);

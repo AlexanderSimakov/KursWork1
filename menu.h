@@ -25,6 +25,7 @@ public:
 	void set_lines(vector<string> lines);
 	void set_title(string title);
 	void set_start_with_first_line(bool is_start_with_first_line);
+	void set_pointer_to_start();
 
 private:
 	bool is_start_with_first_line = false;

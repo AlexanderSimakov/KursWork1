@@ -149,11 +149,11 @@ string console::get_non_existent_product_name(SQLWork* db, string line_for_user)
 }
 
 // возвращает дату с проверкой ввода
-string console::get_format_date() {
+string console::get_format_date(string line_for_user) {
 	string date;
 	
 	while (true) {
-		cout << "> ";
+		cout << line_for_user;
 		cin >> date;
 		cin.ignore(256, '\n');
 

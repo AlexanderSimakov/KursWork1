@@ -96,4 +96,7 @@ void Menu::set_start_with_first_line(bool is_start_with_first_line) {
 	this->is_start_with_first_line = is_start_with_first_line;
 }
 
-
+// устанавливает указатель на первую строку
+void Menu::set_pointer_to_start() {
+	num_of_choisen_line = 0;
+}

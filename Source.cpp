@@ -66,7 +66,7 @@ int main() {
 // открывает и инициализирует базу данных аккаунтов, если она не инициализированна до этого
 void init_accounts_db(SQLWork* db) {
 	db->open();
-	db->create({ SQL_cell{ "LOGIN",  "TEXT PRIMARY KEY NOT NULL"},
+	db->create_table_if_not_exists({ SQL_cell{ "LOGIN",  "TEXT PRIMARY KEY NOT NULL"},
 				 SQL_cell{ "HASH",   "TEXT NOT NULL"},
 				 SQL_cell{ "SALT",   "TEXT NOT NULL"},
 				 SQL_cell{ "ROLE",   "INT NOT NULL"},
@@ -77,7 +77,7 @@ void init_accounts_db(SQLWork* db) {
 // открывает и инициализирует базу данных продуктов, если она не инициализированна до этого
 void init_product_db(SQLWork* db) {
 	db->open();
-	db->create({ SQL_cell{ "NAME",     "TEXT PRIMARY KEY NOT NULL"},
+	db->create_table_if_not_exists({ SQL_cell{ "NAME",     "TEXT PRIMARY KEY NOT NULL"},
 				 SQL_cell{ "AMOUNT",   "INT NOT NULL"},
 				 SQL_cell{ "PRICE",    "INT NOT NULL"},
 				 SQL_cell{ "DATE",     "TEXT NOT NULL"},
