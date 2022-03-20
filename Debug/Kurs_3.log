@@ -1,5 +1,0 @@
-﻿  helpFunctions.cpp
-D:\учеба\курсовая\program\Kurs_3\helpFunctions.cpp(192,20): warning C4018: <: несоответствие типов со знаком и без знака
-D:\учеба\курсовая\program\Kurs_3\helpFunctions.cpp(200,32): warning C4018: <: несоответствие типов со знаком и без знака
-D:\учеба\курсовая\program\Kurs_3\helpFunctions.cpp(304,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
-  Kurs_3.vcxproj -> D:\учеба\курсовая\program\Kurs_3\Debug\Kurs_3.exe
