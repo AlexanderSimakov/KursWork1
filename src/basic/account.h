@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "SQLWORK.h"
+#include "src/sql/SQLWORK.h"
 
 using namespace std;
 

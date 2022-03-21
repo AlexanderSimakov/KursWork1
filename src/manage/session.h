@@ -1,11 +1,11 @@
 #pragma once
 #include <iostream>
-#include "SQLWORK.h"
-#include "account.h"
-#include "product.h"
 #include <string>
-#include "menu.h"
-#include "helpFunctions.h"
+#include "src/sql/SQLWORK.h"
+#include "src/basic/account.h"
+#include "src/basic/product.h"
+#include "src/basic/helpFunctions.h"
+#include "src/menu/menu.h"
 
 using namespace std;
 

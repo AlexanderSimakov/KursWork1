@@ -1,16 +1,16 @@
 #pragma once
-#include "authorization.h"
+#include "src/manage/authorization.h"
 
 
 Authorization::Authorization(SQLWork* sql_db) {
 	this->sql_db = sql_db;
 }
 
-// запуск начала авторизации, возвращает роль
+// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 int Authorization::start() {
 	string input_login, db_account_hash, db_account_salt, input_password;
 
-	console::show_title("Авторизация. (Для выхода введите в любое из полей 0)");
+	console::show_title("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ. (пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ 0)");
 
 	while (true) {
 		input_login = console::get_login(sql_db);
@@ -22,10 +22,10 @@ int Authorization::start() {
 
 		if (input_password == "0") return -1;
 		else if (input_password == "-1") {
-			console::show_error("Вы ввели неправильный логин или пароль");
+			console::show_error("пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ");
 		}
 		else if (sql_db->get_int("LOGIN", input_login, 4) == 0) {
-			console::show_error("В данный момент использование аккаунта невозможно, так как администратор еще не подтвердил его");
+			console::show_error("пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ");
 		}
 		else {
 			break;

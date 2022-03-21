@@ -1,18 +1,18 @@
 #pragma once
-#include "SQLWORK.h"
+#include "src/sql/SQLWORK.h"
 
 SQLWork::SQLWork(string FILE_NAME) {
 	this->FILE_NAME = FILE_NAME;
 }
 
-// создает таблтцу в базе данных, если она не создана до этого
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 void SQLWork::create_table_if_not_exists(vector<SQL_cell> table_fields, string DATA_BASE_NAME) {
 	this->table_fields = table_fields;
 	this->DATA_BASE_NAME = DATA_BASE_NAME;
 	do_sql(get_created_table_sql_command());
 }
 
-// генерирует sql команду для создания базы данных, если она не создана до этого и возвращает ее
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ sql пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ
 string SQLWork::get_created_table_sql_command() {
 	string sql = " CREATE TABLE IF NOT EXISTS " + DATA_BASE_NAME + " ( ";
 
@@ -26,27 +26,27 @@ string SQLWork::get_created_table_sql_command() {
 	return sql;
 }
 
-// открывает базу данных
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 void SQLWork::open() {
 	if (sqlite3_open(FILE_NAME.c_str(), &dataBase)) {
-		cout << "Ошибка открытия/создания БД:" << sqlite3_errmsg(dataBase);
+		cout << "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ:" << sqlite3_errmsg(dataBase);
 	}
 }
 
-// закрывает базу данных
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 void SQLWork::close() {
 	if (sqlite3_close(dataBase) == SQLITE_BUSY) {
-		cout << "Ошибка закрытия БД." << endl;
+		cout << "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ." << endl;
 	}
 }
 
-// вставляет поле в конец таблицы
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void SQLWork::push_back(vector<string> field) {
 	string sql = get_push_back_sql_command(field);
 	do_sql(sql);
 }
 
-// генерирует команду вставки в конец таблицы
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 string SQLWork::get_push_back_sql_command(vector<string> field) {
 	string sql = "INSERT INTO " + DATA_BASE_NAME + " ( ";
 	for (int i = 0; i < table_fields.size(); i++) {
@@ -67,26 +67,26 @@ string SQLWork::get_push_back_sql_command(vector<string> field) {
 	return sql;
 }
 
-// обновляет поле на новое значение по введенному правилу sql
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ sql
 void SQLWork::update(string fild_for_update, string new_value, string rule) {
 	string sql = "UPDATE " + DATA_BASE_NAME + " set " + fild_for_update + " = " + new_value + " where " + rule + " ;";
 	do_sql(sql);
 }
 
-// удаляет поле по введенному правилу sql
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ sql
 void SQLWork::delete_field(string rule) {
 	string sql = "DELETE from " + DATA_BASE_NAME + " where " + rule + " ;";
 	do_sql(sql);
 }
 
 /// <summary>
-/// выводит таблицу с введенными столбцами и правилом
+/// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 /// </summary>
-/// <param name="sql_befor_db_name">sql команда перед названием базы данных</param>
-/// <param name="sql_after_db_name">sql команда после названия быза данных</param>
-/// <param name="out_strings">название столбцов</param>
-/// <param name="num_of_columns">номера полей, которые будут выведены для каждого обьекта базы данных</param>
-/// <param name="lenght_of_columns">ширина каждого столбца</param>
+/// <param name="sql_befor_db_name">sql пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</param>
+/// <param name="sql_after_db_name">sql пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</param>
+/// <param name="out_strings">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</param>
+/// <param name="num_of_columns">пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ</param>
+/// <param name="lenght_of_columns">пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ</param>
 void SQLWork::show_table(string sql_befor_db_name, string sql_after_db_name, vector<string> out_strings, vector<int> num_of_columns, vector<int> lenght_of_columns) {
 	string sql = sql_befor_db_name + DATA_BASE_NAME + sql_after_db_name;
 	int rc;
@@ -113,7 +113,7 @@ void SQLWork::show_table(string sql_befor_db_name, string sql_after_db_name, vec
 	sqlite3_finalize(stmt);
 }
 
-// возвращает дату вычитая введенное количесво месяцев
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 string SQLWork::get_date_mounth_ago(string mounth_amount) {
 	string sql = "SELECT date('now', '-" + mounth_amount + " month');";
 	string date = "";
@@ -128,7 +128,7 @@ string SQLWork::get_date_mounth_ago(string mounth_amount) {
 	return date;
 }
 
-// возвращает значение int, с номером num_of_value, когда находит field_for_search в поле db_field
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ int, пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ num_of_value, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ field_for_search пїЅ пїЅпїЅпїЅпїЅ db_field
 int SQLWork::get_int(string db_field, string field_for_search, int num_of_value) {
 	string sql = "SELECT * FROM " + DATA_BASE_NAME + " WHERE " + db_field + " GLOB '" + field_for_search + "';";
 
@@ -143,7 +143,7 @@ int SQLWork::get_int(string db_field, string field_for_search, int num_of_value)
 	return value;
 }
 
-// возвращает значение string, с номером num_of_value, когда находит field_for_search в поле db_field
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ string, пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ num_of_value, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ field_for_search пїЅ пїЅпїЅпїЅпїЅ db_field
 string SQLWork::get_text(string db_field, string field_for_search, int num_of_value) {
 	string text, sql = "SELECT * FROM " + DATA_BASE_NAME + " WHERE " + db_field + " GLOB '" + field_for_search + "';";
 
@@ -158,12 +158,12 @@ string SQLWork::get_text(string db_field, string field_for_search, int num_of_va
 	return text;
 }
 
-// выполняет переданную sql команду
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ sql пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 bool SQLWork::do_sql(string sql) {
 	char* error = 0;
 	if (sqlite3_exec(dataBase, sql.c_str(), 0, 0, &error))
 	{
-		cout << "Ошибка БД: " << error << endl;
+		cout << "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ: " << error << endl;
 		sqlite3_free(error);
 		return false;
 	}
@@ -172,7 +172,7 @@ bool SQLWork::do_sql(string sql) {
 	}
 }
 
-// печатает введенное количесвто пробелов
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void SQLWork::print_spaces(int amount) {
 	for (int i = 0; i < amount; i++) {
 		cout << " ";

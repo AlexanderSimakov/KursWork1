@@ -2,11 +2,11 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include "SQLWORK.h"
 #include <conio.h>
-#include <time.h>
 #include <Windows.h>
+#include <time.h>
 #include "sha256.h"
+#include "src/sql/SQLWORK.h"
 
 using namespace std;
 
@@ -32,12 +32,12 @@ namespace console {
 	};
 
 	string get_login(SQLWork *db);
-	string get_exists_login(SQLWork* db, string line_for_user = "Логин: ");
+	string get_exists_login(SQLWork* db, string line_for_user = "пїЅпїЅпїЅпїЅпїЅ: ");
 	string get_free_login(SQLWork* db, string line_for_user = "\n> ");
 	string get_password(string true_hash, string true_salt);
 
-	string get_exists_product_name(SQLWork* db, string line_for_user = "Название: ");
-	string get_non_existent_product_name(SQLWork* db, string line_for_user = "Название: ");
+	string get_exists_product_name(SQLWork* db, string line_for_user = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: ");
+	string get_non_existent_product_name(SQLWork* db, string line_for_user = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: ");
 	
 	string get_format_date(string line_for_user = "\n> ");
 

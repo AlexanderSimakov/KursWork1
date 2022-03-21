@@ -1,22 +1,22 @@
 #pragma once
-#include "helpFunctions.h"
+#include "src/basic/helpFunctions.h"
 
-// возвращает логин с проверкой ввода. '0' - для выхода
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ. '0' - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 string console::get_login(SQLWork* db) {
 	string input_login;
 	while (true) {
-		cout << "Логин: ";
+		cout << "пїЅпїЅпїЅпїЅпїЅ: ";
 		cin >> input_login;
 		cin.ignore(256, '\n');
 		
-		if (input_login == "0") { // 0 - для выхода
+		if (input_login == "0") { // 0 - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 			return "0";
 		}
 		else if (input_login.size() < 4) {
-			show_error("Слишком маленький логин");
+			show_error("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ");
 		}
 		else if (!console::is_all_symbols_and_nums(input_login)) {
-			show_error("Логин содержит недопустимые символы");
+			show_error("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 		}
 		else {
 			return input_login;
@@ -24,7 +24,7 @@ string console::get_login(SQLWork* db) {
 	}
 }
 
-// возвращает существующий логин. '0' - для выхода
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ. '0' - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 string console::get_exists_login(SQLWork* db, string line_for_user) {
 	string input_login, account_hash;
 	while (true) {
@@ -33,17 +33,17 @@ string console::get_exists_login(SQLWork* db, string line_for_user) {
 		cin.ignore(256, '\n');
 		account_hash = db->get_text("LOGIN", input_login, 1);
 
-		if (input_login == "0") { // 0 - для выхода
+		if (input_login == "0") { // 0 - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 			return "0";
 		}
 		else if (input_login.size() < 4) {
-			show_error("Слишком маленький логин");
+			show_error("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ");
 		}
 		else if (!console::is_all_symbols_and_nums(input_login)) {
-			show_error("Логин содержит недопустимые символы");
+			show_error("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 		}
 		else if (account_hash == "") {
-			show_error("Аккаунта с таким логином не существует");
+			show_error("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 		}
 		else {
 			return input_login;
@@ -51,7 +51,7 @@ string console::get_exists_login(SQLWork* db, string line_for_user) {
 	}
 }
 
-// возвращает логин, которого нет в базе данных. '0' - для выхода
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ. '0' - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 string console::get_free_login(SQLWork* db, string line_for_user) {
 	string input_login;
 	while (true) {
@@ -59,17 +59,17 @@ string console::get_free_login(SQLWork* db, string line_for_user) {
 		cin >> input_login;
 		cin.ignore(256, '\n');
 
-		if (input_login == "0") { // 0 - для выхода
+		if (input_login == "0") { // 0 - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 			return "0";
 		}
 		else if (input_login.size() < 4) {
-			show_error("Слишком маленький логин");
+			show_error("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ");
 		}
 		else if (!console::is_all_symbols_and_nums(input_login)) {
-			show_error("Логин содержит недопустимые символы");
+			show_error("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 		}
 		else if (db->get_text("LOGIN", input_login, 1) != "") {
-			show_error("Логин занят");
+			show_error("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ");
 		}
 		else {
 			return input_login;
@@ -77,21 +77,21 @@ string console::get_free_login(SQLWork* db, string line_for_user) {
 	}
 }
 
-// возвращает пароль, подходящий к введенному хешу и соли. '0' - выхода. '-1' - неправильный логин или пароль
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ. '0' - пїЅпїЅпїЅпїЅпїЅпїЅ. '-1' - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 string console::get_password(string true_hash, string true_salt) {
-	string input_password = console::password_format_input("Пароль: ");
-	if (input_password == "0") { // выход
+	string input_password = console::password_format_input("пїЅпїЅпїЅпїЅпїЅпїЅ: ");
+	if (input_password == "0") { // пїЅпїЅпїЅпїЅпїЅ
 		return "0";
 	}
-	else if (true_hash != help_functions::get_generated_hash(input_password, true_salt)) { // неправильный логин или пароль
+	else if (true_hash != help_functions::get_generated_hash(input_password, true_salt)) { // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 		return "-1";
 	}
-	else { // все хорошо
+	else { // пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 		return input_password;
 	}
 }
 
-// возвращет название существующего товара. '0' - для выхода
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ. '0' - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 string console::get_exists_product_name(SQLWork* db, string line_for_user) {
 	string input, reg_name;
 	while (true) {
@@ -100,11 +100,11 @@ string console::get_exists_product_name(SQLWork* db, string line_for_user) {
 
 		reg_name = db->get_text("NAME", input, 4);
 
-		if (input == "0") { // 0 - для выхода
+		if (input == "0") { // 0 - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 			return "0";
 		}
 		else if (reg_name == "") {
-			show_error("Товар с таким названием не найден");
+			show_error("пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ");
 		}
 		else {
 			return input;
@@ -112,7 +112,7 @@ string console::get_exists_product_name(SQLWork* db, string line_for_user) {
 	}
 }
 
-// возвращет название не существующего товара. '0' - для выхода
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ. '0' - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 string console::get_non_existent_product_name(SQLWork* db, string line_for_user) {
 	string input, reg_name;
 	while (true) {
@@ -121,11 +121,11 @@ string console::get_non_existent_product_name(SQLWork* db, string line_for_user)
 		
 		reg_name = db->get_text("NAME", input, 4);
 
-		if (input == "0") { // 0 - для выхода
+		if (input == "0") { // 0 - пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 			return "0";
 		}
 		else if (reg_name != "") {
-			show_error("Товар с таким названием уже существует");
+			show_error("пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 		}
 		else {
 			return input;
@@ -135,7 +135,7 @@ string console::get_non_existent_product_name(SQLWork* db, string line_for_user)
 	
 }
 
-// возвращает дату с проверкой ввода
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 string console::get_format_date(string line_for_user) {
 	string date;
 	
@@ -146,18 +146,18 @@ string console::get_format_date(string line_for_user) {
 
 		if (date == "0") return "0";
 		else if (date.size() < 10) {
-			show_error("Слишком маленькое введенное значение");
+			show_error("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 		}
 		else if (date[4] == '-' && date[7] == '-') {
 			return date;
 		}
 		else {
-			show_error("Ошибка, проверьте формат введенной даты (ГГГГ-ММ-ДД)");
+			show_error("пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅ-пїЅпїЅ-пїЅпїЅ)");
 		}
 	}
 }
 
-// возвращает введенный звездочками пароль
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 string console::password_format_input(string line_for_user) {
 	string input_password;
 	unsigned char symbol;
@@ -185,7 +185,7 @@ string console::password_format_input(string line_for_user) {
 	return input_password;
 }
 
-// возвращает true, если символ подходит для пароля
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ true, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 bool help_functions::is_symbol_right_for_password(char symbol) {
 	string right_symbols = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 	for (int i = 0; i < right_symbols.size(); i++) {
@@ -194,7 +194,7 @@ bool help_functions::is_symbol_right_for_password(char symbol) {
 	return false;
 }
 
-// возвращает true, если строка состоит только из букв и цифр
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ true, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
 bool console::is_all_symbols_and_nums(string line) {
 	for (int symbol = 0, i = 0; i < line.size(); i++) {
 		symbol = (int)line[i];
@@ -205,7 +205,7 @@ bool console::is_all_symbols_and_nums(string line) {
 	return true;
 }
 
-// возвращает целое число с проверкой ввода
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 int console::get_number(bool is_positive, string line_for_user) {
 	int number;
 	while (true) {
@@ -220,66 +220,66 @@ int console::get_number(bool is_positive, string line_for_user) {
 				break;
 			}
 			else {
-				show_error("Число должно быть положительным");
+				show_error("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
 			}
 		}
 		else {
 			cin.clear();
 			cin.ignore(256, '\n');
-			show_error("Неправильный ввод");
+			show_error("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ");
 		}
 	}
 	return number;
 }
 
-// возвращает целое число с проверкой ввода из интервала
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 int console::get_number_from_range(int min, int max, string line_for_user) {
 	int number;
 
 	while (true) {
 		number = get_number(false, line_for_user);
 		if (number >= min && number <= max) return number;
-		else show_error("Введенное значение должно принадлежать промежутку [" + to_string(min) + ", " + to_string(max) + "]");
+		else show_error("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ [" + to_string(min) + ", " + to_string(max) + "]");
 	}
 }
 
-// выводит сообщение в формате ошибки
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 void console::show_error(string message, string pref_line, string post_line) {
 	set_color(Color::LightRed);
 	cout << pref_line + "<-- " + message + " -->" + post_line;
 	set_color();
 }
 
-// выводит сообщение в формате заголовка
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void console::show_title(string title, string pref_line, string post_line) {
 	set_color(Color::Yellow);
 	cout << pref_line + "<-- " + title + " -->" + post_line;
 	set_color();
 }
 
-// выводит сообщение в формате информации
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void console::show_info(string info, string pref_line, string post_line) {
 	set_color(Color::Green);
 	cout << pref_line + "<-- " + info + " -->" + post_line;
 	set_color();
 }
 
-// устанавливает цвет и фон последующего текста
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 void console::set_color(Color text_color, Color back_color) {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)((back_color << 4) | text_color));
 }
 
-// возвращает сгенерированную рандомно соль
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 string help_functions::get_generated_salt() {
 	return generate_salt(SALT_SIZE);
 }
 
-// возвращает хешированную солью строку
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 string help_functions::get_generated_hash(string line, string salt) {
 	return sha1(sha1(line + salt) + sha1(line));
 }
 
-// генерирует строку из символов и чисел для соли
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 string help_functions::get_symbols_for_salt(){
 	string symbols;
 	symbols.reserve(SYMBOLS_SIZE);
@@ -296,7 +296,7 @@ string help_functions::get_symbols_for_salt(){
 	return symbols;
 }
 
-// возвращает сгенерированную соль
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 string help_functions::generate_salt(int salt_size){
 	string symbols = get_symbols_for_salt();
 

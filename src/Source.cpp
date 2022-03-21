@@ -1,12 +1,12 @@
-#include "menu.h"
 #include <iostream>
-#include "registration.h"
-#include "authorization.h"
-#include "SQLWORK.h"
-#include "account.h"
-#include "session.h"
-#include "product.h"
-#include "helpFunctions.h"
+#include "src/menu/menu.h"
+#include "src/manage/registration.h"
+#include "src/manage/authorization.h"
+#include "src/manage/session.h"
+#include "src/sql/SQLWORK.h"
+#include "src/basic/account.h"
+#include "src/basic/product.h"
+#include "src/basic/helpFunctions.h"
 
 using namespace std;
 
@@ -28,10 +28,10 @@ int main() {
 	Authorization authorization(&accounts_db);
 	Session session(&product_db, &accounts_db);
 
-	Menu main_menu("<- Главное меню ->",
-				 { " Авторизация",
-				   " Регистрация",
-				   " Выход" });
+	Menu main_menu("<- пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ ->",
+				 { " пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
+				   " пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ",
+				   " пїЅпїЅпїЅпїЅпїЅ" });
 	main_menu.set_start_with_first_line(true);
 
 
@@ -40,19 +40,19 @@ int main() {
 		choise = main_menu.get_num_of_choisen_line();
 		switch (choise)
 		{
-		case 0: // Авторизация
+		case 0: // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			role = authorization.start();
-			if (role == 0) { // запуск пользователя
+			if (role == 0) { // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 				session.start_as_user(authorization.get_login());
 			}
-			else if (role == 1) {//запуск администратора
+			else if (role == 1) {//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 				session.start_as_admin(authorization.get_login());
 			}
 			break;
-		case 1: // Регистрация
+		case 1: // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			registration.start();
 			break;
-		case 2: case -1: // Выход
+		case 2: case -1: // пїЅпїЅпїЅпїЅпїЅ
 			accounts_db.close();
 			product_db.close();
 			return 0;
@@ -65,7 +65,7 @@ int main() {
 }
 
 
-// открывает и инициализирует базу данных аккаунтов, если она не инициализированна до этого
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 void init_accounts_db(SQLWork* db) {
 	db->open();
 	db->create_table_if_not_exists({ SQL_cell{ "LOGIN",  "TEXT PRIMARY KEY NOT NULL"},
@@ -76,7 +76,7 @@ void init_accounts_db(SQLWork* db) {
 		ACCOUNTS_DATABASE_NAME);
 }
 
-// открывает и инициализирует базу данных продуктов, если она не инициализированна до этого
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 void init_product_db(SQLWork* db) {
 	db->open();
 	db->create_table_if_not_exists({ SQL_cell{ "NAME",     "TEXT PRIMARY KEY NOT NULL"},
@@ -87,7 +87,7 @@ void init_product_db(SQLWork* db) {
 		PRODUCT_DATABASE_NAME);
 }
 
-// добавляет аккаунт администратора(admin, admin), если он не существует до этого
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ(admin, admin), пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
 void add_admin_account_if_not_exists(SQLWork* db) {
 	if (db->get_text("LOGIN", "admin", 2) == "") {
 		string salt = help_functions::get_generated_salt();
