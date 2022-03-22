@@ -5,20 +5,17 @@ Menu::Menu() {
 	std_handle = GetStdHandle(STD_OUTPUT_HANDLE);
 }
 
-// ������������� ���� � ��������� ��������
 Menu::Menu(vector<string> lines) {
 	std_handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	this->lines = lines;
 }
 
-// ������������� ���� � ��������� �������� � ����������
 Menu::Menu(string title, vector<string> lines) {
 	std_handle = GetStdHandle(STD_OUTPUT_HANDLE);
 	this->title = title;
 	this->lines = lines;
 }
 
-// ���������� ����� ��������� ������
 int Menu::get_num_of_choisen_line() {
 	char pressed_key = 0;
 	system("cls");
@@ -50,19 +47,16 @@ int Menu::get_num_of_choisen_line() {
 	}
 }
 
-// ������� �� ����� ���������, ���� �� �����
 void Menu::print_title() {
 	if (title.size()) cout << title << std::endl;
 }
 
-// ������� �� ����� ������ ����
 void Menu::print_lines() {
 	for (int i = 0; i < lines.size(); i++) {
 		cout << " " << lines[i] << endl;
 	}
 }
 
-// ������� ��������� �� ��������� ������
 void Menu::print_pointer() {
 	int add = 0;
 	if (title.size()) add = 1;
@@ -76,27 +70,22 @@ void Menu::print_pointer() {
 	}
 }
 
-// ��������� ������ � ����
 void Menu::add_line(string line) {
 	lines.push_back(line);
 }
 
-// ��������� ����� ���� ������ �����
 void Menu::set_lines(vector<string> lines) {
 	this->lines = lines;
 }
 
-// ������������� ��������� ����
 void Menu::set_title(string title) {
 	this->title = title;
 }
 
-// true, � ��������� ��������� ������ ����� ������ ��� ������� ���� ������ �� ������ �����
 void Menu::set_start_with_first_line(bool is_start_with_first_line) {
 	this->is_start_with_first_line = is_start_with_first_line;
 }
 
-// ������������� ��������� �� ������ ������
 void Menu::set_pointer_to_start() {
 	num_of_choisen_line = 0;
 }

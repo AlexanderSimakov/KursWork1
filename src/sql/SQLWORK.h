@@ -41,10 +41,4 @@ private:
 	string get_created_table_sql_command();
 	string get_push_back_sql_command(vector<string> field);
 	void print_spaces(int amount);
-	
 };
-
-
-
-
-

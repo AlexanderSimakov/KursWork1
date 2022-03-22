@@ -28,10 +28,10 @@ int main() {
 	Authorization authorization(&accounts_db);
 	Session session(&product_db, &accounts_db);
 
-	Menu main_menu("<- ������� ���� ->",
-				 { " �����������",
-				   " �����������",
-				   " �����" });
+	Menu main_menu("<- Main menu ->",
+				 { " Authorization",
+				   " Registration",
+				   " Exit" });
 	main_menu.set_start_with_first_line(true);
 
 
@@ -40,19 +40,19 @@ int main() {
 		choise = main_menu.get_num_of_choisen_line();
 		switch (choise)
 		{
-		case 0: // �����������
+		case 0: 
 			role = authorization.start();
-			if (role == 0) { // ������ ������������
+			if (role == 0) { 
 				session.start_as_user(authorization.get_login());
 			}
-			else if (role == 1) {//������ ��������������
+			else if (role == 1) {
 				session.start_as_admin(authorization.get_login());
 			}
 			break;
-		case 1: // �����������
+		case 1:
 			registration.start();
 			break;
-		case 2: case -1: // �����
+		case 2: case -1:
 			accounts_db.close();
 			product_db.close();
 			return 0;
@@ -64,8 +64,6 @@ int main() {
 	return 0;
 }
 
-
-// ��������� � �������������� ���� ������ ���������, ���� ��� �� ����������������� �� �����
 void init_accounts_db(SQLWork* db) {
 	db->open();
 	db->create_table_if_not_exists({ SQL_cell{ "LOGIN",  "TEXT PRIMARY KEY NOT NULL"},
@@ -76,7 +74,6 @@ void init_accounts_db(SQLWork* db) {
 		ACCOUNTS_DATABASE_NAME);
 }
 
-// ��������� � �������������� ���� ������ ���������, ���� ��� �� ����������������� �� �����
 void init_product_db(SQLWork* db) {
 	db->open();
 	db->create_table_if_not_exists({ SQL_cell{ "NAME",     "TEXT PRIMARY KEY NOT NULL"},
@@ -87,7 +84,6 @@ void init_product_db(SQLWork* db) {
 		PRODUCT_DATABASE_NAME);
 }
 
-// ��������� ������� ��������������(admin, admin), ���� �� �� ���������� �� �����
 void add_admin_account_if_not_exists(SQLWork* db) {
 	if (db->get_text("LOGIN", "admin", 2) == "") {
 		string salt = help_functions::get_generated_salt();
@@ -96,4 +92,3 @@ void add_admin_account_if_not_exists(SQLWork* db) {
 		db->push_back({ "'admin'", "'" + salted_hash_password + "'", "'" + salt + "'", "1", "1" });
 	}
 }
-

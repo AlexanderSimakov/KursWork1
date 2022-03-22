@@ -7,7 +7,6 @@ using namespace std;
 const string ACCOUNTS_DATABASE_FILENAME = "accounts.db";
 const string ACCOUNTS_DATABASE_NAME = "ACCOUNTS";
 
-
 struct Account {
 	string login = "";
 	string salted_hash_password = "";

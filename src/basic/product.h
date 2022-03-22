@@ -14,5 +14,3 @@ struct Product
 	string date = "";
 	string name_of_registrant = "";
 };
-
-

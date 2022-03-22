@@ -4,10 +4,7 @@
 #include "src/sql/SQLWORK.h"
 #include "src/basic/helpFunctions.h"
 
-
-
 using namespace std;
-
 
 class Authorization
 {
@@ -19,5 +16,4 @@ public:
 private:
 	SQLWork *sql_db = nullptr;
 	string login = "";
-
 };

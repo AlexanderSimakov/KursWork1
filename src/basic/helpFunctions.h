@@ -10,7 +10,6 @@
 
 using namespace std;
 
-
 namespace console {
 	enum Color {
 		Black = 0,
@@ -32,12 +31,12 @@ namespace console {
 	};
 
 	string get_login(SQLWork *db);
-	string get_exists_login(SQLWork* db, string line_for_user = "�����: ");
+	string get_exists_login(SQLWork* db, string line_for_user = "Login: ");
 	string get_free_login(SQLWork* db, string line_for_user = "\n> ");
 	string get_password(string true_hash, string true_salt);
 
-	string get_exists_product_name(SQLWork* db, string line_for_user = "��������: ");
-	string get_non_existent_product_name(SQLWork* db, string line_for_user = "��������: ");
+	string get_exists_product_name(SQLWork* db, string line_for_user = "Name: ");
+	string get_non_existent_product_name(SQLWork* db, string line_for_user = "Name: ");
 	
 	string get_format_date(string line_for_user = "\n> ");
 
@@ -61,7 +60,3 @@ namespace help_functions {
 	string generate_salt(int salt_size);
 	bool is_symbol_right_for_password(char symbol);
 }
-
-
-
-

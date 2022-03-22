@@ -1,16 +1,14 @@
 #pragma once
 #include "src/manage/authorization.h"
 
-
 Authorization::Authorization(SQLWork* sql_db) {
 	this->sql_db = sql_db;
 }
 
-// ������ ������ �����������, ���������� ����
 int Authorization::start() {
 	string input_login, db_account_hash, db_account_salt, input_password;
 
-	console::show_title("�����������. (��� ������ ������� � ����� �� ����� 0)");
+	console::show_title("Authorization. (0 - exit)");
 
 	while (true) {
 		input_login = console::get_login(sql_db);
@@ -22,10 +20,10 @@ int Authorization::start() {
 
 		if (input_password == "0") return -1;
 		else if (input_password == "-1") {
-			console::show_error("�� ����� ������������ ����� ��� ������");
+			console::show_error("Wrong password");
 		}
 		else if (sql_db->get_int("LOGIN", input_login, 4) == 0) {
-			console::show_error("� ������ ������ ������������� �������� ����������, ��� ��� ������������� ��� �� ���������� ���");
+			console::show_error("Account have no access");
 		}
 		else {
 			break;

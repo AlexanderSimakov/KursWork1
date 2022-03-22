@@ -5,14 +5,12 @@ SQLWork::SQLWork(string FILE_NAME) {
 	this->FILE_NAME = FILE_NAME;
 }
 
-// ������� ������� � ���� ������, ���� ��� �� ������� �� �����
 void SQLWork::create_table_if_not_exists(vector<SQL_cell> table_fields, string DATA_BASE_NAME) {
 	this->table_fields = table_fields;
 	this->DATA_BASE_NAME = DATA_BASE_NAME;
 	do_sql(get_created_table_sql_command());
 }
 
-// ���������� sql ������� ��� �������� ���� ������, ���� ��� �� ������� �� ����� � ���������� ��
 string SQLWork::get_created_table_sql_command() {
 	string sql = " CREATE TABLE IF NOT EXISTS " + DATA_BASE_NAME + " ( ";
 
@@ -26,27 +24,23 @@ string SQLWork::get_created_table_sql_command() {
 	return sql;
 }
 
-// ��������� ���� ������
 void SQLWork::open() {
 	if (sqlite3_open(FILE_NAME.c_str(), &dataBase)) {
-		cout << "������ ��������/�������� ��:" << sqlite3_errmsg(dataBase);
+		cout << "DB open error:" << sqlite3_errmsg(dataBase);
 	}
 }
 
-// ��������� ���� ������
 void SQLWork::close() {
 	if (sqlite3_close(dataBase) == SQLITE_BUSY) {
-		cout << "������ �������� ��." << endl;
+		cout << "DB close error" << endl;
 	}
 }
 
-// ��������� ���� � ����� �������
 void SQLWork::push_back(vector<string> field) {
 	string sql = get_push_back_sql_command(field);
 	do_sql(sql);
 }
 
-// ���������� ������� ������� � ����� �������
 string SQLWork::get_push_back_sql_command(vector<string> field) {
 	string sql = "INSERT INTO " + DATA_BASE_NAME + " ( ";
 	for (int i = 0; i < table_fields.size(); i++) {
@@ -67,26 +61,16 @@ string SQLWork::get_push_back_sql_command(vector<string> field) {
 	return sql;
 }
 
-// ��������� ���� �� ����� �������� �� ���������� ������� sql
 void SQLWork::update(string fild_for_update, string new_value, string rule) {
 	string sql = "UPDATE " + DATA_BASE_NAME + " set " + fild_for_update + " = " + new_value + " where " + rule + " ;";
 	do_sql(sql);
 }
 
-// ������� ���� �� ���������� ������� sql
 void SQLWork::delete_field(string rule) {
 	string sql = "DELETE from " + DATA_BASE_NAME + " where " + rule + " ;";
 	do_sql(sql);
 }
 
-/// <summary>
-/// ������� ������� � ���������� ��������� � ��������
-/// </summary>
-/// <param name="sql_befor_db_name">sql ������� ����� ��������� ���� ������</param>
-/// <param name="sql_after_db_name">sql ������� ����� �������� ���� ������</param>
-/// <param name="out_strings">�������� ��������</param>
-/// <param name="num_of_columns">������ �����, ������� ����� �������� ��� ������� ������� ���� ������</param>
-/// <param name="lenght_of_columns">������ ������� �������</param>
 void SQLWork::show_table(string sql_befor_db_name, string sql_after_db_name, vector<string> out_strings, vector<int> num_of_columns, vector<int> lenght_of_columns) {
 	string sql = sql_befor_db_name + DATA_BASE_NAME + sql_after_db_name;
 	int rc;
@@ -113,7 +97,6 @@ void SQLWork::show_table(string sql_befor_db_name, string sql_after_db_name, vec
 	sqlite3_finalize(stmt);
 }
 
-// ���������� ���� ������� ��������� ��������� �������
 string SQLWork::get_date_mounth_ago(string mounth_amount) {
 	string sql = "SELECT date('now', '-" + mounth_amount + " month');";
 	string date = "";
@@ -128,7 +111,6 @@ string SQLWork::get_date_mounth_ago(string mounth_amount) {
 	return date;
 }
 
-// ���������� �������� int, � ������� num_of_value, ����� ������� field_for_search � ���� db_field
 int SQLWork::get_int(string db_field, string field_for_search, int num_of_value) {
 	string sql = "SELECT * FROM " + DATA_BASE_NAME + " WHERE " + db_field + " GLOB '" + field_for_search + "';";
 
@@ -143,7 +125,6 @@ int SQLWork::get_int(string db_field, string field_for_search, int num_of_value)
 	return value;
 }
 
-// ���������� �������� string, � ������� num_of_value, ����� ������� field_for_search � ���� db_field
 string SQLWork::get_text(string db_field, string field_for_search, int num_of_value) {
 	string text, sql = "SELECT * FROM " + DATA_BASE_NAME + " WHERE " + db_field + " GLOB '" + field_for_search + "';";
 
@@ -158,12 +139,11 @@ string SQLWork::get_text(string db_field, string field_for_search, int num_of_va
 	return text;
 }
 
-// ��������� ���������� sql �������
 bool SQLWork::do_sql(string sql) {
 	char* error = 0;
 	if (sqlite3_exec(dataBase, sql.c_str(), 0, 0, &error))
 	{
-		cout << "������ ��: " << error << endl;
+		cout << "DB error: " << error << endl;
 		sqlite3_free(error);
 		return false;
 	}
@@ -172,11 +152,8 @@ bool SQLWork::do_sql(string sql) {
 	}
 }
 
-// �������� ��������� ���������� ��������
 void SQLWork::print_spaces(int amount) {
 	for (int i = 0; i < amount; i++) {
 		cout << " ";
 	}
 }
-
-

@@ -1,22 +1,21 @@
 #pragma once
 #include "src/basic/helpFunctions.h"
 
-// ���������� ����� � ��������� �����. '0' - ��� ������
 string console::get_login(SQLWork* db) {
 	string input_login;
 	while (true) {
-		cout << "�����: ";
+		cout << "Login: ";
 		cin >> input_login;
 		cin.ignore(256, '\n');
 		
-		if (input_login == "0") { // 0 - ��� ������
+		if (input_login == "0") {
 			return "0";
 		}
 		else if (input_login.size() < 4) {
-			show_error("������� ��������� �����");
+			show_error("Login is too small");
 		}
 		else if (!console::is_all_symbols_and_nums(input_login)) {
-			show_error("����� �������� ������������ �������");
+			show_error("Login contains wrong symbols");
 		}
 		else {
 			return input_login;
@@ -24,7 +23,6 @@ string console::get_login(SQLWork* db) {
 	}
 }
 
-// ���������� ������������ �����. '0' - ��� ������
 string console::get_exists_login(SQLWork* db, string line_for_user) {
 	string input_login, account_hash;
 	while (true) {
@@ -33,17 +31,17 @@ string console::get_exists_login(SQLWork* db, string line_for_user) {
 		cin.ignore(256, '\n');
 		account_hash = db->get_text("LOGIN", input_login, 1);
 
-		if (input_login == "0") { // 0 - ��� ������
+		if (input_login == "0") {
 			return "0";
 		}
 		else if (input_login.size() < 4) {
-			show_error("������� ��������� �����");
+			show_error("Login is too small");
 		}
 		else if (!console::is_all_symbols_and_nums(input_login)) {
-			show_error("����� �������� ������������ �������");
+			show_error("Login contains wrong symbols");
 		}
 		else if (account_hash == "") {
-			show_error("�������� � ����� ������� �� ����������");
+			show_error("There is no account with such login");
 		}
 		else {
 			return input_login;
@@ -51,7 +49,6 @@ string console::get_exists_login(SQLWork* db, string line_for_user) {
 	}
 }
 
-// ���������� �����, �������� ��� � ���� ������. '0' - ��� ������
 string console::get_free_login(SQLWork* db, string line_for_user) {
 	string input_login;
 	while (true) {
@@ -59,17 +56,17 @@ string console::get_free_login(SQLWork* db, string line_for_user) {
 		cin >> input_login;
 		cin.ignore(256, '\n');
 
-		if (input_login == "0") { // 0 - ��� ������
+		if (input_login == "0") {
 			return "0";
 		}
 		else if (input_login.size() < 4) {
-			show_error("������� ��������� �����");
+			show_error("Login is too small");
 		}
 		else if (!console::is_all_symbols_and_nums(input_login)) {
-			show_error("����� �������� ������������ �������");
+			show_error("Login contains wrong symbols");
 		}
 		else if (db->get_text("LOGIN", input_login, 1) != "") {
-			show_error("����� �����");
+			show_error("Login is already exist");
 		}
 		else {
 			return input_login;
@@ -77,21 +74,19 @@ string console::get_free_login(SQLWork* db, string line_for_user) {
 	}
 }
 
-// ���������� ������, ���������� � ���������� ���� � ����. '0' - ������. '-1' - ������������ ����� ��� ������
 string console::get_password(string true_hash, string true_salt) {
-	string input_password = console::password_format_input("������: ");
-	if (input_password == "0") { // �����
+	string input_password = console::password_format_input("password: ");
+	if (input_password == "0") {
 		return "0";
 	}
-	else if (true_hash != help_functions::get_generated_hash(input_password, true_salt)) { // ������������ ����� ��� ������
+	else if (true_hash != help_functions::get_generated_hash(input_password, true_salt)) {
 		return "-1";
 	}
-	else { // ��� ������
+	else {
 		return input_password;
 	}
 }
 
-// ��������� �������� ������������� ������. '0' - ��� ������
 string console::get_exists_product_name(SQLWork* db, string line_for_user) {
 	string input, reg_name;
 	while (true) {
@@ -100,11 +95,11 @@ string console::get_exists_product_name(SQLWork* db, string line_for_user) {
 
 		reg_name = db->get_text("NAME", input, 4);
 
-		if (input == "0") { // 0 - ��� ������
+		if (input == "0") {
 			return "0";
 		}
 		else if (reg_name == "") {
-			show_error("����� � ����� ��������� �� ������");
+			show_error("There are no product with such name");
 		}
 		else {
 			return input;
@@ -112,7 +107,6 @@ string console::get_exists_product_name(SQLWork* db, string line_for_user) {
 	}
 }
 
-// ��������� �������� �� ������������� ������. '0' - ��� ������
 string console::get_non_existent_product_name(SQLWork* db, string line_for_user) {
 	string input, reg_name;
 	while (true) {
@@ -121,21 +115,18 @@ string console::get_non_existent_product_name(SQLWork* db, string line_for_user)
 		
 		reg_name = db->get_text("NAME", input, 4);
 
-		if (input == "0") { // 0 - ��� ������
+		if (input == "0") {
 			return "0";
 		}
 		else if (reg_name != "") {
-			show_error("����� � ����� ��������� ��� ����������");
+			show_error("Product with such name already exist");
 		}
 		else {
 			return input;
 		}
 	}
-
-	
 }
 
-// ���������� ���� � ��������� �����
 string console::get_format_date(string line_for_user) {
 	string date;
 	
@@ -146,18 +137,17 @@ string console::get_format_date(string line_for_user) {
 
 		if (date == "0") return "0";
 		else if (date.size() < 10) {
-			show_error("������� ��������� ��������� ��������");
+			show_error("Wrong input, shoud be (yyyy-mm-dd)");
 		}
 		else if (date[4] == '-' && date[7] == '-') {
 			return date;
 		}
 		else {
-			show_error("������, ��������� ������ ��������� ���� (����-��-��)");
+			show_error("Wrong input, shoud be (yyyy-mm-dd)");
 		}
 	}
 }
 
-// ���������� ��������� ����������� ������
 string console::password_format_input(string line_for_user) {
 	string input_password;
 	unsigned char symbol;
@@ -185,7 +175,6 @@ string console::password_format_input(string line_for_user) {
 	return input_password;
 }
 
-// ���������� true, ���� ������ �������� ��� ������
 bool help_functions::is_symbol_right_for_password(char symbol) {
 	string right_symbols = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
 	for (int i = 0; i < right_symbols.size(); i++) {
@@ -194,7 +183,6 @@ bool help_functions::is_symbol_right_for_password(char symbol) {
 	return false;
 }
 
-// ���������� true, ���� ������ ������� ������ �� ���� � ����
 bool console::is_all_symbols_and_nums(string line) {
 	for (int symbol = 0, i = 0; i < line.size(); i++) {
 		symbol = (int)line[i];
@@ -205,7 +193,6 @@ bool console::is_all_symbols_and_nums(string line) {
 	return true;
 }
 
-// ���������� ����� ����� � ��������� �����
 int console::get_number(bool is_positive, string line_for_user) {
 	int number;
 	while (true) {
@@ -220,66 +207,58 @@ int console::get_number(bool is_positive, string line_for_user) {
 				break;
 			}
 			else {
-				show_error("����� ������ ���� �������������");
+				show_error("Number should be positive");
 			}
 		}
 		else {
 			cin.clear();
 			cin.ignore(256, '\n');
-			show_error("������������ ����");
+			show_error("Wrong input");
 		}
 	}
 	return number;
 }
 
-// ���������� ����� ����� � ��������� ����� �� ���������
 int console::get_number_from_range(int min, int max, string line_for_user) {
 	int number;
 
 	while (true) {
 		number = get_number(false, line_for_user);
 		if (number >= min && number <= max) return number;
-		else show_error("��������� �������� ������ ������������ ���������� [" + to_string(min) + ", " + to_string(max) + "]");
+		else show_error("Input number should be between [" + to_string(min) + ", " + to_string(max) + "]");
 	}
 }
 
-// ������� ��������� � ������� ������
 void console::show_error(string message, string pref_line, string post_line) {
 	set_color(Color::LightRed);
 	cout << pref_line + "<-- " + message + " -->" + post_line;
 	set_color();
 }
 
-// ������� ��������� � ������� ���������
 void console::show_title(string title, string pref_line, string post_line) {
 	set_color(Color::Yellow);
 	cout << pref_line + "<-- " + title + " -->" + post_line;
 	set_color();
 }
 
-// ������� ��������� � ������� ����������
 void console::show_info(string info, string pref_line, string post_line) {
 	set_color(Color::Green);
 	cout << pref_line + "<-- " + info + " -->" + post_line;
 	set_color();
 }
 
-// ������������� ���� � ��� ������������ ������
 void console::set_color(Color text_color, Color back_color) {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)((back_color << 4) | text_color));
 }
 
-// ���������� ��������������� �������� ����
 string help_functions::get_generated_salt() {
 	return generate_salt(SALT_SIZE);
 }
 
-// ���������� ������������ ����� ������
 string help_functions::get_generated_hash(string line, string salt) {
 	return sha1(sha1(line + salt) + sha1(line));
 }
 
-// ���������� ������ �� �������� � ����� ��� ����
 string help_functions::get_symbols_for_salt(){
 	string symbols;
 	symbols.reserve(SYMBOLS_SIZE);
@@ -296,7 +275,6 @@ string help_functions::get_symbols_for_salt(){
 	return symbols;
 }
 
-// ���������� ��������������� ����
 string help_functions::generate_salt(int salt_size){
 	string symbols = get_symbols_for_salt();
 
