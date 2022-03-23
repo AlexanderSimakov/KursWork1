@@ -429,7 +429,7 @@ void Session::admin_manage_products_start() {
 void Session::show_products_table(string sql_start, string sql_end) {
 	console::show_title("products", "                                          ");
 	product_db->show_table(sql_start, sql_end,
-		{ "         ��������", "����������", "  ����", "���� �����������", "    ��� �������������������" },
+		{ "         name", "amount", "  price", "date", "    name of registrant" },
 		{ 0, 1, 2, 3, 4 },
 		{ 28, 13, 12, 19, 35 });
 	cout << endl;
@@ -437,22 +437,22 @@ void Session::show_products_table(string sql_start, string sql_end) {
 
 void Session::add_new_product() {
 	Product product;
-	console::show_title("add new product");
+	console::show_title("Add new product");
 
 	product.name = console::get_non_existent_product_name(product_db);
 	if (product.name == "0") return;
 
-	product.amount = console::get_number(true, "amount: ");
+	product.amount = console::get_number(true, "Amount: ");
 	if (product.amount == 0) return;
 
-	product.price = console::get_number(true, "price: ");
+	product.price = console::get_number(true, "Price: ");
 	if (product.price == 0) return;
 
-	cout << "date (yyyy-mm-dd): ";
+	cout << "Date (yyyy-mm-dd): ";
 	product.date = console::get_format_date();
 	if (product.date == "0") return;
 
-	cout << "name of registrant: ";
+	cout << "Name of registrant: ";
 	getline(cin, product.name_of_registrant);
 	if (product.name_of_registrant == "0") return;
 
@@ -462,23 +462,23 @@ void Session::add_new_product() {
 						"'" + product.date + "'",
 						"'" + product.name_of_registrant + "'" });
 
-	console::show_info("product added", "\n\t", "\n\n");
+	console::show_info("Product was added", "\n\t", "\n\n");
 	system("pause");
 }
 
 void Session::delete_product() {
-	console::show_title("delete product", "", "\n\n");
+	console::show_title("Delete product", "", "\n\n");
 	show_products_table();
 
 	string name = console::get_exists_product_name(product_db);
 
 	if (name == "0") return;
-	else if (confirm_menu_start("<- �� �������, ��� ������ ������� ����� '" + name + "' ? ->")) {
+	else if (confirm_menu_start("<- Are you shure? ->")) {
 		product_db->delete_field("NAME='" + name + "'");
-		console::show_info("����� ��� ������.", "\t", "\n\n");
+		console::show_info("Product was deleted", "\t", "\n\n");
 	}
 	else {
-		console::show_info("��������� �� ���� �������.", "\t", "\n\n");
+		console::show_info("Product was't deleted", "\t", "\n\n");
 	}
 	system("pause");
 }
