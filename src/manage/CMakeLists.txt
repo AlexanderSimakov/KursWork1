@@ -8,6 +8,6 @@ set(manage_source_files
 )
 add_library(manage ${manage_source_files})
 
-target_link_libraries(manage sqlite)
+target_link_libraries(manage sql)
 target_link_libraries(manage basic)
 target_link_libraries(manage menu)

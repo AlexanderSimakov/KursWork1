@@ -6,5 +6,5 @@ set(basic_source_files
 )
 add_library(basic ${basic_source_files})
 
-target_link_libraries(basic sqlite)
+target_link_libraries(basic sql)
 target_link_libraries(basic sha)
