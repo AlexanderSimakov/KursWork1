@@ -66,7 +66,7 @@ string console::get_free_login(SQLWork* db, string line_for_user) {
 			show_error("Login contains wrong symbols");
 		}
 		else if (db->get_text("LOGIN", input_login, 1) != "") {
-			show_error("Login is already exist");
+			show_error("This login already exists");
 		}
 		else {
 			return input_login;
