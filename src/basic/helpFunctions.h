@@ -16,28 +16,6 @@
 using namespace std;
 
 namespace console {
-	enum Color {
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
- 		Black = 0,
-		Blue = 1,
-		Green = 2,
-		Cyan = 3,
-		Red = 4,
-		Magenta = 5,
-		Yellow = 14,
-		White = 15  
-#elif __linux__
-		Black = 30,
-		Red = 31,
-		Green = 32,
-		Yellow = 33,
-		Blue = 34,
-		Magenta = 35,
-		Cyan = 36,
-		White = 37,
-#endif
-	};
-
 	string get_login(SQLWork *db);
 	string get_exists_login(SQLWork* db, string line_for_user = "Login: ");
 	string get_free_login(SQLWork* db, string line_for_user = "\n> ");
