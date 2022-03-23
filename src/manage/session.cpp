@@ -187,7 +187,7 @@ void Session::admin_manage_accounts_start() {
 }
 
 void Session::show_accounts_table(string sql_start, string sql_end) {
-	console::show_title("Accounts", "    ");
+	ConsoleOut::show_title("Accounts", "    ");
 	account_db->show_table(sql_start, sql_end,
 		{ "     name", "role", "access" },
 		{ 0, 3, 4 },
