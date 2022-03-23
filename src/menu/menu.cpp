@@ -30,7 +30,7 @@ int Menu::get_num_of_choisen_line() {
 
 	while (true) {
 		print_pointer();
-		pressed_key = _getch();
+		pressed_key = ConsoleOut::getchar();
 
 		if ((int)pressed_key == Buttons::ENTER) {
 			clear();
@@ -109,29 +109,3 @@ void Menu::clear(){
 	system("clear");
 #endif
 }
-
-#if __linux__
-	void Menu::initTermios() 
-	{
-  		tcgetattr(0, &old);
-  		current = old;
-  		current.c_lflag &= ~ICANON;
-    	current.c_lflag &= ~ECHO;
-  		tcsetattr(0, TCSANOW, &current);
-	}
-
-	void Menu::resetTermios(void) 
-	{
-  		tcsetattr(0, TCSANOW, &old);
-	}
-
-	char Menu::_getch() 
-	{
-  		char ch;
-  		initTermios();
-  		ch = getchar();
-  		resetTermios();
-  		return ch;
-	}
-	
-#endif

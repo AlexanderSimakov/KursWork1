@@ -2,16 +2,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
-
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
-#include <conio.h>
-#include <Windows.h>
-   
-#elif __linux__
-#include <termios.h>
-#include <stdio.h>
-
-#endif
+#include "../basic/ConsoleOut.h"
 
 using namespace std;
 
@@ -28,10 +19,6 @@ enum Buttons {
 	ESC = 110 // n
 #endif
 };
-
-#if __linux__
-static struct termios old, current;
-#endif
 
 class Menu {
 public:
@@ -55,12 +42,6 @@ private:
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 	HANDLE std_handle;
 	DWORD cWrittenChars;
-
-#elif __linux__
-	void initTermios();
-	void resetTermios(void);
-	char _getch(); 
-	
 #endif
 
 	void print_lines();
