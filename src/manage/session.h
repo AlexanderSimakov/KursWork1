@@ -6,6 +6,7 @@
 #include "../basic/product.h"
 #include "../basic/helpFunctions.h"
 #include "../menu/menu.h"
+#include "../basic/ConsoleOut.h"
 
 using namespace std;
 

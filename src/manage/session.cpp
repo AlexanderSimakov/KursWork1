@@ -74,7 +74,7 @@ void Session::start_as_user(string login) {
 		{
 		case 0:
 			show_products_table();
-			system("pause");
+			ConsoleOut::pause();
 			break;
 		case 1:
 			individual_task();
@@ -159,7 +159,7 @@ void Session::admin_manage_accounts_start() {
 		{
 		case 0: 
 			show_accounts_table();
-			system("pause");
+			ConsoleOut::pause();
 			break;
 		case 1: 
 			add_new_account();
@@ -224,7 +224,7 @@ void Session::add_new_account() {
 	else {
 		console::show_info("Account was't created", "\t", "\n\n");
 	}
-	system("pause");
+	ConsoleOut::pause();
 }
 
 void Session::start_edit_account_menu() {
@@ -273,7 +273,7 @@ void Session::edit_account_login(string* login) {
 	else {
 		console::show_info("Login was't changed", "\t", "\n\n");
 	}
-	system("pause");
+	ConsoleOut::pause();
 }
 
 void Session::edit_account_password(string login) {
@@ -292,7 +292,7 @@ void Session::edit_account_password(string login) {
 	else {
 		console::show_info("Password was't changed", "\t", "\n\n");
 	}
-	system("pause");
+	ConsoleOut::pause();
 }
 
 void Session::edit_account_role(string login) {
@@ -312,7 +312,7 @@ void Session::edit_account_role(string login) {
 	else {
 		console::show_error("You cannot edit your role", "\t", "\n\n");
 	}
-	system("pause");
+	ConsoleOut::pause();
 
 }
 
@@ -333,7 +333,7 @@ void Session::delete_account() {
 	else {
 		console::show_info("Account was't deleted", "\t", "\n\n");
 	}
-	system("pause");
+	ConsoleOut::pause();
 }
 
 void Session::confirm_account() {
@@ -353,7 +353,7 @@ void Session::confirm_account() {
 		account_db->update("ACCESS", "1", "LOGIN='" + login + "'");
 		console::show_info("Account '" + login + "' was confirmed", "\n\t", "\n\n");
 	}
-	system("pause");
+	ConsoleOut::pause();
 }
 
 void Session::block_account() {
@@ -373,7 +373,7 @@ void Session::block_account() {
 		account_db->update("ACCESS", "0", "LOGIN='" + login + "'");
 		console::show_info("Account '" + login + "' was blocked", "\n\t", "\n\n");
 	}
-	system("pause");
+	ConsoleOut::pause();
 }
 
 void Session::admin_manage_products_start() {
@@ -384,7 +384,7 @@ void Session::admin_manage_products_start() {
 		{
 		case 0:
 			show_products_table();
-			system("pause");
+			ConsoleOut::pause();
 			break;
 		case 1:
 			add_new_product();
@@ -463,7 +463,7 @@ void Session::add_new_product() {
 						"'" + product.name_of_registrant + "'" });
 
 	console::show_info("Product was added", "\n\t", "\n\n");
-	system("pause");
+	ConsoleOut::pause();
 }
 
 void Session::delete_product() {
@@ -480,7 +480,7 @@ void Session::delete_product() {
 	else {
 		console::show_info("Product was't deleted", "\t", "\n\n");
 	}
-	system("pause");
+	ConsoleOut::pause();
 }
 
 void Session::start_edit_product_menu() {
@@ -537,7 +537,7 @@ void Session::edit_product_name(string* name) {
 	else {
 		console::show_info("Product was't renamed", "\t", "\n\n");
 	}
-	system("pause");
+	ConsoleOut::pause();
 }
 
 void Session::edit_product_amount(string name) {
@@ -551,7 +551,7 @@ void Session::edit_product_amount(string name) {
 		product_db->update("AMOUNT", "'" + to_string(amount) + "'", "NAME='" + name + "'");
 		console::show_info("Amount was updated", "\t", "\n\n");
 	}
-	system("pause");
+	ConsoleOut::pause();
 }
 
 void Session::edit_product_price(string name) {
@@ -565,7 +565,7 @@ void Session::edit_product_price(string name) {
 		product_db->update("PRICE", "'" + to_string(price) + "'", "NAME='" + name + "'");
 		console::show_info("Price was updated", "\t", "\n\n");
 	}
-	system("pause");
+	ConsoleOut::pause();
 }
 
 void Session::edit_product_date(string name) {
@@ -579,7 +579,7 @@ void Session::edit_product_date(string name) {
 		product_db->update("DATE", "'" + date + "'", "NAME='" + name + "'");
 		console::show_info("Date was updated", "\t", "\n\n");
 	}
-	system("pause");
+	ConsoleOut::pause();
 }
 
 void Session::edit_name_of_product_registrant(string name) {
@@ -595,7 +595,7 @@ void Session::edit_name_of_product_registrant(string name) {
 		product_db->update("REG_NAME", "'" + reg_name + "'", "NAME='" + name + "'");
 		console::show_info("Name was updated", "\t", "\n\n");
 	}
-	system("pause");
+	ConsoleOut::pause();
 }
 
 void Session::individual_task() {
@@ -611,7 +611,7 @@ void Session::individual_task() {
 	cout << "\ndate: " << data << "\n" << endl;
 
 	show_products_table("SELECT * FROM ", " WHERE DATE > '" + data + "' AND PRICE > '" + to_string(price) + "' ORDER BY NAME ASC;");
-	system("pause");
+	ConsoleOut::pause();
 }
 
 void Session::find_products_by_name() {
@@ -624,7 +624,7 @@ void Session::find_products_by_name() {
 
 	cout << endl;
 	show_products_table("SELECT * FROM ", " WHERE NAME GLOB '*" + name + "*';");
-	system("pause");
+	ConsoleOut::pause();
 }
 
 void Session::find_products_by_name_of_registrant() {
@@ -637,7 +637,7 @@ void Session::find_products_by_name_of_registrant() {
 
 	cout << endl;
 	show_products_table("SELECT * FROM ", " WHERE REG_NAME GLOB '*" + name + "*';");
-	system("pause");
+	ConsoleOut::pause();
 }
 
 void Session::find_products_by_date() {
@@ -652,23 +652,23 @@ void Session::find_products_by_date() {
 
 	cout << endl;
 	show_products_table("SELECT * FROM ", " WHERE DATE GLOB '" + date + "';");
-	system("pause");
+	ConsoleOut::pause();
 }
 
 void Session::sort_products_by_name() {
 	console::show_title("Products sorted by name", "\t", "\n\n");
 	show_products_table("SELECT * FROM ", " ORDER BY NAME ASC ;");
-	system("pause");
+	ConsoleOut::pause();
 }
 
 void Session::sort_products_by_price_to_higher() {
 	console::show_title("Products sorted by price (to higher)", "\t", "\n\n");
 	show_products_table("SELECT * FROM ", " ORDER BY PRICE ASC ;");
-	system("pause");
+	ConsoleOut::pause();
 }
 
 void Session::sort_products_by_amount_to_higher() {
 	console::show_title("products sorted by amount (to higher)", "\t", "\n\n");
 	show_products_table("SELECT * FROM ", " ORDER BY AMOUNT ASC ;");
-	system("pause");
+	ConsoleOut::pause();
 }
