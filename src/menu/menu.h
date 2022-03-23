@@ -1,18 +1,37 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <iostream>
+
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 #include <conio.h>
 #include <Windows.h>
-#include <iostream>
+   
+#elif __linux__
+#include <termios.h>
+#include <stdio.h>
+
+#endif
 
 using namespace std;
 
 enum Buttons {
-	ENTER = 13,
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+ 	ENTER = 13,
 	KEU_UP = 72,
 	KEY_DOWN = 80,
-	ESC = 27
+	ESC = 27  
+#elif __linux__
+	ENTER = 105, // i
+	KEU_UP = 107, // k
+	KEY_DOWN = 106, // j
+	ESC = 110 // n
+#endif
 };
+
+#if __linux__
+static struct termios old, current;
+#endif
 
 class Menu {
 public:
@@ -32,10 +51,20 @@ private:
 	int num_of_choisen_line = 0;
 	vector<string> lines;
 	string title;
+
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 	HANDLE std_handle;
 	DWORD cWrittenChars;
+
+#elif __linux__
+	void initTermios();
+	void resetTermios(void);
+	char _getch(); 
+	
+#endif
 
 	void print_lines();
 	void print_title();
 	void print_pointer();
+	void clear();
 };

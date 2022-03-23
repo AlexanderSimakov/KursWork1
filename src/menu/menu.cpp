@@ -2,23 +2,25 @@
 #include "src/menu/menu.h"
 
 Menu::Menu() {
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 	std_handle = GetStdHandle(STD_OUTPUT_HANDLE);
+#endif
 }
 
 Menu::Menu(vector<string> lines) {
-	std_handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	Menu();
 	this->lines = lines;
 }
 
 Menu::Menu(string title, vector<string> lines) {
-	std_handle = GetStdHandle(STD_OUTPUT_HANDLE);
+	Menu();
 	this->title = title;
 	this->lines = lines;
 }
 
 int Menu::get_num_of_choisen_line() {
 	char pressed_key = 0;
-	system("cls");
+	clear();
 	print_title();
 	print_lines();
 
@@ -31,7 +33,7 @@ int Menu::get_num_of_choisen_line() {
 		pressed_key = _getch();
 
 		if ((int)pressed_key == Buttons::ENTER) {
-			system("cls");
+			clear();
 			return num_of_choisen_line;
 		}
 		else if ((int)pressed_key == Buttons::KEU_UP && num_of_choisen_line > 0) {
@@ -41,7 +43,7 @@ int Menu::get_num_of_choisen_line() {
 			num_of_choisen_line++;
 		}
 		else if ((int)pressed_key == Buttons::ESC) {
-			system("cls");
+			clear();
 			return -1;
 		}
 	}
@@ -62,11 +64,21 @@ void Menu::print_pointer() {
 	if (title.size()) add = 1;
 	for (int i = 0; i < lines.size(); i++) {
 		if (num_of_choisen_line == i) {
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 			FillConsoleOutputCharacter(std_handle, (TCHAR)'>', 1, { 0, (SHORT)(i + add) }, &cWrittenChars);
-		}
-		else {
+		else{
 			FillConsoleOutputCharacter(std_handle, (TCHAR)' ', 1, { 0, (SHORT)(i + add) }, &cWrittenChars);
 		}
+
+#elif __linux__
+			printf("\033[%d;%dH>", i + add + 1, 0);
+			printf("\033[%d;%dH", 10, 30);
+		}
+		else {
+			printf("\033[%d;%dH ", i + add + 1, 0);
+			printf("\033[%d;%dH", 10, 30);
+		}
+#endif
 	}
 }
 
@@ -89,3 +101,37 @@ void Menu::set_start_with_first_line(bool is_start_with_first_line) {
 void Menu::set_pointer_to_start() {
 	num_of_choisen_line = 0;
 }
+
+void Menu::clear(){
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+	system("cls");
+#elif __linux__
+	system("clear");
+#endif
+}
+
+#if __linux__
+	void Menu::initTermios() 
+	{
+  		tcgetattr(0, &old);
+  		current = old;
+  		current.c_lflag &= ~ICANON;
+    	current.c_lflag &= ~ECHO;
+  		tcsetattr(0, TCSANOW, &current);
+	}
+
+	void Menu::resetTermios(void) 
+	{
+  		tcsetattr(0, TCSANOW, &old);
+	}
+
+	char Menu::_getch() 
+	{
+  		char ch;
+  		initTermios();
+  		ch = getchar();
+  		resetTermios();
+  		return ch;
+	}
+	
+#endif
