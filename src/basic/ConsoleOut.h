@@ -26,4 +26,5 @@ private:
 public:
     static void pause();
     static char getchar();
+    static void clear();
 };
