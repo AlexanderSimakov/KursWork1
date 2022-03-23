@@ -1,1 +1,0 @@
-add_library(sqllite sqlite3.c)
