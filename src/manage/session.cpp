@@ -26,19 +26,19 @@ void Session::init_admin_menu() {
 		  " Block",
 		  " Exit" });
 
-	products_manage_menu = new Menu("<- product manage menu ->",
-		{ " show",
-		  " add",
-		  " delete",
-		  " edit",
-		  " individual task",
-		  " find by name",
-		  " find by name of registrant",
-		  " find by date",
-		  " sort by name",
-		  " sort by price to higher",
-		  " sort by amount to higher",
-		  " exit" });
+	products_manage_menu = new Menu("<- Products ->",
+		{ " Show",
+		  " Add",
+		  " Delete",
+		  " Edit",
+		  " Individual task",
+		  " Find by name",
+		  " Find by name of registrant",
+		  " Find by date",
+		  " Sort by name",
+		  " Sort by price (to higher)",
+		  " Sort by amount (to higher)",
+		  " Exit" });
 
 	account_edit_menu = new Menu({ " login", " password", " role", " exit" });
 	account_edit_menu->set_start_with_first_line(true);
