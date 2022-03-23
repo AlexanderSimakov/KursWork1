@@ -43,7 +43,7 @@ void Session::init_admin_menu() {
 	account_edit_menu = new Menu({ " login", " password", " role", " exit" });
 	account_edit_menu->set_start_with_first_line(true);
 
-	product_edit_menu = new Menu({ " name", " amount", " price", " date", " product registrant", " exit" });
+	product_edit_menu = new Menu({ " Name", " Amount", " Price", " Date", " Registrant", " Exit" });
 	product_edit_menu->set_start_with_first_line(true);
 }
 
@@ -489,7 +489,7 @@ void Session::start_edit_product_menu() {
 	string name = console::get_exists_product_name(product_db);
 	if (name == "0") return;
 
-	product_edit_menu->set_title("<- product: " + name + " ->");
+	product_edit_menu->set_title("<- Editing: " + name + " ->");
 	int choise = 0;
 	while (true) {
 		choise = product_edit_menu->get_num_of_choisen_line();
@@ -497,7 +497,7 @@ void Session::start_edit_product_menu() {
 		{
 		case 0:
 			edit_product_name(&name);
-			product_edit_menu->set_title("<- product: " + name + " ->");
+			product_edit_menu->set_title("<- Editing: " + name + " ->");
 			break;
 		case 1:
 			edit_product_amount(name);
@@ -525,17 +525,17 @@ void Session::start_edit_product_menu() {
 void Session::edit_product_name(string* name) {
 	console::show_title("Edit product name", "\t", "\n\n");
 	
-	cout << "old name: " << *name << endl;
-	string new_name = console::get_non_existent_product_name(product_db, "new name: ");
+	cout << "Old name: " << *name << endl;
+	string new_name = console::get_non_existent_product_name(product_db, "New name: ");
 
 	if (new_name == "0") return;
-	else if (confirm_menu_start("�� �������, ��� ������ �������� �������� �� '" + new_name + "' ?")) {
+	else if (confirm_menu_start("Are you shure ?")) {
 		product_db->update("NAME", "'" + new_name + "'", "NAME='" + *name + "'");
 		*name = new_name;
-		console::show_info("��������� ���� �������.", "\t", "\n\n");
+		console::show_info("Product was renamed", "\t", "\n\n");
 	}
 	else {
-		console::show_info("��������� �� ���� �������.", "\t", "\n\n");
+		console::show_info("Product was't renamed", "\t", "\n\n");
 	}
 	system("pause");
 }
@@ -543,13 +543,13 @@ void Session::edit_product_name(string* name) {
 void Session::edit_product_amount(string name) {
 	console::show_title("Edit amount", "\t", "\n\n");
 
-	cout << "old amount: " << product_db->get_int("NAME", name, 1) << endl;
-	int amount = console::get_number(true, "new amount: ");
+	cout << "Old amount: " << product_db->get_int("NAME", name, 1) << endl;
+	int amount = console::get_number(true, "New amount: ");
 
 	if (amount == 0) return;
 	else {
 		product_db->update("AMOUNT", "'" + to_string(amount) + "'", "NAME='" + name + "'");
-		console::show_info("��������� ���� �������.", "\t", "\n\n");
+		console::show_info("Amount was updated", "\t", "\n\n");
 	}
 	system("pause");
 }
@@ -563,37 +563,37 @@ void Session::edit_product_price(string name) {
 	if (price == 0) return;
 	else {
 		product_db->update("PRICE", "'" + to_string(price) + "'", "NAME='" + name + "'");
-		console::show_info("��������� ���� �������.", "\t", "\n\n");
+		console::show_info("Prace was updated", "\t", "\n\n");
 	}
 	system("pause");
 }
 
 void Session::edit_product_date(string name) {
-	console::show_title("Edit product date", "\t", "\n\n");
+	console::show_title("Edit date", "\t", "\n\n");
 
-	cout << "old date: " << product_db->get_text("NAME", name, 3) << endl;
-	string date = console::get_format_date("new date: ");
+	cout << "Old date: " << product_db->get_text("NAME", name, 3) << endl;
+	string date = console::get_format_date("New date: ");
 
 	if (date == "0") return;
 	else {
 		product_db->update("DATE", "'" + date + "'", "NAME='" + name + "'");
-		console::show_info("��������� ���� �������.", "\t", "\n\n");
+		console::show_info("Date was updated", "\t", "\n\n");
 	}
 	system("pause");
 }
 
 void Session::edit_name_of_product_registrant(string name) {
-	console::show_title("Edit name of product registrant", "\t", "\n\n");
+	console::show_title("Edit registrant name", "\t", "\n\n");
 
-	cout << "old name: " << product_db->get_text("NAME", name, 4) << endl;
-	cout << "new name: ";
+	cout << "Old name: " << product_db->get_text("NAME", name, 4) << endl;
+	cout << "New name: ";
 	string reg_name;
 	getline(cin, reg_name);
 
 	if (reg_name == "0") return;
 	else {
 		product_db->update("REG_NAME", "'" + reg_name + "'", "NAME='" + name + "'");
-		console::show_info("��������� ���� �������.", "\t", "\n\n");
+		console::show_info("Name was updated", "\t", "\n\n");
 	}
 	system("pause");
 }
