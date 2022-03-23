@@ -615,9 +615,9 @@ void Session::individual_task() {
 }
 
 void Session::find_products_by_name() {
-	console::show_title("find product by name", "\t", "\n\n");
+	console::show_title("Find product by name", "\t", "\n\n");
 	
-	cout << "name\n>";
+	cout << "Name\n>";
 	string name;
 	getline(cin, name);
 	if (name == "0") return;
@@ -628,9 +628,9 @@ void Session::find_products_by_name() {
 }
 
 void Session::find_products_by_name_of_registrant() {
-	console::show_title("find by registrant name", "\t", "\n\n");
+	console::show_title("Find by registrant name", "\t", "\n\n");
 
-	cout << "Registrant name\n>";
+	cout << "Name\n>";
 	string name;
 	getline(cin, name);
 	if (name == "0") return;
@@ -642,10 +642,10 @@ void Session::find_products_by_name_of_registrant() {
 
 void Session::find_products_by_date() {
 	string date;
-	console::show_title("find by date", "\t", "\n\n");
+	console::show_title("Find by date", "\t", "\n\n");
 
-	cout << "�� ������ ������������ ���� * ��� ����������� ����������� �������. (������: *-12-05, 2021-*-*)" << endl;
-	cout << "date: ";
+	cout << "(*-12-05, 2021-*-*, 2022-11-01)" << endl;
+	cout << "Date: ";
 	cin >> date;
 	cin.ignore(256, '\n');
 	if (date == "0") return;
@@ -656,19 +656,19 @@ void Session::find_products_by_date() {
 }
 
 void Session::sort_products_by_name() {
-	console::show_title("products sorted by name", "\t", "\n\n");
+	console::show_title("Products sorted by name", "\t", "\n\n");
 	show_products_table("SELECT * FROM ", " ORDER BY NAME ASC ;");
 	system("pause");
 }
 
 void Session::sort_products_by_price_to_higher() {
-	console::show_title("products sorted by price to higher", "\t", "\n\n");
+	console::show_title("Products sorted by price (to higher)", "\t", "\n\n");
 	show_products_table("SELECT * FROM ", " ORDER BY PRICE ASC ;");
 	system("pause");
 }
 
 void Session::sort_products_by_amount_to_higher() {
-	console::show_title("products sorted by amount to higher", "\t", "\n\n");
+	console::show_title("products sorted by amount (to higher)", "\t", "\n\n");
 	show_products_table("SELECT * FROM ", " ORDER BY AMOUNT ASC ;");
 	system("pause");
 }
