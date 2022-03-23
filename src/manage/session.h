@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include "../sqlwork/SQLWORK.h"
+#include "../sqlwork/AccountsDB.h"
 #include "../basic/account.h"
 #include "../basic/product.h"
 #include "../basic/helpFunctions.h"
