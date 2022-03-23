@@ -197,7 +197,7 @@ void Session::show_accounts_table(string sql_start, string sql_end) {
 
 void Session::add_new_account() {
 	Account account;
-	console::show_title("add new account");
+	console::show_title("Add new account");
 
 	account.login = console::get_free_login(account_db, "Login: ");
 	if (account.login == "0") return;
@@ -205,10 +205,10 @@ void Session::add_new_account() {
 	string pass = console::password_format_input("Password: ");
 	if (pass == "0") return;
 
-	account.role = console::get_number_from_range(0, 1, "role: ");
+	account.role = console::get_number_from_range(0, 1, "Role(0|1): ");
 
 
-	if (confirm_menu_start("<- confirm? ->")) {
+	if (confirm_menu_start("<- Are you sure? ->")) {
 		account.access = 1;
 		account.salt = help_functions::get_generated_salt();
 		account.salted_hash_password = help_functions::get_generated_hash(pass, account.salt);
@@ -219,10 +219,10 @@ void Session::add_new_account() {
 						   to_string(account.role),
 						   to_string(account.access) });
 
-		console::show_info("������� ��� ������", "\t", "\n\n");
+		console::show_info("Account was created", "\t", "\n\n");
 	}
 	else {
-		console::show_info("������� �� ��� ������", "\t", "\n\n");
+		console::show_info("Account was't created", "\t", "\n\n");
 	}
 	system("pause");
 }
