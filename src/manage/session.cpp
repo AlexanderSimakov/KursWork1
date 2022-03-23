@@ -233,7 +233,7 @@ void Session::start_edit_account_menu() {
 	string login = console::get_exists_login(account_db);
 	if (login == "0") return;
 
-	account_edit_menu->set_title("<- Editing accout '" + login + "' ->");
+	account_edit_menu->set_title("<- Editing '" + login + "' ->");
 	int choise = 0;
 	while (true) {
 		choise = account_edit_menu->get_num_of_choisen_line();
@@ -241,7 +241,7 @@ void Session::start_edit_account_menu() {
 		{
 		case 0: 
 			edit_account_login(&login);
-			account_edit_menu->set_title("<- �������������� �������� '" + login + "' ->");
+			account_edit_menu->set_title("<- Editing '" + login + "' ->");
 			break;
 		case 1: 
 			edit_account_password(login);
