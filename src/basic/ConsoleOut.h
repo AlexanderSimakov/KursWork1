@@ -2,12 +2,13 @@
 #include <string>
 #include <iostream>
 
-class ConsloeOut
+class ConsoleOut
 {
 private:
 
 public:
-
+    static void pause();
+    static void getch();
 };
 
 
