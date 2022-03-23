@@ -16,8 +16,6 @@ void add_admin_account_if_not_exists(SQLWork* db);
 
 
 int main() {
-	setlocale(LC_ALL, "rus");
-
 	SQLWork accounts_db(ACCOUNTS_DATABASE_FILENAME);
 	SQLWork product_db(PRODUCT_DATABASE_FILENAME);
 	init_accounts_db(&accounts_db);
