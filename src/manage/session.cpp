@@ -427,7 +427,7 @@ void Session::admin_manage_products_start() {
 }
 
 void Session::show_products_table(string sql_start, string sql_end) {
-	console::ConsoleOut("products", "                                          ");
+	ConsoleOut::show_title("products", "                                          ");
 	product_db->show_table(sql_start, sql_end,
 		{ "         name", "amount", "  price", "date", "    name of registrant" },
 		{ 0, 1, 2, 3, 4 },
