@@ -29,8 +29,8 @@ int main() {
 	Session session(&product_db, &accounts_db);
 
 	Menu main_menu("<- Main menu ->",
-				 { " Authorization",
-				   " Registration",
+				 { " Log in",
+				   " Create account",
 				   " Exit" });
 	main_menu.set_start_with_first_line(true);
 
