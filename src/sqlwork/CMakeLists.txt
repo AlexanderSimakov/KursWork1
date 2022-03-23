@@ -3,6 +3,8 @@ set(sqlwork_source_files
     SQLWORK.h
     AccountsDB.cpp
     AccountsDB.h
+    ProductsDB.cpp
+    ProductsDB.h
 )
 add_library(sqlwork ${sqlwork_source_files})
 
