@@ -27,8 +27,8 @@ void AccountsDB::init()
 
     if (db->get_text(LOGIN, "admin", 2) == "") 
 	{
-		string salt = help_functions::get_generated_salt();
-		string salted_hash_password = help_functions::get_generated_hash("admin", salt);
+		string salt = Account::get_generated_salt();
+		string salted_hash_password = Account::get_generated_hash("admin", salt);
 
 		db->push_back({ "'admin'", "'" + salted_hash_password + "'", "'" + salt + "'", "1", "1" });
 	}
@@ -46,11 +46,11 @@ void AccountsDB::show_table()
 
 void AccountsDB::add_new(Account account)
 {
-    db->push_back({ "'" + account.login + "'",
-						  "'" + account.salted_hash_password + "'",
-						  "'" + account.salt + "'",
-						  to_string(account.role),
-						  to_string(account.access) });
+    db->push_back({ "'" + account.get_login() + "'",
+						  "'" + account.get_hash() + "'",
+						  "'" + account.get_salt() + "'",
+						  to_string(account.get_role()),
+						  to_string(account.get_access()) });
 }
 
 void AccountsDB::_delete(string login){
@@ -70,8 +70,8 @@ void AccountsDB::update_login(string old_login, string new_login){
 }
 
 void AccountsDB::update_password(string login, string password){
-	string salt = help_functions::get_generated_salt();
-	string hash = help_functions::get_generated_hash(password, salt);
+	string salt = Account::get_generated_salt();
+	string hash = Account::get_generated_hash(password, salt);
 	db->update(HASH, "'" + hash + "'", LOGIN + "='" + login + "'");
 	db->update(SALT, "'" + salt + "'", LOGIN + "='" + login + "'");
 }

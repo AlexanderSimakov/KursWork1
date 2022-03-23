@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <time.h>
+#include "Account.h"
 #include "../sqlwork/SQLWORK.h"
 #include "../sha/sha256.h"
 #include "ConsoleOut.h"
@@ -33,11 +34,5 @@ namespace console {
 }
 
 namespace help_functions {
-	const int SALT_SIZE = 16; 
-	const int SYMBOLS_SIZE = 62;
-	string get_generated_salt();
-	string get_generated_hash(string line, string salt);
-	string get_symbols_for_salt();
-	string generate_salt(int salt_size);
 	bool is_symbol_right_for_password(char symbol);
 }

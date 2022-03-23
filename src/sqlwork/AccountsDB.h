@@ -1,7 +1,7 @@
 #pragma once
 #include "SQLWORK.h"
 #include "../basic/ConsoleOut.h"
-#include "../basic/account.h"
+#include "../basic/Account.h"
 #include "../basic/helpFunctions.h"
 #include <string>
 

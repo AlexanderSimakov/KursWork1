@@ -8,13 +8,12 @@ Registration::Registration(SQLWork *sql_db) {
 void Registration::start() {
 	ConsoleOut::show_title("Creating an account (0 - exit)");
 
-	account.login = console::get_free_login(sql_db, "Login: ");
-	if (account.login == "0") return;
+	account.set_login(console::get_free_login(sql_db, "Login: "));
+	if (account.get_login() == "0") return;
 	string pass = console::password_format_input("Password: ");
 	if (pass == "0") return;
-	account.salt = help_functions::get_generated_salt();
-	account.salted_hash_password = help_functions::get_generated_hash(pass, account.salt);
-
+	account.set_salt(Account::get_generated_salt());
+	account.set_hash(Account::get_generated_hash(pass, account.get_salt()));
 
 	add_account_to_data_base();
 
@@ -24,10 +23,10 @@ void Registration::start() {
 }
 
 void Registration::add_account_to_data_base() {
-	sql_db->push_back({ "'" + account.login + "'",
-					    "'" + account.salted_hash_password  + "'",
-					    "'" + account.salt + "'",
-					   to_string(account.role),
-					   to_string(account.access) });
+	sql_db->push_back({ "'" + account.get_login() + "'",
+					    "'" + account.get_hash()  + "'",
+					    "'" + account.get_salt() + "'",
+					   to_string(account.get_role()),
+					   to_string(account.get_access()) });
 }
 

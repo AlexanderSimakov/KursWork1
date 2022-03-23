@@ -191,19 +191,19 @@ void Session::add_new_account() {
 	Account account;
 	ConsoleOut::show_title("Add new account");
 
-	account.login = console::get_free_login(account_db, "Login: ");
-	if (account.login == "0") return;
+	account.set_login(console::get_free_login(account_db, "Login: "));
+	if (account.get_login() == "0") return;
 
 	string pass = console::password_format_input("Password: ");
 	if (pass == "0") return;
 
-	account.role = console::get_number_from_range(0, 1, "Role(0|1): ");
+	account.set_role((Role)console::get_number_from_range(0, 1, "Role(0|1): "));
 
 
 	if (confirm_menu_start("<- Are you sure? ->")) {
-		account.access = 1;
-		account.salt = help_functions::get_generated_salt();
-		account.salted_hash_password = help_functions::get_generated_hash(pass, account.salt);
+		account.set_access(Access::YES);
+		account.set_salt(Account::get_generated_salt());
+		account.set_hash(Account::get_generated_hash(pass, account.get_salt()));
 
 		accountsdb.add_new(account);
 

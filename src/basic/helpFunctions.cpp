@@ -79,7 +79,7 @@ string console::get_password(string true_hash, string true_salt) {
 	if (input_password == "0") {
 		return "0";
 	}
-	else if (true_hash != help_functions::get_generated_hash(input_password, true_salt)) {
+	else if (true_hash != Account::get_generated_hash(input_password, true_salt)) {
 		return "-1";
 	}
 	else {
@@ -230,44 +230,4 @@ int console::get_number_from_range(int min, int max, string line_for_user) {
 		if (number >= min && number <= max) return number;
 		else ConsoleOut::show_error("Input number should be between [" + to_string(min) + ", " + to_string(max) + "]");
 	}
-}
-
-
-string help_functions::get_generated_salt() {
-	return generate_salt(SALT_SIZE);
-}
-
-string help_functions::get_generated_hash(string line, string salt) {
-	return sha1(sha1(line + salt) + sha1(line));
-}
-
-string help_functions::get_symbols_for_salt(){
-	string symbols;
-	symbols.reserve(SYMBOLS_SIZE);
-
-	char little_letter = 'a';
-	char big_letter = 'A';
-	char number = '0';
-	for (int k = 0; k < 26; k++){
-		symbols.push_back(little_letter++);
-		symbols.push_back(big_letter++);
-		if (k < 10) symbols.push_back(number++);
-	}
-
-	return symbols;
-}
-
-string help_functions::generate_salt(int salt_size){
-	string symbols = get_symbols_for_salt();
-
-	srand(time(NULL));
-
-	string salt;
-	salt.reserve(salt_size);
-
-	for (int i = 0; i < salt_size; i++){
-		salt.push_back(symbols[rand() % SYMBOLS_SIZE]);
-	}
-
-	return salt;
 }
