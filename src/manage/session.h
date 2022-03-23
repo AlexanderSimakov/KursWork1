@@ -19,6 +19,7 @@ public:
 	void start_as_user(string login);
 
 private:
+	AccountsDB accountsdb;
 	string session_account_login = "";
 	SQLWork *product_db = nullptr;
 	SQLWork *account_db = nullptr;
@@ -38,7 +39,6 @@ private:
 	void admin_manage_products_start();
 	bool confirm_menu_start(string title);
 
-	void show_accounts_table(string sql_start = "SELECT * FROM ", string sql_end = " ;");
 	void add_new_account(); 
 	void delete_account();
 	void confirm_account();

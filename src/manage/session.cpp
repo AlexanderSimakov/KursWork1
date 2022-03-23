@@ -5,6 +5,7 @@
 Session::Session(SQLWork* product_db, SQLWork* account_db) {
 	this->product_db = product_db;
 	this->account_db = account_db;
+	accountsdb = AccountsDB(account_db);
 	init_admin_menu();
 	init_user_menu();
 	init_confirm_operation_menu();
@@ -158,7 +159,7 @@ void Session::admin_manage_accounts_start() {
 		switch (choise)
 		{
 		case 0: 
-			show_accounts_table();
+			accountsdb.show_table();
 			ConsoleOut::pause();
 			break;
 		case 1: 
@@ -186,15 +187,6 @@ void Session::admin_manage_accounts_start() {
 	}
 }
 
-void Session::show_accounts_table(string sql_start, string sql_end) {
-	ConsoleOut::show_title("Accounts", "    ");
-	account_db->show_table(sql_start, sql_end,
-		{ "     name", "role", "access" },
-		{ 0, 3, 4 },
-		{ 18, 7, 9 });
-	cout << endl;
-}
-
 void Session::add_new_account() {
 	Account account;
 	ConsoleOut::show_title("Add new account");
@@ -213,11 +205,7 @@ void Session::add_new_account() {
 		account.salt = help_functions::get_generated_salt();
 		account.salted_hash_password = help_functions::get_generated_hash(pass, account.salt);
 
-		account_db->push_back({ "'" + account.login + "'",
-							"'" + account.salted_hash_password + "'",
-							"'" + account.salt + "'",
-						   to_string(account.role),
-						   to_string(account.access) });
+		accountsdb.add_new(account);
 
 		ConsoleOut::show_info("Account was created", "\t", "\n\n");
 	}
@@ -266,7 +254,7 @@ void Session::edit_account_login(string* login) {
 
 	if (new_login == "0") return;
 	else if (confirm_menu_start("<- Are you sure? ->")) {
-		account_db->update("LOGIN", "'" + new_login + "'", "LOGIN='" + *login + "'");
+		accountsdb.update_login(*login, new_login);
 		*login = new_login;
 		ConsoleOut::show_info("Login was changed", "\t", "\n\n");
 	}
@@ -282,11 +270,7 @@ void Session::edit_account_password(string login) {
 
 	if (pass == "0") return;
 	else if (confirm_menu_start("<- Are you sure? ->")) {
-		string salt = help_functions::get_generated_salt();
-		string hash = help_functions::get_generated_hash(pass, salt);
-		account_db->update("HASH", "'" + hash + "'", "LOGIN='" + login + "'");
-		account_db->update("SALT", "'" + salt + "'", "LOGIN='" + login + "'");
-
+		accountsdb.update_password(login, pass);
 		ConsoleOut::show_info("Password was changed", "\t", "\n\n");
 	}
 	else {
@@ -302,7 +286,7 @@ void Session::edit_account_role(string login) {
 
 		if (new_role == -1) return;
 		else if (confirm_menu_start("<- Are you sure? ->")) {
-			account_db->update("ROLE", to_string(new_role), "LOGIN='" + login + "'");
+			accountsdb.update_role(login, new_role);
 			ConsoleOut::show_info("Role was changed", "\t", "\n\n");
 		}
 		else {
@@ -318,7 +302,7 @@ void Session::edit_account_role(string login) {
 
 void Session::delete_account() {
 	ConsoleOut::show_title("Delete account", "", "\n\n");
-	show_accounts_table();
+	accountsdb.show_table();
 
 	string login = console::get_exists_login(account_db);
 
@@ -327,7 +311,7 @@ void Session::delete_account() {
 		ConsoleOut::show_error("You cannot delete your account", "\t", "\n");
 	}
 	else if (confirm_menu_start("<- Are you sure? ->")) {
-		account_db->delete_field("LOGIN='" + login + "'");
+		accountsdb._delete(login);
 		ConsoleOut::show_info("Account '" + login + "' was deleted", "\t", "\n\n");
 	}
 	else {
@@ -338,7 +322,7 @@ void Session::delete_account() {
 
 void Session::confirm_account() {
 	ConsoleOut::show_title("Confirm account", "", "\n\n");
-	show_accounts_table();
+	accountsdb.show_table();
 
 	string login = console::get_exists_login(account_db);
 
@@ -350,7 +334,7 @@ void Session::confirm_account() {
 		ConsoleOut::show_info("Account already confirmed", "\n\t", "\n\n");
 	}
 	else {
-		account_db->update("ACCESS", "1", "LOGIN='" + login + "'");
+		accountsdb.confirm(login);
 		ConsoleOut::show_info("Account '" + login + "' was confirmed", "\n\t", "\n\n");
 	}
 	ConsoleOut::pause();
@@ -358,7 +342,7 @@ void Session::confirm_account() {
 
 void Session::block_account() {
 	ConsoleOut::show_title("Block account", "", "\n\n");
-	show_accounts_table();
+	accountsdb.show_table();
 
 	string login = console::get_exists_login(account_db);
 
@@ -370,7 +354,7 @@ void Session::block_account() {
 		ConsoleOut::show_info("Account already blocked", "\n\t", "\n\n");
 	}
 	else {
-		account_db->update("ACCESS", "0", "LOGIN='" + login + "'");
+		accountsdb.block(login);
 		ConsoleOut::show_info("Account '" + login + "' was blocked", "\n\t", "\n\n");
 	}
 	ConsoleOut::pause();
