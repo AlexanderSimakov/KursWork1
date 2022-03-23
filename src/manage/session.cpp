@@ -317,21 +317,21 @@ void Session::edit_account_role(string login) {
 }
 
 void Session::delete_account() {
-	console::show_title("delete account", "", "\n\n");
+	console::show_title("Delete account", "", "\n\n");
 	show_accounts_table();
 
 	string login = console::get_exists_login(account_db);
 
 	if (login == "0") return;
 	else if (login == session_account_login) {
-		console::show_error("������ ������� ���� �������", "\t", "\n");
+		console::show_error("You cannot delete your account", "\t", "\n");
 	}
 	else if (confirm_menu_start("<- confirm '" + login + "' ? ->")) {
 		account_db->delete_field("LOGIN='" + login + "'");
-		console::show_info("������� '" + login + "' ��� ������", "\t", "\n\n");
+		console::show_info("Account '" + login + "' was deleted", "\t", "\n\n");
 	}
 	else {
-		console::show_info("��������� �� ���� �������", "\t", "\n\n");
+		console::show_info("Account was't deleted", "\t", "\n\n");
 	}
 	system("pause");
 }
