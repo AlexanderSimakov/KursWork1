@@ -48,16 +48,16 @@ void Session::init_admin_menu() {
 }
 
 void Session::init_user_menu() {
-	user_menu = new Menu("<- ���� ������ � �������� ->",
-		{ " product table",
-		  " individual task",
-		  " find products by name",
-		  " find products by name registrant",
-		  " find products by date",
-		  " sort products by name",
-		  " sort products by price to higher",
-		  " sort products by amount to higher",
-		  " log out" });
+	user_menu = new Menu("<- Products ->",
+		{ " Show",
+		  " Individual task",
+		  " Find by name",
+		  " Find by registrant name",
+		  " Find by date",
+		  " Sort by name",
+		  " Sort by price (to higher)",
+		  " Sort by amount (to higher)",
+		  " Log out" });
 }
 
 void Session::init_confirm_operation_menu() {
@@ -98,7 +98,7 @@ void Session::start_as_user(string login) {
 			sort_products_by_amount_to_higher();
 			break;
 		case 8: case -1:
-			if (confirm_menu_start("confirm?")) {
+			if (confirm_menu_start("Are you sure?")) {
 				user_menu->set_pointer_to_start();
 				return;
 			}
@@ -124,7 +124,7 @@ void Session::start_as_admin(string login) {
 			admin_manage_products_start();
 			break;
 		case 2: case -1:
-			if (confirm_menu_start("<- confirm? ->")) {
+			if (confirm_menu_start("<- Are you sure? ->")) {
 				return;
 			}
 			break;
@@ -260,37 +260,37 @@ void Session::start_edit_account_menu() {
 }
 
 void Session::edit_account_login(string* login) {
-	console::show_title("edit account login", "\t", "\n\n");
-	cout << "old login: " << *login << endl;
-	string new_login = console::get_free_login(account_db, "new login: ");
+	console::show_title("Edit login", "\t", "\n\n");
+	cout << "Old login: " << *login << endl;
+	string new_login = console::get_free_login(account_db, "New login: ");
 
 	if (new_login == "0") return;
-	else if (confirm_menu_start("<- confirm '" + new_login + "' ? ->")) {
+	else if (confirm_menu_start("<- Are you sure? ->")) {
 		account_db->update("LOGIN", "'" + new_login + "'", "LOGIN='" + *login + "'");
 		*login = new_login;
-		console::show_info("��������� ���� �������", "\t", "\n\n");
+		console::show_info("Login was changed", "\t", "\n\n");
 	}
 	else {
-		console::show_info("��������� �� ���� �������", "\t", "\n\n");
+		console::show_info("Login was't changed", "\t", "\n\n");
 	}
 	system("pause");
 }
 
 void Session::edit_account_password(string login) {
 	console::show_title("Edit password", "\t", "\n\n");
-	string pass = console::password_format_input("new password: ");
+	string pass = console::password_format_input("Password: ");
 
 	if (pass == "0") return;
-	else if (confirm_menu_start("<- confirm? ->")) {
+	else if (confirm_menu_start("<- Are you sure? ->")) {
 		string salt = help_functions::get_generated_salt();
 		string hash = help_functions::get_generated_hash(pass, salt);
 		account_db->update("HASH", "'" + hash + "'", "LOGIN='" + login + "'");
 		account_db->update("SALT", "'" + salt + "'", "LOGIN='" + login + "'");
 
-		console::show_info("��������� ���� �������", "\t", "\n\n");
+		console::show_info("Password was changed", "\t", "\n\n");
 	}
 	else {
-		console::show_info("��������� �� ���� �������", "\t", "\n\n");
+		console::show_info("Password was't changed", "\t", "\n\n");
 	}
 	system("pause");
 }
@@ -298,19 +298,19 @@ void Session::edit_account_password(string login) {
 void Session::edit_account_role(string login) {
 	if (login != session_account_login) {
 		console::show_title("Edit role", "\t", "\n\n");
-		int new_role = console::get_number_from_range(-1, 1, "new role: ");
+		int new_role = console::get_number_from_range(-1, 1, "Role: ");
 
 		if (new_role == -1) return;
-		else if (confirm_menu_start("<- confirm? ->")) {
+		else if (confirm_menu_start("<- Are you sure? ->")) {
 			account_db->update("ROLE", to_string(new_role), "LOGIN='" + login + "'");
-			console::show_info("��������� ���� �������", "\t", "\n\n");
+			console::show_info("Role was changed", "\t", "\n\n");
 		}
 		else {
-			console::show_info("��������� �� ���� �������", "\t", "\n\n");
+			console::show_info("Role was't changed", "\t", "\n\n");
 		}
 	}
 	else {
-		console::show_error("��� ������� ������ ������������ ��� ������ ��������", "\t", "\n\n");
+		console::show_error("You cannot edit your role", "\t", "\n\n");
 	}
 	system("pause");
 
@@ -326,7 +326,7 @@ void Session::delete_account() {
 	else if (login == session_account_login) {
 		console::show_error("You cannot delete your account", "\t", "\n");
 	}
-	else if (confirm_menu_start("<- confirm '" + login + "' ? ->")) {
+	else if (confirm_menu_start("<- Are you sure? ->")) {
 		account_db->delete_field("LOGIN='" + login + "'");
 		console::show_info("Account '" + login + "' was deleted", "\t", "\n\n");
 	}
@@ -473,7 +473,7 @@ void Session::delete_product() {
 	string name = console::get_exists_product_name(product_db);
 
 	if (name == "0") return;
-	else if (confirm_menu_start("<- Are you shure? ->")) {
+	else if (confirm_menu_start("<- Are you sure? ->")) {
 		product_db->delete_field("NAME='" + name + "'");
 		console::show_info("Product was deleted", "\t", "\n\n");
 	}
@@ -529,7 +529,7 @@ void Session::edit_product_name(string* name) {
 	string new_name = console::get_non_existent_product_name(product_db, "New name: ");
 
 	if (new_name == "0") return;
-	else if (confirm_menu_start("Are you shure ?")) {
+	else if (confirm_menu_start("Are you sure ?")) {
 		product_db->update("NAME", "'" + new_name + "'", "NAME='" + *name + "'");
 		*name = new_name;
 		console::show_info("Product was renamed", "\t", "\n\n");
@@ -557,13 +557,13 @@ void Session::edit_product_amount(string name) {
 void Session::edit_product_price(string name) {
 	console::show_title("Edit product price", "\t", "\n\n");
 	
-	cout << "old price: " << product_db->get_int("NAME", name, 2) << endl;
-	int price = console::get_number(true, "new price: ");
+	cout << "Old price: " << product_db->get_int("NAME", name, 2) << endl;
+	int price = console::get_number(true, "New price: ");
 
 	if (price == 0) return;
 	else {
 		product_db->update("PRICE", "'" + to_string(price) + "'", "NAME='" + name + "'");
-		console::show_info("Prace was updated", "\t", "\n\n");
+		console::show_info("Price was updated", "\t", "\n\n");
 	}
 	system("pause");
 }
