@@ -153,6 +153,8 @@ string console::password_format_input(string line_for_user) {
 	unsigned char symbol;
 
 	cout << line_for_user;
+	cin >> input_password;
+	/*
 	do
 	{
 		symbol = _getch();
@@ -171,6 +173,7 @@ string console::password_format_input(string line_for_user) {
 		}
 
 	} while (true);
+	*/
 
 	return input_password;
 }
@@ -230,25 +233,37 @@ int console::get_number_from_range(int min, int max, string line_for_user) {
 }
 
 void console::show_error(string message, string pref_line, string post_line) {
-	set_color(Color::LightRed);
+	set_color(Color::Red);
 	cout << pref_line + "<-- " + message + " -->" + post_line;
-	set_color();
+	set_default_color();
 }
 
 void console::show_title(string title, string pref_line, string post_line) {
 	set_color(Color::Yellow);
 	cout << pref_line + "<-- " + title + " -->" + post_line;
-	set_color();
+	set_default_color();
 }
 
 void console::show_info(string info, string pref_line, string post_line) {
 	set_color(Color::Green);
 	cout << pref_line + "<-- " + info + " -->" + post_line;
-	set_color();
+	set_default_color();
 }
 
 void console::set_color(Color text_color, Color back_color) {
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)((back_color << 4) | text_color));
+#elif __linux__
+	cout << "\033[" << text_color << "m";
+#endif
+}
+
+void console::set_default_color(){
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
+	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)((Color::Black << 4) | Color::White));
+#elif __linux__
+	cout << "\033[0m";
+#endif
 }
 
 string help_functions::get_generated_salt() {
