@@ -10,6 +10,8 @@ using namespace std;
 class AccountsDB
 {
 public:
+    AccountsDB();
+    AccountsDB(SQLWork *db);
     void init();
     void show_table();
     void add_new(Account account); 
@@ -20,7 +22,8 @@ public:
     void update_password(string login, string password);
     void update_role(string login, int role);
 
-    
+    SQLWork *db;
+
 private:
 	static const string DATABASE_FILENAME;
     static const string DATABASE_NAME;
@@ -29,8 +32,6 @@ private:
     static const string SALT;
     static const string ROLE;
     static const string ACCESS;
-
-    static SQLWork data_base;
 };
 
 
