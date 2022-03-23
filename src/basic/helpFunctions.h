@@ -3,8 +3,8 @@
 #include <iostream>
 #include <vector>
 #include <time.h>
-#include "sha256.h"
-#include "src/sql/SQLWORK.h"
+#include "../sqlwork/SQLWORK.h"
+#include "../sha/sha256.h"
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 #include <conio.h>

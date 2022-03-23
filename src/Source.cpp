@@ -1,12 +1,12 @@
 #include <iostream>
-#include "src/menu/menu.h"
-#include "src/manage/registration.h"
-#include "src/manage/authorization.h"
-#include "src/manage/session.h"
-#include "src/sql/SQLWORK.h"
-#include "src/basic/account.h"
-#include "src/basic/product.h"
-#include "src/basic/helpFunctions.h"
+#include "menu/menu.h"
+#include "manage/registration.h"
+#include "manage/authorization.h"
+#include "manage/session.h"
+#include "sqlwork/SQLWORK.h"
+#include "basic/account.h"
+#include "basic/product.h"
+#include "basic/helpFunctions.h"
 
 using namespace std;
 

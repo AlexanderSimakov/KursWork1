@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "src/sql/SQLWORK.h"
-#include "src/basic/helpFunctions.h"
+#include "../sqlwork/SQLWORK.h"
+#include "../basic/helpFunctions.h"
 
 using namespace std;
 

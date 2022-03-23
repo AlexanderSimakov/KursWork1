@@ -1,5 +1,5 @@
 #pragma once
-#include "src/manage/registration.h"
+#include "registration.h"
 
 Registration::Registration(SQLWork *sql_db) {
 	this->sql_db = sql_db;

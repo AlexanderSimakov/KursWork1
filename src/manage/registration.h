@@ -1,8 +1,8 @@
 #pragma once
 #include <iostream>
-#include "src/basic/account.h"
-#include "src/sql/SQLWORK.h"
-#include "src/basic/helpFunctions.h"
+#include "../basic/account.h"
+#include "../sqlwork/SQLWORK.h"
+#include "../basic/helpFunctions.h"
 
 using namespace std;
 

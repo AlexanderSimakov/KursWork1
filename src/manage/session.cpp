@@ -1,5 +1,5 @@
 #pragma once
-#include "src/manage/session.h"
+#include "session.h"
 
 
 Session::Session(SQLWork* product_db, SQLWork* account_db) {

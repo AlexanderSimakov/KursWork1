@@ -1,5 +1,5 @@
 #pragma once
-#include "src/manage/authorization.h"
+#include "authorization.h"
 
 Authorization::Authorization(SQLWork* sql_db) {
 	this->sql_db = sql_db;

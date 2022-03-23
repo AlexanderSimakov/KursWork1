@@ -1,5 +1,5 @@
 #pragma once
-#include "src/basic/helpFunctions.h"
+#include "helpFunctions.h"
 
 string console::get_login(SQLWork* db) {
 	string input_login;
