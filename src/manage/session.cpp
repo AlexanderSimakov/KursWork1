@@ -17,14 +17,14 @@ void Session::init_admin_menu() {
 		  " Log Out" });
 	admin_menu->set_start_with_first_line(true);
 
-	accounts_manage_menu = new Menu("<- Accounts manage menu ->",
-		{ " show",
-		  " add new",
-		  " edit",
-		  " delete",
-		  " confirm",
-		  " block",
-		  " exit" });
+	accounts_manage_menu = new Menu("<- Accounts ->",
+		{ " Show",
+		  " Add new",
+		  " Edit",
+		  " Delete",
+		  " Confirm",
+		  " Block",
+		  " Exit" });
 
 	products_manage_menu = new Menu("<- product manage menu ->",
 		{ " show",
