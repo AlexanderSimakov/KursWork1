@@ -5,6 +5,7 @@
 #include <time.h>
 #include "../sqlwork/SQLWORK.h"
 #include "../sha/sha256.h"
+#include "ConsoleOut.h"
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
 #include <conio.h>
@@ -51,12 +52,6 @@ namespace console {
 	bool is_all_symbols_and_nums(string line);
 	int get_number(bool is_positive = false, string line_for_user = "\n> ");
 	int get_number_from_range(int min, int max, string out_line = "\n> ");
-
-	void show_error(string message, string pref_line = "\t", string post_line = "\n");
-	void show_title(string title, string pref_line = "\t", string post_line = "\n");
-	void show_info(string info, string pref_line = "\t", string post_line = "\n");
-	void set_color(Color text_color, Color back_color = Color::Black);
-	void set_default_color();
 }
 
 namespace help_functions {

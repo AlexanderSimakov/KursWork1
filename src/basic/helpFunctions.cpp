@@ -12,10 +12,10 @@ string console::get_login(SQLWork* db) {
 			return "0";
 		}
 		else if (input_login.size() < 4) {
-			show_error("Login is too small");
+			ConsoleOut::show_error("Login is too small");
 		}
 		else if (!console::is_all_symbols_and_nums(input_login)) {
-			show_error("Login contains wrong symbols");
+			ConsoleOut::show_error("Login contains wrong symbols");
 		}
 		else {
 			return input_login;
@@ -35,13 +35,13 @@ string console::get_exists_login(SQLWork* db, string line_for_user) {
 			return "0";
 		}
 		else if (input_login.size() < 4) {
-			show_error("Login is too small");
+			ConsoleOut::show_error("Login is too small");
 		}
 		else if (!console::is_all_symbols_and_nums(input_login)) {
-			show_error("Login contains wrong symbols");
+			ConsoleOut::show_error("Login contains wrong symbols");
 		}
 		else if (account_hash == "") {
-			show_error("There is no account with such login");
+			ConsoleOut::show_error("There is no account with such login");
 		}
 		else {
 			return input_login;
@@ -60,13 +60,13 @@ string console::get_free_login(SQLWork* db, string line_for_user) {
 			return "0";
 		}
 		else if (input_login.size() < 4) {
-			show_error("Login is too small");
+			ConsoleOut::show_error("Login is too small");
 		}
 		else if (!console::is_all_symbols_and_nums(input_login)) {
-			show_error("Login contains wrong symbols");
+			ConsoleOut::show_error("Login contains wrong symbols");
 		}
 		else if (db->get_text("LOGIN", input_login, 1) != "") {
-			show_error("This login already exists");
+			ConsoleOut::show_error("This login already exists");
 		}
 		else {
 			return input_login;
@@ -99,7 +99,7 @@ string console::get_exists_product_name(SQLWork* db, string line_for_user) {
 			return "0";
 		}
 		else if (reg_name == "") {
-			show_error("There are no product with such name");
+			ConsoleOut::show_error("There are no product with such name");
 		}
 		else {
 			return input;
@@ -119,7 +119,7 @@ string console::get_non_existent_product_name(SQLWork* db, string line_for_user)
 			return "0";
 		}
 		else if (reg_name != "") {
-			show_error("Product with such name already exist");
+			ConsoleOut::show_error("Product with such name already exist");
 		}
 		else {
 			return input;
@@ -137,13 +137,13 @@ string console::get_format_date(string line_for_user) {
 
 		if (date == "0") return "0";
 		else if (date.size() < 10) {
-			show_error("Wrong input, shoud be (yyyy-mm-dd)");
+			ConsoleOut::show_error("Wrong input, shoud be (yyyy-mm-dd)");
 		}
 		else if (date[4] == '-' && date[7] == '-') {
 			return date;
 		}
 		else {
-			show_error("Wrong input, shoud be (yyyy-mm-dd)");
+			ConsoleOut::show_error("Wrong input, shoud be (yyyy-mm-dd)");
 		}
 	}
 }
@@ -210,13 +210,13 @@ int console::get_number(bool is_positive, string line_for_user) {
 				break;
 			}
 			else {
-				show_error("Number should be positive");
+				ConsoleOut::show_error("Number should be positive");
 			}
 		}
 		else {
 			cin.clear();
 			cin.ignore(256, '\n');
-			show_error("Wrong input");
+			ConsoleOut::show_error("Wrong input");
 		}
 	}
 	return number;
@@ -228,43 +228,10 @@ int console::get_number_from_range(int min, int max, string line_for_user) {
 	while (true) {
 		number = get_number(false, line_for_user);
 		if (number >= min && number <= max) return number;
-		else show_error("Input number should be between [" + to_string(min) + ", " + to_string(max) + "]");
+		else ConsoleOut::show_error("Input number should be between [" + to_string(min) + ", " + to_string(max) + "]");
 	}
 }
 
-void console::show_error(string message, string pref_line, string post_line) {
-	set_color(Color::Red);
-	cout << pref_line + "<-- " + message + " -->" + post_line;
-	set_default_color();
-}
-
-void console::show_title(string title, string pref_line, string post_line) {
-	set_color(Color::Yellow);
-	cout << pref_line + "<-- " + title + " -->" + post_line;
-	set_default_color();
-}
-
-void console::show_info(string info, string pref_line, string post_line) {
-	set_color(Color::Green);
-	cout << pref_line + "<-- " + info + " -->" + post_line;
-	set_default_color();
-}
-
-void console::set_color(Color text_color, Color back_color) {
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)((back_color << 4) | text_color));
-#elif __linux__
-	cout << "\033[" << text_color << "m";
-#endif
-}
-
-void console::set_default_color(){
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)((Color::Black << 4) | Color::White));
-#elif __linux__
-	cout << "\033[0m";
-#endif
-}
 
 string help_functions::get_generated_salt() {
 	return generate_salt(SALT_SIZE);
