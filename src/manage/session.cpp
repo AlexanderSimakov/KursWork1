@@ -337,21 +337,21 @@ void Session::delete_account() {
 }
 
 void Session::confirm_account() {
-	console::show_title("confirm account", "", "\n\n");
+	console::show_title("Confirm account", "", "\n\n");
 	show_accounts_table();
 
 	string login = console::get_exists_login(account_db);
 
 	if (login == "0") return;
 	else if (login == session_account_login) {
-		console::show_error("��� ������� ������ ������������ ��� ������ ��������", "\n\t", "\n\n");
+		console::show_error("You cannot confirm your account", "\n\t", "\n\n");
 	}
 	else if (account_db->get_int("LOGIN", login, 4) == 1) {
-		console::show_info("���� ������� ��� �����������", "\n\t", "\n\n");
+		console::show_info("Account already confirmed", "\n\t", "\n\n");
 	}
 	else {
 		account_db->update("ACCESS", "1", "LOGIN='" + login + "'");
-		console::show_info("������� '" + login + "' ��� �����������", "\n\t", "\n\n");
+		console::show_info("Account '" + login + "' was confirmed", "\n\t", "\n\n");
 	}
 	system("pause");
 }
