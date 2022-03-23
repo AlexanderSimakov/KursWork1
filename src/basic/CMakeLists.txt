@@ -1,4 +1,6 @@
 set(basic_source_files
+    Account.h
+    Account.cpp
     account.h
     product.h
     helpFunctions.cpp
