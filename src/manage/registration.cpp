@@ -6,7 +6,7 @@ Registration::Registration(SQLWork *sql_db) {
 }
 
 void Registration::start() {
-	console::show_title("Creating an account (0 - exit)");
+	ConsoleOut::show_title("Creating an account (0 - exit)");
 
 	account.login = console::get_free_login(sql_db, "Login: ");
 	if (account.login == "0") return;
@@ -18,7 +18,7 @@ void Registration::start() {
 
 	add_account_to_data_base();
 
-	console::show_info("Your account was created and waiting to get access", "\n\t", "\n\n");
+	ConsoleOut::show_info("Your account was created and waiting to get access", "\n\t", "\n\n");
 
 	system("pause");
 }
