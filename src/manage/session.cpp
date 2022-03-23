@@ -11,10 +11,10 @@ Session::Session(SQLWork* product_db, SQLWork* account_db) {
 }
 
 void Session::init_admin_menu() {
-	admin_menu = new Menu("<- Admin nemu ->",
-		{ " manage accounts",
-		  " manage products",
-		  " log out" });
+	admin_menu = new Menu("<- Admin menu ->",
+		{ " Accounts",
+		  " Products",
+		  " Log Out" });
 	admin_menu->set_start_with_first_line(true);
 
 	accounts_manage_menu = new Menu("<- Accounts manage menu ->",
