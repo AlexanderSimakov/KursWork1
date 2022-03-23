@@ -8,7 +8,7 @@ Authorization::Authorization(SQLWork* sql_db) {
 int Authorization::start() {
 	string input_login, db_account_hash, db_account_salt, input_password;
 
-	console::show_title("Authorization. (0 - exit)");
+	console::show_title("Log In (0 - exit)");
 
 	while (true) {
 		input_login = console::get_login(sql_db);

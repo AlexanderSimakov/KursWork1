@@ -6,7 +6,7 @@ Registration::Registration(SQLWork *sql_db) {
 }
 
 void Registration::start() {
-	console::show_title("Registration. (0 - exit)");
+	console::show_title("Creating an account (0 - exit)");
 
 	account.login = console::get_free_login(sql_db, "Login: ");
 	if (account.login == "0") return;
