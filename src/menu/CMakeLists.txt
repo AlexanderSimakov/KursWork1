@@ -3,3 +3,5 @@ set(menu_source_files
     menu.h
 )
 add_library(menu ${menu_source_files})
+
+target_link_libraries(menu basic)
