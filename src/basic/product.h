@@ -3,8 +3,6 @@
 
 using namespace std;
 
-const string PRODUCT_DATABASE_FILENAME = "product.db";
-const string PRODUCT_DATABASE_NAME = "PRODUCTSLIST";
 
 struct Product
 {

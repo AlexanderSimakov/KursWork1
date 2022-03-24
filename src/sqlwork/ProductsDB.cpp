@@ -1,12 +1,12 @@
 #include "ProductsDB.h"
 
-const string ProductsDB::DATABASE_FILENAME;
-const string ProductsDB::DATABASE_NAME;
+const string ProductsDB::DATABASE_FILENAME = "products.db";
+const string ProductsDB::DATABASE_NAME = "PRODUCTS";
 const string ProductsDB::NAME = "NAME";
 const string ProductsDB::AMOUNT = "AMOUNT";
 const string ProductsDB::PRICE = "PRICE";
 const string ProductsDB::DATE = "DATE";
-const string ProductsDB::REGISTRANT = "REG_NAME";
+const string ProductsDB::REGISTRANT = "REGISTRANT";
 
 
 ProductsDB::ProductsDB() { }
@@ -45,7 +45,7 @@ void ProductsDB::add_new(Product product)
 {
     db->push_back({ "'" + product.name + "'",
 		to_string(product.amount),
-		"'" + to_string(product.price) + "'",
+		to_string(product.price),
 		"'" + product.date + "'",
 		"'" + product.name_of_registrant + "'" });
 }
