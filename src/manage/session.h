@@ -5,7 +5,7 @@
 #include "../sqlwork/AccountsDB.h"
 #include "../sqlwork/ProductsDB.h"
 #include "../basic/Account.h"
-#include "../basic/product.h"
+#include "../basic/Product.h"
 #include "../basic/helpFunctions.h"
 #include "../menu/menu.h"
 #include "../basic/ConsoleOut.h"

@@ -2,7 +2,7 @@
 #include "SQLWORK.h"
 #include <string>
 #include "../basic/ConsoleOut.h"
-#include "../basic/product.h"
+#include "../basic/Product.h"
 
 using namespace std;
 

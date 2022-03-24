@@ -1,7 +1,8 @@
 set(basic_source_files
     Account.h
     Account.cpp
-    product.h
+    Product.cpp
+    Product.h
     helpFunctions.cpp
     helpFunctions.h
     ConsoleOut.cpp

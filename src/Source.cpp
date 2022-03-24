@@ -7,7 +7,6 @@
 #include "sqlwork/AccountsDB.h"
 #include "sqlwork/ProductsDB.h"
 #include "basic/Account.h"
-#include "basic/product.h"
 #include "basic/helpFunctions.h"
 
 using namespace std;

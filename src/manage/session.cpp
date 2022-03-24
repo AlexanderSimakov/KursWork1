@@ -415,22 +415,24 @@ void Session::add_new_product() {
 	Product product;
 	ConsoleOut::show_title("Add new product");
 
-	product.name = console::get_non_existent_product_name(product_db);
-	if (product.name == "0") return;
+	product.set_name(console::get_non_existent_product_name(product_db));
+	if (product.get_name() == "0") return;
 
-	product.amount = console::get_number(true, "Amount: ");
-	if (product.amount == 0) return;
+	product.set_amount(console::get_number(true, "Amount: "));
+	if (product.get_amount() == 0) return;
 
-	product.price = console::get_number(true, "Price: ");
-	if (product.price == 0) return;
+	product.set_price(console::get_number(true, "Price: "));
+	if (product.get_price() == 0) return;
 
 	cout << "Date (yyyy-mm-dd): ";
-	product.date = console::get_format_date();
-	if (product.date == "0") return;
+	product.set_date(console::get_format_date());
+	if (product.get_date() == "0") return;
 
 	cout << "Name of registrant: ";
-	getline(cin, product.name_of_registrant);
-	if (product.name_of_registrant == "0") return;
+	string registrant;
+	getline(cin, registrant);
+	product.set_registrant(registrant);
+	if (product.get_registrant() == "0") return;
 
 	productsdb.add_new(product);
 

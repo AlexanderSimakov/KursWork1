@@ -43,11 +43,11 @@ void ProductsDB::show_table()
 
 void ProductsDB::add_new(Product product)
 {
-    db->push_back({ "'" + product.name + "'",
-		to_string(product.amount),
-		to_string(product.price),
-		"'" + product.date + "'",
-		"'" + product.name_of_registrant + "'" });
+    db->push_back({ "'" + product.get_name() + "'",
+		to_string(product.get_amount()),
+		to_string(product.get_price()),
+		"'" + product.get_date() + "'",
+		"'" + product.get_registrant() + "'" });
 }
 
 void ProductsDB::_delete(string name)
