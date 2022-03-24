@@ -14,14 +14,14 @@ using namespace std;
 
 
 int main() {
-	AccountsDB a;
+	AccountsDB accountsDB;
 	ProductsDB productsDB;
-	a.init();
+	accountsDB.init();
 	productsDB.init();
 
-	Registration registration(a.db);
-	Authorization authorization(a.db);
-	Session session(productsDB.db, a.db);
+	Registration registration(accountsDB.db);
+	Authorization authorization(accountsDB.db);
+	Session session(productsDB.db, accountsDB.db);
 
 	Menu main_menu("<- Main menu ->",
 				 { " Log in",
@@ -37,10 +37,10 @@ int main() {
 		{
 		case 0: 
 			role = authorization.start();
-			if (role == 0) { 
+			if (role == Role::USER) { 
 				session.start_as_user(authorization.get_login());
 			}
-			else if (role == 1) {
+			else if (role == Role::ADMIN) {
 				session.start_as_admin(authorization.get_login());
 			}
 			break;
@@ -48,7 +48,7 @@ int main() {
 			registration.start();
 			break;
 		case 2: case -1:
-			a.db->close();
+			accountsDB.db->close();
 			productsDB.db->close();
 			return 0;
 		default:
