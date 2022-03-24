@@ -1,11 +1,8 @@
 #pragma once
 #include <string>
 #include <iostream>
-#include <vector>
-#include <time.h>
 #include "Account.h"
 #include "../sqlwork/SQLWORK.h"
-#include "../sha/sha256.h"
 #include "ConsoleOut.h"
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
@@ -31,8 +28,4 @@ namespace console {
 	bool is_all_symbols_and_nums(string line);
 	int get_number(bool is_positive = false, string line_for_user = "\n> ");
 	int get_number_from_range(int min, int max, string out_line = "\n> ");
-}
-
-namespace help_functions {
-	bool is_symbol_right_for_password(char symbol);
 }
