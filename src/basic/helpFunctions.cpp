@@ -149,41 +149,13 @@ string console::get_format_date(string line_for_user) {
 }
 
 string console::password_format_input(string line_for_user) {
+	// TODO check input
 	string input_password;
 	unsigned char symbol;
 
 	cout << line_for_user;
 	cin >> input_password;
-	/*
-	do
-	{
-		symbol = _getch();
-
-		if (symbol == 13) {
-			cout << endl;
-			break;
-		}
-		else if (symbol == '\b' && !input_password.empty()){
-			cout << '\b' << ' ' << '\b';
-			input_password.pop_back();
-		}
-		else if (help_functions::is_symbol_right_for_password(symbol)){
-			cout << '*';
-			input_password.push_back(symbol);
-		}
-
-	} while (true);
-	*/
-
 	return input_password;
-}
-
-bool help_functions::is_symbol_right_for_password(char symbol) {
-	string right_symbols = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm1234567890!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
-	for (int i = 0; i < right_symbols.size(); i++) {
-		if (symbol == right_symbols[i]) return true;
-	}
-	return false;
 }
 
 bool console::is_all_symbols_and_nums(string line) {
