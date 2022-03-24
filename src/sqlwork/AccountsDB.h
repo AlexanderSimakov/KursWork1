@@ -22,6 +22,8 @@ public:
     void update_password(string login, string password);
     void update_role(string login, int role);
 
+    bool is_have_access(string login);
+
     SQLWork *db;
 
 private:

@@ -79,3 +79,8 @@ void AccountsDB::update_password(string login, string password){
 void AccountsDB::update_role(string login, int role){
 	db->update(ROLE, to_string(role), LOGIN + "='" + login + "'");
 }
+
+
+bool AccountsDB::is_have_access(string login){
+	return db->get_int(LOGIN, login, 4) == Access::YES; 
+}

@@ -331,7 +331,7 @@ void Session::confirm_account() {
 	else if (login == session_account_login) {
 		ConsoleOut::show_error("You cannot confirm your account", "\n\t", "\n\n");
 	}
-	else if (account_db->get_int("LOGIN", login, 4) == 1) {
+	else if (accountsdb.is_have_access(login)) {
 		ConsoleOut::show_info("Account already confirmed", "\n\t", "\n\n");
 	}
 	else {
@@ -351,7 +351,7 @@ void Session::block_account() {
 	else if (login == session_account_login) {
 		ConsoleOut::show_error("You cannot block your account", "\n\t", "\n\n");
 	}
-	else if (account_db->get_int("LOGIN", login, 4) == 0) {
+	else if (!accountsdb.is_have_access(login)) {
 		ConsoleOut::show_info("Account already blocked", "\n\t", "\n\n");
 	}
 	else {
