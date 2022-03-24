@@ -1,12 +1,12 @@
 #include "ProductsDB.h"
 
-static const string DATABASE_FILENAME;
-static const string DATABASE_NAME;
-static const string NAME = "NAME";
-static const string AMOUNT = "AMOUNT";
-static const string PRICE = "PRICE";
-static const string DATE = "DATE";
-static const string REGISTRANT = "REG_NAME";
+const string ProductsDB::DATABASE_FILENAME;
+const string ProductsDB::DATABASE_NAME;
+const string ProductsDB::NAME = "NAME";
+const string ProductsDB::AMOUNT = "AMOUNT";
+const string ProductsDB::PRICE = "PRICE";
+const string ProductsDB::DATE = "DATE";
+const string ProductsDB::REGISTRANT = "REG_NAME";
 
 
 ProductsDB::ProductsDB() { }
