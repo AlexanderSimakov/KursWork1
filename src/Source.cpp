@@ -5,24 +5,23 @@
 #include "manage/session.h"
 #include "sqlwork/SQLWORK.h"
 #include "sqlwork/AccountsDB.h"
+#include "sqlwork/ProductsDB.h"
 #include "basic/Account.h"
 #include "basic/product.h"
 #include "basic/helpFunctions.h"
 
 using namespace std;
 
-void init_product_db(SQLWork* db);
-
 
 int main() {
 	AccountsDB a;
+	ProductsDB productsDB;
 	a.init();
-	SQLWork product_db(PRODUCT_DATABASE_FILENAME);
-	init_product_db(&product_db);
+	productsDB.init();
 
 	Registration registration(a.db);
 	Authorization authorization(a.db);
-	Session session(&product_db, a.db);
+	Session session(productsDB.db, a.db);
 
 	Menu main_menu("<- Main menu ->",
 				 { " Log in",
@@ -50,7 +49,7 @@ int main() {
 			break;
 		case 2: case -1:
 			a.db->close();
-			product_db.close();
+			productsDB.db->close();
 			return 0;
 		default:
 			break;
@@ -58,14 +57,4 @@ int main() {
 	}
 
 	return 0;
-}
-
-void init_product_db(SQLWork* db) {
-	db->open();
-	db->create_table_if_not_exists({ SQL_cell{ "NAME",     "TEXT PRIMARY KEY NOT NULL"},
-				 SQL_cell{ "AMOUNT",   "INT NOT NULL"},
-				 SQL_cell{ "PRICE",    "INT NOT NULL"},
-				 SQL_cell{ "DATE",     "TEXT NOT NULL"},
-				 SQL_cell{ "REG_NAME", "TEXT NOT NULL"} },
-		PRODUCT_DATABASE_NAME);
 }

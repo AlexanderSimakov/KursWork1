@@ -3,6 +3,7 @@
 #include <string>
 #include "../sqlwork/SQLWORK.h"
 #include "../sqlwork/AccountsDB.h"
+#include "../sqlwork/ProductsDB.h"
 #include "../basic/Account.h"
 #include "../basic/product.h"
 #include "../basic/helpFunctions.h"
@@ -20,6 +21,7 @@ public:
 
 private:
 	AccountsDB accountsdb;
+	ProductsDB productsdb;
 	string session_account_login = "";
 	SQLWork *product_db = nullptr;
 	SQLWork *account_db = nullptr;
@@ -48,7 +50,6 @@ private:
 	void edit_account_password(string login);
 	void edit_account_role(string login);
 
-	void show_products_table(string sql_start = "SELECT * FROM ", string sql_end = " ;");
 	void add_new_product();
 	void delete_product();
 	void start_edit_product_menu(); 
@@ -61,7 +62,4 @@ private:
 	void find_products_by_name(); 
 	void find_products_by_name_of_registrant();
 	void find_products_by_date();
-	void sort_products_by_name(); 
-	void sort_products_by_price_to_higher();
-	void sort_products_by_amount_to_higher();
 };

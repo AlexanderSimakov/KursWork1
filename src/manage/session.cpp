@@ -6,6 +6,7 @@ Session::Session(SQLWork* product_db, SQLWork* account_db) {
 	this->product_db = product_db;
 	this->account_db = account_db;
 	accountsdb = AccountsDB(account_db);
+	productsdb = ProductsDB(product_db);
 	init_admin_menu();
 	init_user_menu();
 	init_confirm_operation_menu();
@@ -74,7 +75,7 @@ void Session::start_as_user(string login) {
 		switch (choise)
 		{
 		case 0:
-			show_products_table();
+		 	productsdb.show_table();
 			ConsoleOut::pause();
 			break;
 		case 1:
@@ -90,13 +91,13 @@ void Session::start_as_user(string login) {
 			find_products_by_date();
 			break;
 		case 5:
-			sort_products_by_name();
+		 	productsdb.show_sorted_by_name();
 			break;
 		case 6:
-			sort_products_by_price_to_higher();
+		 	productsdb.show_sorted_by_price_to_higher();
 			break;
 		case 7:
-			sort_products_by_amount_to_higher();
+			productsdb.show_sorted_by_amount_to_higher();
 			break;
 		case 8: case -1:
 			if (confirm_menu_start("Are you sure?")) {
@@ -367,7 +368,7 @@ void Session::admin_manage_products_start() {
 		switch (choise)
 		{
 		case 0:
-			show_products_table();
+		 	productsdb.show_table();
 			ConsoleOut::pause();
 			break;
 		case 1:
@@ -392,13 +393,13 @@ void Session::admin_manage_products_start() {
 			find_products_by_date();
 			break;
 		case 8:
-			sort_products_by_name();
+		 	productsdb.show_sorted_by_name();
 			break;
 		case 9:
-			sort_products_by_price_to_higher();
+		 	productsdb.show_sorted_by_price_to_higher();
 			break;
 		case 10:
-			sort_products_by_amount_to_higher();
+		 	productsdb.show_sorted_by_amount_to_higher();
 			break;
 		case 11: case -1:
 			products_manage_menu->set_pointer_to_start();
@@ -408,15 +409,6 @@ void Session::admin_manage_products_start() {
 			break;
 		}
 	}
-}
-
-void Session::show_products_table(string sql_start, string sql_end) {
-	ConsoleOut::show_title("products", "                                          ");
-	product_db->show_table(sql_start, sql_end,
-		{ "         name", "amount", "  price", "date", "    name of registrant" },
-		{ 0, 1, 2, 3, 4 },
-		{ 28, 13, 12, 19, 35 });
-	cout << endl;
 }
 
 void Session::add_new_product() {
@@ -440,11 +432,7 @@ void Session::add_new_product() {
 	getline(cin, product.name_of_registrant);
 	if (product.name_of_registrant == "0") return;
 
-	product_db->push_back({ "'" + product.name + "'",
-						to_string(product.amount),
-						"'" + to_string(product.price) + "'",
-						"'" + product.date + "'",
-						"'" + product.name_of_registrant + "'" });
+	productsdb.add_new(product);
 
 	ConsoleOut::show_info("Product was added", "\n\t", "\n\n");
 	ConsoleOut::pause();
@@ -452,13 +440,13 @@ void Session::add_new_product() {
 
 void Session::delete_product() {
 	ConsoleOut::show_title("Delete product", "", "\n\n");
-	show_products_table();
+	productsdb.show_table();
 
 	string name = console::get_exists_product_name(product_db);
 
 	if (name == "0") return;
 	else if (confirm_menu_start("<- Are you sure? ->")) {
-		product_db->delete_field("NAME='" + name + "'");
+		productsdb._delete(name);
 		ConsoleOut::show_info("Product was deleted", "\t", "\n\n");
 	}
 	else {
@@ -514,7 +502,7 @@ void Session::edit_product_name(string* name) {
 
 	if (new_name == "0") return;
 	else if (confirm_menu_start("Are you sure ?")) {
-		product_db->update("NAME", "'" + new_name + "'", "NAME='" + *name + "'");
+		productsdb.update_name(*name, new_name);
 		*name = new_name;
 		ConsoleOut::show_info("Product was renamed", "\t", "\n\n");
 	}
@@ -532,7 +520,7 @@ void Session::edit_product_amount(string name) {
 
 	if (amount == 0) return;
 	else {
-		product_db->update("AMOUNT", "'" + to_string(amount) + "'", "NAME='" + name + "'");
+		productsdb.update_amount(name, amount);
 		ConsoleOut::show_info("Amount was updated", "\t", "\n\n");
 	}
 	ConsoleOut::pause();
@@ -546,7 +534,7 @@ void Session::edit_product_price(string name) {
 
 	if (price == 0) return;
 	else {
-		product_db->update("PRICE", "'" + to_string(price) + "'", "NAME='" + name + "'");
+		productsdb.update_price(name, price);
 		ConsoleOut::show_info("Price was updated", "\t", "\n\n");
 	}
 	ConsoleOut::pause();
@@ -560,7 +548,7 @@ void Session::edit_product_date(string name) {
 
 	if (date == "0") return;
 	else {
-		product_db->update("DATE", "'" + date + "'", "NAME='" + name + "'");
+		productsdb.update_date(name, date);
 		ConsoleOut::show_info("Date was updated", "\t", "\n\n");
 	}
 	ConsoleOut::pause();
@@ -576,26 +564,14 @@ void Session::edit_name_of_product_registrant(string name) {
 
 	if (reg_name == "0") return;
 	else {
-		product_db->update("REG_NAME", "'" + reg_name + "'", "NAME='" + name + "'");
+		productsdb.update_registrant(name, reg_name);
 		ConsoleOut::show_info("Name was updated", "\t", "\n\n");
 	}
 	ConsoleOut::pause();
 }
 
 void Session::individual_task() {
-	ConsoleOut::show_title("individual task", "\t", "\n\n");
 
-	int mounth_amount = console::get_number(true, "mounth amount: ");
-	if (mounth_amount == 0) return;
-
-	int price = console::get_number(true, "price: ");
-	if (price == 0) return;
-
-	string data = product_db->get_date_mounth_ago(to_string(mounth_amount));
-	cout << "\ndate: " << data << "\n" << endl;
-
-	show_products_table("SELECT * FROM ", " WHERE DATE > '" + data + "' AND PRICE > '" + to_string(price) + "' ORDER BY NAME ASC;");
-	ConsoleOut::pause();
 }
 
 void Session::find_products_by_name() {
@@ -607,8 +583,7 @@ void Session::find_products_by_name() {
 	if (name == "0") return;
 
 	cout << endl;
-	show_products_table("SELECT * FROM ", " WHERE NAME GLOB '*" + name + "*';");
-	ConsoleOut::pause();
+	productsdb.find_by_name(name);
 }
 
 void Session::find_products_by_name_of_registrant() {
@@ -620,8 +595,7 @@ void Session::find_products_by_name_of_registrant() {
 	if (name == "0") return;
 
 	cout << endl;
-	show_products_table("SELECT * FROM ", " WHERE REG_NAME GLOB '*" + name + "*';");
-	ConsoleOut::pause();
+	productsdb.find_by_registrant(name);
 }
 
 void Session::find_products_by_date() {
@@ -635,24 +609,5 @@ void Session::find_products_by_date() {
 	if (date == "0") return;
 
 	cout << endl;
-	show_products_table("SELECT * FROM ", " WHERE DATE GLOB '" + date + "';");
-	ConsoleOut::pause();
-}
-
-void Session::sort_products_by_name() {
-	ConsoleOut::show_title("Products sorted by name", "\t", "\n\n");
-	show_products_table("SELECT * FROM ", " ORDER BY NAME ASC ;");
-	ConsoleOut::pause();
-}
-
-void Session::sort_products_by_price_to_higher() {
-	ConsoleOut::show_title("Products sorted by price (to higher)", "\t", "\n\n");
-	show_products_table("SELECT * FROM ", " ORDER BY PRICE ASC ;");
-	ConsoleOut::pause();
-}
-
-void Session::sort_products_by_amount_to_higher() {
-	ConsoleOut::show_title("products sorted by amount (to higher)", "\t", "\n\n");
-	show_products_table("SELECT * FROM ", " ORDER BY AMOUNT ASC ;");
-	ConsoleOut::pause();
+	productsdb.find_by_date(date);
 }
