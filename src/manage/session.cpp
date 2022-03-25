@@ -415,7 +415,7 @@ void Session::add_new_product() {
 	Product product;
 	ConsoleOut::show_title("Add new product");
 
-	product.set_name(ConsoleInp::get_non_existent_product_name(product_db));
+	product.set_name(ConsoleInp::get_non_existent_product_name(&productsdb));
 	if (product.get_name() == "0") return;
 
 	product.set_amount(ConsoleInp::get_number(true, "Amount: "));
@@ -444,7 +444,7 @@ void Session::delete_product() {
 	ConsoleOut::show_title("Delete product", "", "\n\n");
 	productsdb.show_table();
 
-	string name = ConsoleInp::get_exists_product_name(product_db);
+	string name = ConsoleInp::get_exists_product_name(&productsdb);
 
 	if (name == "0") return;
 	else if (confirm_menu_start("<- Are you sure? ->")) {
@@ -460,7 +460,7 @@ void Session::delete_product() {
 void Session::start_edit_product_menu() {
 	ConsoleOut::show_title("Edit product munu");
 
-	string name = ConsoleInp::get_exists_product_name(product_db);
+	string name = ConsoleInp::get_exists_product_name(&productsdb);
 	if (name == "0") return;
 
 	product_edit_menu->set_title("<- Editing: " + name + " ->");
@@ -500,7 +500,7 @@ void Session::edit_product_name(string* name) {
 	ConsoleOut::show_title("Edit product name", "\t", "\n\n");
 	
 	cout << "Old name: " << *name << endl;
-	string new_name = ConsoleInp::get_non_existent_product_name(product_db, "New name: ");
+	string new_name = ConsoleInp::get_non_existent_product_name(&productsdb, "New name: ");
 
 	if (new_name == "0") return;
 	else if (confirm_menu_start("Are you sure ?")) {

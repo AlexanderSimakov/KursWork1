@@ -2,6 +2,7 @@
 #include <string>
 #include "../../sqlwork/SQLWORK.h"
 #include "../../sqlwork/AccountsDB.h"
+#include "../../sqlwork/ProductsDB.h"
 #include "ConsoleOut.h"
 #include "../Account/Account.h"
 
@@ -13,8 +14,8 @@ public:
 	static string get_free_login(AccountsDB* db, string line_for_user = "\n> ");
 	static string get_password(string true_hash, string true_salt);
 
-	static string get_exists_product_name(SQLWork* db, string line_for_user = "Name: ");
-	static string get_non_existent_product_name(SQLWork* db, string line_for_user = "Name: ");
+	static string get_exists_product_name(ProductsDB* db, string line_for_user = "Name: ");
+	static string get_non_existent_product_name(ProductsDB* db, string line_for_user = "Name: ");
 	
 	static string get_format_date(string line_for_user = "\n> ");
 

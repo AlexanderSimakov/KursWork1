@@ -30,6 +30,8 @@ public:
     void show_sorted_by_price_to_higher();
     void show_sorted_by_amount_to_higher();
 
+    bool is_product_exists(string name);
+
     SQLWork *db;
 
 private:

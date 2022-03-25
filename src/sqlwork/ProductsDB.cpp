@@ -121,3 +121,7 @@ void ProductsDB::show_sorted_by_amount_to_higher()
     cout << endl;
 	ConsoleOut::pause();
 }
+
+bool ProductsDB::is_product_exists(string name){
+	return db->get_text(NAME, name, 4) != "";
+}

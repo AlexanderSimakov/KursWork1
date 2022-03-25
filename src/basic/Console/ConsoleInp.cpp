@@ -86,42 +86,38 @@ string ConsoleInp::get_password(string true_hash, string true_salt) {
 	}
 }
 
-string ConsoleInp::get_exists_product_name(SQLWork* db, string line_for_user) {
-	string input, reg_name;
+string ConsoleInp::get_exists_product_name(ProductsDB* db, string line_for_user) {
+	string name;
 	while (true) {
 		cout << line_for_user;
-		getline(cin, input);
+		getline(cin, name);
 
-		reg_name = db->get_text("NAME", input, 4);
-
-		if (input == "0") {
+		if (name == "0") {
 			return "0";
 		}
-		else if (reg_name == "") {
+		else if (!db->is_product_exists(name)) {
 			ConsoleOut::show_error("There are no product with such name");
 		}
 		else {
-			return input;
+			return name;
 		}
 	}
 }
 
-string ConsoleInp::get_non_existent_product_name(SQLWork* db, string line_for_user) {
-	string input, reg_name;
+string ConsoleInp::get_non_existent_product_name(ProductsDB* db, string line_for_user) {
+	string name;
 	while (true) {
 		cout << line_for_user;
-		getline(cin, input);
+		getline(cin, name);
 		
-		reg_name = db->get_text("NAME", input, 4);
-
-		if (input == "0") {
+		if (name == "0") {
 			return "0";
 		}
-		else if (reg_name != "") {
+		else if (db->is_product_exists(name)) {
 			ConsoleOut::show_error("Product with such name already exist");
 		}
 		else {
-			return input;
+			return name;
 		}
 	}
 }
