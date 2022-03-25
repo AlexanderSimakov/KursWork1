@@ -2,10 +2,9 @@
 #include "session.h"
 
 
-Session::Session(SQLWork* product_db, SQLWork* account_db) {
+Session::Session(SQLWork* product_db, AccountsDB* accountsdb) {
 	this->product_db = product_db;
-	this->account_db = account_db;
-	accountsdb = AccountsDB(account_db);
+	this->accountsdb = accountsdb;
 	productsdb = ProductsDB(product_db);
 	init_admin_menu();
 	init_user_menu();
@@ -155,7 +154,7 @@ void Session::admin_manage_accounts_start() {
 		switch (choise)
 		{
 		case 0: 
-			accountsdb.show_table();
+			accountsdb->show_table();
 			ConsoleOut::pause();
 			break;
 		case 1: 
@@ -187,7 +186,7 @@ void Session::add_new_account() {
 	Account account;
 	ConsoleOut::show_title("Add new account");
 
-	account.set_login(ConsoleInp::get_free_login(&accountsdb, "Login: "));
+	account.set_login(ConsoleInp::get_free_login(accountsdb, "Login: "));
 	if (account.get_login() == "0") return;
 
 	string pass = ConsoleInp::password_format_input("Password: ");
@@ -201,7 +200,7 @@ void Session::add_new_account() {
 		account.set_salt(Account::get_generated_salt());
 		account.set_hash(Account::get_generated_hash(pass, account.get_salt()));
 
-		accountsdb.add_new(account);
+		accountsdb->add_new(account);
 
 		ConsoleOut::show_info("Account was created", "\t", "\n\n");
 	}
@@ -214,7 +213,7 @@ void Session::add_new_account() {
 void Session::start_edit_account_menu() {
 	ConsoleOut::show_title("Edit account");
 	
-	string login = ConsoleInp::get_exists_login(&accountsdb);
+	string login = ConsoleInp::get_exists_login(accountsdb);
 	if (login == "0") return;
 
 	account_edit_menu->set_title("<- Editing '" + login + "' ->");
@@ -246,11 +245,11 @@ void Session::start_edit_account_menu() {
 void Session::edit_account_login(string* login) {
 	ConsoleOut::show_title("Edit login", "\t", "\n\n");
 	cout << "Old login: " << *login << endl;
-	string new_login = ConsoleInp::get_free_login(&accountsdb, "New login: ");
+	string new_login = ConsoleInp::get_free_login(accountsdb, "New login: ");
 
 	if (new_login == "0") return;
 	else if (confirm_menu_start("<- Are you sure? ->")) {
-		accountsdb.update_login(*login, new_login);
+		accountsdb->update_login(*login, new_login);
 		*login = new_login;
 		ConsoleOut::show_info("Login was changed", "\t", "\n\n");
 	}
@@ -266,7 +265,7 @@ void Session::edit_account_password(string login) {
 
 	if (pass == "0") return;
 	else if (confirm_menu_start("<- Are you sure? ->")) {
-		accountsdb.update_password(login, pass);
+		accountsdb->update_password(login, pass);
 		ConsoleOut::show_info("Password was changed", "\t", "\n\n");
 	}
 	else {
@@ -282,7 +281,7 @@ void Session::edit_account_role(string login) {
 
 		if (new_role == -1) return;
 		else if (confirm_menu_start("<- Are you sure? ->")) {
-			accountsdb.update_role(login, new_role);
+			accountsdb->update_role(login, new_role);
 			ConsoleOut::show_info("Role was changed", "\t", "\n\n");
 		}
 		else {
@@ -298,16 +297,16 @@ void Session::edit_account_role(string login) {
 
 void Session::delete_account() {
 	ConsoleOut::show_title("Delete account", "", "\n\n");
-	accountsdb.show_table();
+	accountsdb->show_table();
 
-	string login = ConsoleInp::get_exists_login(&accountsdb);
+	string login = ConsoleInp::get_exists_login(accountsdb);
 
 	if (login == "0") return;
 	else if (login == session_account_login) {
 		ConsoleOut::show_error("You cannot delete your account", "\t", "\n");
 	}
 	else if (confirm_menu_start("<- Are you sure? ->")) {
-		accountsdb._delete(login);
+		accountsdb->_delete(login);
 		ConsoleOut::show_info("Account '" + login + "' was deleted", "\t", "\n\n");
 	}
 	else {
@@ -318,19 +317,19 @@ void Session::delete_account() {
 
 void Session::confirm_account() {
 	ConsoleOut::show_title("Confirm account", "", "\n\n");
-	accountsdb.show_table();
+	accountsdb->show_table();
 
-	string login = ConsoleInp::get_exists_login(&accountsdb);
+	string login = ConsoleInp::get_exists_login(accountsdb);
 
 	if (login == "0") return;
 	else if (login == session_account_login) {
 		ConsoleOut::show_error("You cannot confirm your account", "\n\t", "\n\n");
 	}
-	else if (accountsdb.is_have_access(login)) {
+	else if (accountsdb->is_have_access(login)) {
 		ConsoleOut::show_info("Account already confirmed", "\n\t", "\n\n");
 	}
 	else {
-		accountsdb.confirm(login);
+		accountsdb->confirm(login);
 		ConsoleOut::show_info("Account '" + login + "' was confirmed", "\n\t", "\n\n");
 	}
 	ConsoleOut::pause();
@@ -338,19 +337,19 @@ void Session::confirm_account() {
 
 void Session::block_account() {
 	ConsoleOut::show_title("Block account", "", "\n\n");
-	accountsdb.show_table();
+	accountsdb->show_table();
 
-	string login = ConsoleInp::get_exists_login(&accountsdb);
+	string login = ConsoleInp::get_exists_login(accountsdb);
 
 	if (login == "0") return;
 	else if (login == session_account_login) {
 		ConsoleOut::show_error("You cannot block your account", "\n\t", "\n\n");
 	}
-	else if (!accountsdb.is_have_access(login)) {
+	else if (!accountsdb->is_have_access(login)) {
 		ConsoleOut::show_info("Account already blocked", "\n\t", "\n\n");
 	}
 	else {
-		accountsdb.block(login);
+		accountsdb->block(login);
 		ConsoleOut::show_info("Account '" + login + "' was blocked", "\n\t", "\n\n");
 	}
 	ConsoleOut::pause();
