@@ -192,7 +192,7 @@ void Session::add_new_account() {
 	Account account;
 	ConsoleOut::show_title("Add new account");
 
-	account.set_login(ConsoleInp::get_free_login(account_db, "Login: "));
+	account.set_login(ConsoleInp::get_free_login(&accountsdb, "Login: "));
 	if (account.get_login() == "0") return;
 
 	string pass = ConsoleInp::password_format_input("Password: ");
@@ -251,7 +251,7 @@ void Session::start_edit_account_menu() {
 void Session::edit_account_login(string* login) {
 	ConsoleOut::show_title("Edit login", "\t", "\n\n");
 	cout << "Old login: " << *login << endl;
-	string new_login = ConsoleInp::get_free_login(account_db, "New login: ");
+	string new_login = ConsoleInp::get_free_login(&accountsdb, "New login: ");
 
 	if (new_login == "0") return;
 	else if (confirm_menu_start("<- Are you sure? ->")) {

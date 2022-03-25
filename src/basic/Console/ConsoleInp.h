@@ -10,7 +10,7 @@ class ConsoleInp
 public:
     static string get_login();
 	static string get_exists_login(AccountsDB* db, string line_for_user = "Login: ");
-	static string get_free_login(SQLWork* db, string line_for_user = "\n> ");
+	static string get_free_login(AccountsDB* db, string line_for_user = "\n> ");
 	static string get_password(string true_hash, string true_salt);
 
 	static string get_exists_product_name(SQLWork* db, string line_for_user = "Name: ");

@@ -16,7 +16,7 @@ int main() {
 	accountsDB.init();
 	productsDB.init();
 
-	Registration registration(accountsDB.db);
+	Registration registration(&accountsDB);
 	Authorization authorization(accountsDB.db);
 	Session session(productsDB.db, accountsDB.db);
 

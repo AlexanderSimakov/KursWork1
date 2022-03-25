@@ -48,7 +48,7 @@ string ConsoleInp::get_exists_login(AccountsDB* db, string line_for_user) {
 	}
 }
 
-string ConsoleInp::get_free_login(SQLWork* db, string line_for_user) {
+string ConsoleInp::get_free_login(AccountsDB* db, string line_for_user) {
 	string input_login;
 	while (true) {
 		cout << line_for_user;
@@ -64,7 +64,7 @@ string ConsoleInp::get_free_login(SQLWork* db, string line_for_user) {
 		else if (!is_all_symbols_and_nums(input_login)) {
 			ConsoleOut::show_error("Login contains wrong symbols");
 		}
-		else if (db->get_text("LOGIN", input_login, 1) != "") {
+		else if (db->is_account_exists(input_login)) {
 			ConsoleOut::show_error("This login already exists");
 		}
 		else {
