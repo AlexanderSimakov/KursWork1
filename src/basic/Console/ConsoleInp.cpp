@@ -2,73 +2,51 @@
 
 
 string ConsoleInp::get_login() {
-	string input_login;
+	string login;
 	while (true) {
 		cout << "Login: ";
-		cin >> input_login;
+		cin >> login;
 		cin.ignore(256, '\n');
 		
-		if (input_login == "0") {
+		if (login == "0") {
 			return "0";
 		}
-		else if (input_login.size() < 4) {
+		else if (login.size() < 4) {
 			ConsoleOut::show_error("Login is too small");
 		}
-		else if (!is_all_symbols_and_nums(input_login)) {
+		else if (!is_all_symbols_and_nums(login)) {
 			ConsoleOut::show_error("Login contains wrong symbols");
 		}
 		else {
-			return input_login;
+			return login;
 		}
 	}
 }
 
 string ConsoleInp::get_exists_login(AccountsDB* db, string line_for_user) {
-	string input_login;
+	string login;
 	while (true) {
-		cout << line_for_user;
-		cin >> input_login;
-		cin.ignore(256, '\n');
+		login = get_login();
 
-		if (input_login == "0") {
-			return "0";
-		}
-		else if (input_login.size() < 4) {
-			ConsoleOut::show_error("Login is too small");
-		}
-		else if (!is_all_symbols_and_nums(input_login)) {
-			ConsoleOut::show_error("Login contains wrong symbols");
-		}
-		else if (!db->is_account_exists(input_login)) {
+		if (!db->is_account_exists(login)) {
 			ConsoleOut::show_error("There is no account with such login");
 		}
 		else {
-			return input_login;
+			return login;
 		}
 	}
 }
 
 string ConsoleInp::get_free_login(AccountsDB* db, string line_for_user) {
-	string input_login;
+	string login;
 	while (true) {
-		cout << line_for_user;
-		cin >> input_login;
-		cin.ignore(256, '\n');
+		login = get_login();
 
-		if (input_login == "0") {
-			return "0";
-		}
-		else if (input_login.size() < 4) {
-			ConsoleOut::show_error("Login is too small");
-		}
-		else if (!is_all_symbols_and_nums(input_login)) {
-			ConsoleOut::show_error("Login contains wrong symbols");
-		}
-		else if (db->is_account_exists(input_login)) {
+		if (db->is_account_exists(login)) {
 			ConsoleOut::show_error("This login already exists");
 		}
 		else {
-			return input_login;
+			return login;
 		}
 	}
 }
