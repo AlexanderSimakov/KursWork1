@@ -1,6 +1,4 @@
 set(basic_source_files
-    Account.h
-    Account.cpp
     Product.cpp
     Product.h
     helpFunctions.cpp
@@ -10,5 +8,8 @@ set(basic_source_files
 )
 add_library(basic ${basic_source_files})
 
+add_subdirectory(Account)
+
+target_link_libraries(basic Account)
 target_link_libraries(basic sql)
 target_link_libraries(basic sha)

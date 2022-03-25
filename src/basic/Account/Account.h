@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "../sha/sha256.h"
+#include "..//../sha/sha256.h"
 
 using namespace std;
 
