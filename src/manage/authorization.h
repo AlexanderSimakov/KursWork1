@@ -3,7 +3,7 @@
 #include <string>
 #include "../sqlwork/SQLWORK.h"
 #include "../basic/helpFunctions.h"
-#include "../basic/ConsoleOut.h"
+#include "../basic/Console/ConsoleOut.h"
 
 using namespace std;
 
