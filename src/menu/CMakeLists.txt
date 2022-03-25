@@ -4,4 +4,4 @@ set(menu_source_files
 )
 add_library(menu ${menu_source_files})
 
-target_link_libraries(menu basic)
+target_link_libraries(menu Console)

@@ -7,7 +7,6 @@
 #include "../basic/Account/Account.h"
 #include "../basic/Product/Product.h"
 #include "../basic/Console/ConsoleInp.h"
-#include "../basic/helpFunctions.h"
 #include "../menu/menu.h"
 #include "../basic/Console/ConsoleOut.h"
 

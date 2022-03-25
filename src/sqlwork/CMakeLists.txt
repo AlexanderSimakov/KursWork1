@@ -9,4 +9,6 @@ set(sqlwork_source_files
 add_library(sqlwork ${sqlwork_source_files})
 
 target_link_libraries(sqlwork sql)
-target_link_libraries(sqlwork basic)
+target_link_libraries(sqlwork Account)
+target_link_libraries(sqlwork Product)
+target_link_libraries(sqlwork Console)

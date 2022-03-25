@@ -2,7 +2,6 @@
 #include "SQLWORK.h"
 #include "../basic/Console/ConsoleOut.h"
 #include "../basic/Account/Account.h"
-#include "../basic/helpFunctions.h"
 #include <string>
 
 using namespace std;
