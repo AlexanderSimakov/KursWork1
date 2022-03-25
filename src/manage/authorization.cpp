@@ -11,12 +11,12 @@ int Authorization::start() {
 	ConsoleOut::show_title("Log In (0 - exit)");
 
 	while (true) {
-		input_login = console::get_login(sql_db);
+		input_login = ConsoleInp::get_login();
 		if (input_login == "0") return -1;
 
 		db_account_hash = sql_db->get_text("LOGIN", input_login, 1);
 		db_account_salt = sql_db->get_text("LOGIN", input_login, 2);
-		input_password = console::get_password(db_account_hash, db_account_salt);
+		input_password = ConsoleInp::get_password(db_account_hash, db_account_salt);
 
 		if (input_password == "0") return -1;
 		else if (input_password == "-1") {

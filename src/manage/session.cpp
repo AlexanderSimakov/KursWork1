@@ -192,13 +192,13 @@ void Session::add_new_account() {
 	Account account;
 	ConsoleOut::show_title("Add new account");
 
-	account.set_login(console::get_free_login(account_db, "Login: "));
+	account.set_login(ConsoleInp::get_free_login(account_db, "Login: "));
 	if (account.get_login() == "0") return;
 
-	string pass = console::password_format_input("Password: ");
+	string pass = ConsoleInp::password_format_input("Password: ");
 	if (pass == "0") return;
 
-	account.set_role((Role)console::get_number_from_range(0, 1, "Role(0|1): "));
+	account.set_role((Role)ConsoleInp::get_number_from_range(0, 1, "Role(0|1): "));
 
 
 	if (confirm_menu_start("<- Are you sure? ->")) {
@@ -219,7 +219,7 @@ void Session::add_new_account() {
 void Session::start_edit_account_menu() {
 	ConsoleOut::show_title("Edit account");
 	
-	string login = console::get_exists_login(account_db);
+	string login = ConsoleInp::get_exists_login(account_db);
 	if (login == "0") return;
 
 	account_edit_menu->set_title("<- Editing '" + login + "' ->");
@@ -251,7 +251,7 @@ void Session::start_edit_account_menu() {
 void Session::edit_account_login(string* login) {
 	ConsoleOut::show_title("Edit login", "\t", "\n\n");
 	cout << "Old login: " << *login << endl;
-	string new_login = console::get_free_login(account_db, "New login: ");
+	string new_login = ConsoleInp::get_free_login(account_db, "New login: ");
 
 	if (new_login == "0") return;
 	else if (confirm_menu_start("<- Are you sure? ->")) {
@@ -267,7 +267,7 @@ void Session::edit_account_login(string* login) {
 
 void Session::edit_account_password(string login) {
 	ConsoleOut::show_title("Edit password", "\t", "\n\n");
-	string pass = console::password_format_input("Password: ");
+	string pass = ConsoleInp::password_format_input("Password: ");
 
 	if (pass == "0") return;
 	else if (confirm_menu_start("<- Are you sure? ->")) {
@@ -283,7 +283,7 @@ void Session::edit_account_password(string login) {
 void Session::edit_account_role(string login) {
 	if (login != session_account_login) {
 		ConsoleOut::show_title("Edit role", "\t", "\n\n");
-		int new_role = console::get_number_from_range(-1, 1, "Role: ");
+		int new_role = ConsoleInp::get_number_from_range(-1, 1, "Role: ");
 
 		if (new_role == -1) return;
 		else if (confirm_menu_start("<- Are you sure? ->")) {
@@ -305,7 +305,7 @@ void Session::delete_account() {
 	ConsoleOut::show_title("Delete account", "", "\n\n");
 	accountsdb.show_table();
 
-	string login = console::get_exists_login(account_db);
+	string login = ConsoleInp::get_exists_login(account_db);
 
 	if (login == "0") return;
 	else if (login == session_account_login) {
@@ -325,7 +325,7 @@ void Session::confirm_account() {
 	ConsoleOut::show_title("Confirm account", "", "\n\n");
 	accountsdb.show_table();
 
-	string login = console::get_exists_login(account_db);
+	string login = ConsoleInp::get_exists_login(account_db);
 
 	if (login == "0") return;
 	else if (login == session_account_login) {
@@ -345,7 +345,7 @@ void Session::block_account() {
 	ConsoleOut::show_title("Block account", "", "\n\n");
 	accountsdb.show_table();
 
-	string login = console::get_exists_login(account_db);
+	string login = ConsoleInp::get_exists_login(account_db);
 
 	if (login == "0") return;
 	else if (login == session_account_login) {
@@ -415,17 +415,17 @@ void Session::add_new_product() {
 	Product product;
 	ConsoleOut::show_title("Add new product");
 
-	product.set_name(console::get_non_existent_product_name(product_db));
+	product.set_name(ConsoleInp::get_non_existent_product_name(product_db));
 	if (product.get_name() == "0") return;
 
-	product.set_amount(console::get_number(true, "Amount: "));
+	product.set_amount(ConsoleInp::get_number(true, "Amount: "));
 	if (product.get_amount() == 0) return;
 
-	product.set_price(console::get_number(true, "Price: "));
+	product.set_price(ConsoleInp::get_number(true, "Price: "));
 	if (product.get_price() == 0) return;
 
 	cout << "Date (yyyy-mm-dd): ";
-	product.set_date(console::get_format_date());
+	product.set_date(ConsoleInp::get_format_date());
 	if (product.get_date() == "0") return;
 
 	cout << "Name of registrant: ";
@@ -444,7 +444,7 @@ void Session::delete_product() {
 	ConsoleOut::show_title("Delete product", "", "\n\n");
 	productsdb.show_table();
 
-	string name = console::get_exists_product_name(product_db);
+	string name = ConsoleInp::get_exists_product_name(product_db);
 
 	if (name == "0") return;
 	else if (confirm_menu_start("<- Are you sure? ->")) {
@@ -460,7 +460,7 @@ void Session::delete_product() {
 void Session::start_edit_product_menu() {
 	ConsoleOut::show_title("Edit product munu");
 
-	string name = console::get_exists_product_name(product_db);
+	string name = ConsoleInp::get_exists_product_name(product_db);
 	if (name == "0") return;
 
 	product_edit_menu->set_title("<- Editing: " + name + " ->");
@@ -500,7 +500,7 @@ void Session::edit_product_name(string* name) {
 	ConsoleOut::show_title("Edit product name", "\t", "\n\n");
 	
 	cout << "Old name: " << *name << endl;
-	string new_name = console::get_non_existent_product_name(product_db, "New name: ");
+	string new_name = ConsoleInp::get_non_existent_product_name(product_db, "New name: ");
 
 	if (new_name == "0") return;
 	else if (confirm_menu_start("Are you sure ?")) {
@@ -518,7 +518,7 @@ void Session::edit_product_amount(string name) {
 	ConsoleOut::show_title("Edit amount", "\t", "\n\n");
 
 	cout << "Old amount: " << product_db->get_int("NAME", name, 1) << endl;
-	int amount = console::get_number(true, "New amount: ");
+	int amount = ConsoleInp::get_number(true, "New amount: ");
 
 	if (amount == 0) return;
 	else {
@@ -532,7 +532,7 @@ void Session::edit_product_price(string name) {
 	ConsoleOut::show_title("Edit product price", "\t", "\n\n");
 	
 	cout << "Old price: " << product_db->get_int("NAME", name, 2) << endl;
-	int price = console::get_number(true, "New price: ");
+	int price = ConsoleInp::get_number(true, "New price: ");
 
 	if (price == 0) return;
 	else {
@@ -546,7 +546,7 @@ void Session::edit_product_date(string name) {
 	ConsoleOut::show_title("Edit date", "\t", "\n\n");
 
 	cout << "Old date: " << product_db->get_text("NAME", name, 3) << endl;
-	string date = console::get_format_date("New date: ");
+	string date = ConsoleInp::get_format_date("New date: ");
 
 	if (date == "0") return;
 	else {

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include "../sqlwork/SQLWORK.h"
-#include "../basic/helpFunctions.h"
+#include "../basic/Console/ConsoleInp.h"
 #include "../basic/Console/ConsoleOut.h"
 
 using namespace std;
