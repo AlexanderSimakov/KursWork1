@@ -66,118 +66,68 @@ void Session::init_confirm_operation_menu() {
 
 void Session::start_as_user(string login) {
 	this->session_account_login = login;
-	int choise = 0;
-	while (true) {
-		choise = user_menu->get_num_of_choisen_line();
-		switch (choise)
+	while (true) 
+	{
+		switch (user_menu->get_num_of_choisen_line())
 		{
-		case 0:
-		 	productsdb.show_table();
-			ConsoleOut::pause();
-			break;
-		case 1:
-			find_products_by_name();
-			break;
-		case 2:
-			find_products_by_name_of_registrant();
-			break;
-		case 3:
-			find_products_by_date();
-			break;
-		case 4:
-		 	productsdb.show_sorted_by_name();
-			break;
-		case 5:
-		 	productsdb.show_sorted_by_price_to_higher();
-			break;
-		case 6:
-			productsdb.show_sorted_by_amount_to_higher();
-			break;
+		case 0: productsdb.show_table(); ConsoleOut::pause(); break;
+		case 1: find_products_by_name(); break;
+		case 2: find_products_by_name_of_registrant(); break;
+		case 3: find_products_by_date(); break;
+		case 4: productsdb.show_sorted_by_name(); break;
+		case 5: productsdb.show_sorted_by_price_to_higher(); break;
+		case 6: productsdb.show_sorted_by_amount_to_higher(); break;
 		case 7: case -1:
-			if (confirm_menu_start("Are you sure?")) {
+			if (confirm_menu_start("Are you sure?")) 
+			{
 				user_menu->set_pointer_to_start();
 				return;
 			}
-			break;
-
-		default:
-			break;
+		default: break;
 		}
 	}
 }
 
 void Session::start_as_admin(string login) {
 	this->session_account_login = login;
-	int choise = 0;
-	while (true) {
-		choise = admin_menu->get_num_of_choisen_line();
-		switch (choise)
+	while (true) 
+	{
+		switch (admin_menu->get_num_of_choisen_line())
 		{
-		case 0:
-			admin_manage_accounts_start();
-			break;
-		case 1:
-			admin_manage_products_start();
-			break;
-		case 2: case -1:
-			if (confirm_menu_start("<- Are you sure? ->")) {
-				return;
-			}
-			break;
-		default:
-			break;
+		case 0: admin_manage_accounts_start(); break;
+		case 1: admin_manage_products_start(); break;
+		case 2: case -1: if (confirm_menu_start("<- Are you sure? ->")) return;
+		default: break;
 		}
 	}
 }
 
 bool Session::confirm_menu_start(string title) {
 	confirm_operation_menu->set_title(title);
-	int choise = 0;
-	while (true) {
-		choise = confirm_operation_menu->get_num_of_choisen_line();
-		switch (choise)
+	while (true) 
+	{
+		switch (confirm_operation_menu->get_num_of_choisen_line())
 		{
-		case 0: // yes 
-			return true;
-		case 1: // No 
-			return false;
-		case -1: default:
-			break;
+		case 0: return true;
+		case 1: return false;
+		case -1: default: break;
 		}
 	}
 }
 
 void Session::admin_manage_accounts_start() {
-	int choise = 0;
-	while (true) {
-		choise = accounts_manage_menu->get_num_of_choisen_line();
-		switch (choise)
+	while (true) 
+	{
+		switch (accounts_manage_menu->get_num_of_choisen_line())
 		{
-		case 0: 
-			accountsdb->show_table();
-			ConsoleOut::pause();
-			break;
-		case 1: 
-			add_new_account();
-			break;
-		case 2:  
-			start_edit_account_menu();
-			break;
-		case 3: 
-			delete_account();
-			break;
-		case 4: 
-			confirm_account();
-			break;
-		case 5: 
-			block_account();
-			break;
-		case 6:	case -1: 
-			accounts_manage_menu->set_pointer_to_start();
-			return;
-			break;
-		default:
-			break;
+		case 0: accountsdb->show_table(); ConsoleOut::pause(); break;
+		case 1: add_new_account(); break;
+		case 2: start_edit_account_menu(); break;
+		case 3: delete_account(); break;
+		case 4: confirm_account(); break;
+		case 5: block_account(); break;
+		case 6:	case -1: accounts_manage_menu->set_pointer_to_start(); return;
+		default: break;
 		}
 	}
 }
@@ -217,27 +167,18 @@ void Session::start_edit_account_menu() {
 	if (login == "0") return;
 
 	account_edit_menu->set_title("<- Editing '" + login + "' ->");
-	int choise = 0;
-	while (true) {
-		choise = account_edit_menu->get_num_of_choisen_line();
-		switch (choise)
+	while (true) 
+	{
+		switch (account_edit_menu->get_num_of_choisen_line())
 		{
 		case 0: 
 			edit_account_login(&login);
 			account_edit_menu->set_title("<- Editing '" + login + "' ->");
 			break;
-		case 1: 
-			edit_account_password(login);
-			break;
-		case 2:  
-			edit_account_role(login);
-			break;
-		case 3: case -1: 
-			return;
-			break;
-
-		default:
-			break;
+		case 1: edit_account_password(login); break;
+		case 2: edit_account_role(login); break;
+		case 3: case -1: return;
+		default: break;
 		}
 	}
 }
@@ -356,48 +297,22 @@ void Session::block_account() {
 }
 
 void Session::admin_manage_products_start() {
-	int choise = 0;
-	while (true) {
-		choise = products_manage_menu->get_num_of_choisen_line();
-		switch (choise)
+	while (true) 
+	{
+		switch (products_manage_menu->get_num_of_choisen_line())
 		{
-		case 0:
-		 	productsdb.show_table();
-			ConsoleOut::pause();
-			break;
-		case 1:
-			add_new_product();
-			break;
-		case 2:
-			delete_product();
-			break;
-		case 3:
-			start_edit_product_menu();
-			break;
-		case 4:
-			find_products_by_name();
-			break;
-		case 5:
-			find_products_by_name_of_registrant();
-			break;
-		case 6:
-			find_products_by_date();
-			break;
-		case 7:
-		 	productsdb.show_sorted_by_name();
-			break;
-		case 8:
-		 	productsdb.show_sorted_by_price_to_higher();
-			break;
-		case 9:
-		 	productsdb.show_sorted_by_amount_to_higher();
-			break;
-		case 10: case -1:
-			products_manage_menu->set_pointer_to_start();
-			return;
-			break;
-		default:
-			break;
+		case 0: productsdb.show_table(); ConsoleOut::pause(); break;
+		case 1: add_new_product(); break;
+		case 2: delete_product(); break;
+		case 3: start_edit_product_menu(); break;
+		case 4: find_products_by_name(); break;
+		case 5: find_products_by_name_of_registrant(); break;
+		case 6: find_products_by_date(); break;
+		case 7: productsdb.show_sorted_by_name(); break;
+		case 8: productsdb.show_sorted_by_price_to_higher(); break;
+		case 9: productsdb.show_sorted_by_amount_to_higher(); break;
+		case 10: case -1: products_manage_menu->set_pointer_to_start(); return;
+		default: break;
 		}
 	}
 }
@@ -455,33 +370,20 @@ void Session::start_edit_product_menu() {
 	if (name == "0") return;
 
 	product_edit_menu->set_title("<- Editing: " + name + " ->");
-	int choise = 0;
-	while (true) {
-		choise = product_edit_menu->get_num_of_choisen_line();
-		switch (choise)
+	while (true) 
+	{
+		switch (product_edit_menu->get_num_of_choisen_line())
 		{
-		case 0:
+		case 0: 
 			edit_product_name(&name);
 			product_edit_menu->set_title("<- Editing: " + name + " ->");
 			break;
-		case 1:
-			edit_product_amount(name);
-			break;
-		case 2:
-			edit_product_price(name);
-			break;
-		case 3:
-			edit_product_date(name);
-			break;
-		case 4:
-			edit_name_of_product_registrant(name);
-			break;
-		case 5: case -1:
-			return;
-			break;
-
-		default:
-			break;
+		case 1: edit_product_amount(name); break;
+		case 2: edit_product_price(name); break;
+		case 3: edit_product_date(name); break;
+		case 4: edit_name_of_product_registrant(name); break;
+		case 5: case -1: return;
+		default: break;
 		}
 	}
 
