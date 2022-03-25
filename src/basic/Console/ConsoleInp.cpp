@@ -23,13 +23,12 @@ string ConsoleInp::get_login() {
 	}
 }
 
-string ConsoleInp::get_exists_login(SQLWork* db, string line_for_user) {
-	string input_login, account_hash;
+string ConsoleInp::get_exists_login(AccountsDB* db, string line_for_user) {
+	string input_login;
 	while (true) {
 		cout << line_for_user;
 		cin >> input_login;
 		cin.ignore(256, '\n');
-		account_hash = db->get_text("LOGIN", input_login, 1);
 
 		if (input_login == "0") {
 			return "0";
@@ -40,7 +39,7 @@ string ConsoleInp::get_exists_login(SQLWork* db, string line_for_user) {
 		else if (!is_all_symbols_and_nums(input_login)) {
 			ConsoleOut::show_error("Login contains wrong symbols");
 		}
-		else if (account_hash == "") {
+		else if (!db->is_account_exists(input_login)) {
 			ConsoleOut::show_error("There is no account with such login");
 		}
 		else {

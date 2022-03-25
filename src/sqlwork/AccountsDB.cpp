@@ -84,3 +84,7 @@ void AccountsDB::update_role(string login, int role){
 bool AccountsDB::is_have_access(string login){
 	return db->get_int(LOGIN, login, 4) == Access::YES; 
 }
+
+bool AccountsDB::is_account_exists(string login){
+	return "" != db->get_text(LOGIN, login, 1);
+}

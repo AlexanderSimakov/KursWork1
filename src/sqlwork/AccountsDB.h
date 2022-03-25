@@ -22,7 +22,7 @@ public:
     void update_role(string login, int role);
 
     bool is_have_access(string login);
-
+    bool is_account_exists(string login);
     SQLWork *db;
 
 private:

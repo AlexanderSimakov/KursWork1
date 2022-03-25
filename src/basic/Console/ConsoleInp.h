@@ -1,6 +1,7 @@
 #pragma once 
 #include <string>
 #include "../../sqlwork/SQLWORK.h"
+#include "../../sqlwork/AccountsDB.h"
 #include "ConsoleOut.h"
 #include "../Account/Account.h"
 
@@ -8,7 +9,7 @@ class ConsoleInp
 {
 public:
     static string get_login();
-	static string get_exists_login(SQLWork* db, string line_for_user = "Login: ");
+	static string get_exists_login(AccountsDB* db, string line_for_user = "Login: ");
 	static string get_free_login(SQLWork* db, string line_for_user = "\n> ");
 	static string get_password(string true_hash, string true_salt);
 

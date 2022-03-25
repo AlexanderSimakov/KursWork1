@@ -219,7 +219,7 @@ void Session::add_new_account() {
 void Session::start_edit_account_menu() {
 	ConsoleOut::show_title("Edit account");
 	
-	string login = ConsoleInp::get_exists_login(account_db);
+	string login = ConsoleInp::get_exists_login(&accountsdb);
 	if (login == "0") return;
 
 	account_edit_menu->set_title("<- Editing '" + login + "' ->");
@@ -305,7 +305,7 @@ void Session::delete_account() {
 	ConsoleOut::show_title("Delete account", "", "\n\n");
 	accountsdb.show_table();
 
-	string login = ConsoleInp::get_exists_login(account_db);
+	string login = ConsoleInp::get_exists_login(&accountsdb);
 
 	if (login == "0") return;
 	else if (login == session_account_login) {
@@ -325,7 +325,7 @@ void Session::confirm_account() {
 	ConsoleOut::show_title("Confirm account", "", "\n\n");
 	accountsdb.show_table();
 
-	string login = ConsoleInp::get_exists_login(account_db);
+	string login = ConsoleInp::get_exists_login(&accountsdb);
 
 	if (login == "0") return;
 	else if (login == session_account_login) {
@@ -345,7 +345,7 @@ void Session::block_account() {
 	ConsoleOut::show_title("Block account", "", "\n\n");
 	accountsdb.show_table();
 
-	string login = ConsoleInp::get_exists_login(account_db);
+	string login = ConsoleInp::get_exists_login(&accountsdb);
 
 	if (login == "0") return;
 	else if (login == session_account_login) {
