@@ -58,7 +58,6 @@ private:
 	void edit_product_price(string name);
 	void edit_product_date(string name); 
 	void edit_name_of_product_registrant(string name);
-	void individual_task();
 	void find_products_by_name(); 
 	void find_products_by_name_of_registrant();
 	void find_products_by_date();

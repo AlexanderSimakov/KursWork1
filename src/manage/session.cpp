@@ -33,7 +33,6 @@ void Session::init_admin_menu() {
 		  " Add",
 		  " Delete",
 		  " Edit",
-		  " Individual task",
 		  " Find by name",
 		  " Find by name of registrant",
 		  " Find by date",
@@ -52,7 +51,6 @@ void Session::init_admin_menu() {
 void Session::init_user_menu() {
 	user_menu = new Menu("<- Products ->",
 		{ " Show",
-		  " Individual task",
 		  " Find by name",
 		  " Find by registrant name",
 		  " Find by date",
@@ -79,27 +77,24 @@ void Session::start_as_user(string login) {
 			ConsoleOut::pause();
 			break;
 		case 1:
-			individual_task();
-			break;
-		case 2:
 			find_products_by_name();
 			break;
-		case 3:
+		case 2:
 			find_products_by_name_of_registrant();
 			break;
-		case 4:
+		case 3:
 			find_products_by_date();
 			break;
-		case 5:
+		case 4:
 		 	productsdb.show_sorted_by_name();
 			break;
-		case 6:
+		case 5:
 		 	productsdb.show_sorted_by_price_to_higher();
 			break;
-		case 7:
+		case 6:
 			productsdb.show_sorted_by_amount_to_higher();
 			break;
-		case 8: case -1:
+		case 7: case -1:
 			if (confirm_menu_start("Are you sure?")) {
 				user_menu->set_pointer_to_start();
 				return;
@@ -381,27 +376,24 @@ void Session::admin_manage_products_start() {
 			start_edit_product_menu();
 			break;
 		case 4:
-			individual_task();
-			break;
-		case 5:
 			find_products_by_name();
 			break;
-		case 6:
+		case 5:
 			find_products_by_name_of_registrant();
 			break;
-		case 7:
+		case 6:
 			find_products_by_date();
 			break;
-		case 8:
+		case 7:
 		 	productsdb.show_sorted_by_name();
 			break;
-		case 9:
+		case 8:
 		 	productsdb.show_sorted_by_price_to_higher();
 			break;
-		case 10:
+		case 9:
 		 	productsdb.show_sorted_by_amount_to_higher();
 			break;
-		case 11: case -1:
+		case 10: case -1:
 			products_manage_menu->set_pointer_to_start();
 			return;
 			break;
@@ -570,10 +562,6 @@ void Session::edit_name_of_product_registrant(string name) {
 		ConsoleOut::show_info("Name was updated", "\t", "\n\n");
 	}
 	ConsoleOut::pause();
-}
-
-void Session::individual_task() {
-
 }
 
 void Session::find_products_by_name() {
