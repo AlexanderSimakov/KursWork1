@@ -125,3 +125,19 @@ void ProductsDB::show_sorted_by_amount_to_higher()
 bool ProductsDB::is_product_exists(string name){
 	return db->get_text(NAME, name, 4) != "";
 }
+
+int ProductsDB::get_amount(string name){
+	return db->get_int(NAME, name, 1);
+}
+
+int ProductsDB::get_price(string name){
+	return db->get_int(NAME, name, 2);
+}
+
+string ProductsDB::get_date(string name){
+	return db->get_text(NAME, name, 3);
+}
+
+string ProductsDB::get_registrant(string name){
+	return db->get_text(NAME, name, 4);
+}
