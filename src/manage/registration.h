@@ -11,10 +11,5 @@ using namespace std;
 class Registration
 {
 public:
-	Registration(AccountsDB *db);
-	void start();
-
-private:
-	Account account;
-	AccountsDB *db = nullptr;
+	static void start(AccountsDB* db);
 };

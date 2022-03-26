@@ -15,7 +15,6 @@ int main() {
 	accountsDB.init();
 	productsDB.init();
 
-	Registration registration(&accountsDB);
 	Authorization authorization(&accountsDB);
 	Session session(&productsDB, &accountsDB);
 
@@ -41,7 +40,7 @@ int main() {
 			}
 			break;
 		case 1:
-			registration.start();
+			Registration::start(&accountsDB);
 			break;
 		case 2: case -1:
 			accountsDB.db->close();
