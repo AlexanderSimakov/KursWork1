@@ -3,7 +3,6 @@
 #include "manage/registration.h"
 #include "manage/authorization.h"
 #include "manage/session.h"
-#include "sqlwork/SQLWORK.h"
 #include "sqlwork/AccountsDB.h"
 #include "sqlwork/ProductsDB.h"
 
