@@ -8,7 +8,6 @@ Session::Session(SQLWork* product_db, AccountsDB* accountsdb) {
 	productsdb = ProductsDB(product_db);
 	init_admin_menu();
 	init_user_menu();
-	init_confirm_operation_menu();
 }
 
 void Session::init_admin_menu() {
@@ -59,11 +58,6 @@ void Session::init_user_menu() {
 		  " Log out" });
 }
 
-void Session::init_confirm_operation_menu() {
-	confirm_operation_menu = new Menu({ " Yes", " No" });
-	confirm_operation_menu->set_start_with_first_line(true);
-}
-
 void Session::start_as_user(string login) {
 	this->session_account_login = login;
 	while (true) 
@@ -78,7 +72,7 @@ void Session::start_as_user(string login) {
 		case 5: productsdb.show_sorted_by_price_to_higher(); break;
 		case 6: productsdb.show_sorted_by_amount_to_higher(); break;
 		case 7: case -1:
-			if (confirm_menu_start("Are you sure?")) 
+			if (ConfirmationMenu::confirm()) 
 			{
 				user_menu->set_pointer_to_start();
 				return;
@@ -96,21 +90,8 @@ void Session::start_as_admin(string login) {
 		{
 		case 0: admin_manage_accounts_start(); break;
 		case 1: admin_manage_products_start(); break;
-		case 2: case -1: if (confirm_menu_start("<- Are you sure? ->")) return;
+		case 2: case -1: if (ConfirmationMenu::confirm()) return;
 		default: break;
-		}
-	}
-}
-
-bool Session::confirm_menu_start(string title) {
-	confirm_operation_menu->set_title(title);
-	while (true) 
-	{
-		switch (confirm_operation_menu->get_num_of_choisen_line())
-		{
-		case 0: return true;
-		case 1: return false;
-		case -1: default: break;
 		}
 	}
 }
@@ -145,7 +126,7 @@ void Session::add_new_account() {
 	account.set_role((Role)ConsoleInp::get_number_from_range(0, 1, "Role(0|1): "));
 
 
-	if (confirm_menu_start("<- Are you sure? ->")) {
+	if (ConfirmationMenu::confirm()) {
 		account.set_access(Access::YES);
 		account.set_salt(Account::get_generated_salt());
 		account.set_hash(Account::get_generated_hash(pass, account.get_salt()));
@@ -189,7 +170,7 @@ void Session::edit_account_login(string* login) {
 	string new_login = ConsoleInp::get_free_login(accountsdb, "New login: ");
 
 	if (new_login == "0") return;
-	else if (confirm_menu_start("<- Are you sure? ->")) {
+	else if (ConfirmationMenu::confirm()) {
 		accountsdb->update_login(*login, new_login);
 		*login = new_login;
 		ConsoleOut::show_info("Login was changed", "\t", "\n\n");
@@ -205,7 +186,7 @@ void Session::edit_account_password(string login) {
 	string pass = ConsoleInp::password_format_input("Password: ");
 
 	if (pass == "0") return;
-	else if (confirm_menu_start("<- Are you sure? ->")) {
+	else if (ConfirmationMenu::confirm()) {
 		accountsdb->update_password(login, pass);
 		ConsoleOut::show_info("Password was changed", "\t", "\n\n");
 	}
@@ -221,7 +202,7 @@ void Session::edit_account_role(string login) {
 		int new_role = ConsoleInp::get_number_from_range(-1, 1, "Role: ");
 
 		if (new_role == -1) return;
-		else if (confirm_menu_start("<- Are you sure? ->")) {
+		else if (ConfirmationMenu::confirm()) {
 			accountsdb->update_role(login, new_role);
 			ConsoleOut::show_info("Role was changed", "\t", "\n\n");
 		}
@@ -246,7 +227,7 @@ void Session::delete_account() {
 	else if (login == session_account_login) {
 		ConsoleOut::show_error("You cannot delete your account", "\t", "\n");
 	}
-	else if (confirm_menu_start("<- Are you sure? ->")) {
+	else if (ConfirmationMenu::confirm()) {
 		accountsdb->_delete(login);
 		ConsoleOut::show_info("Account '" + login + "' was deleted", "\t", "\n\n");
 	}
@@ -353,7 +334,7 @@ void Session::delete_product() {
 	string name = ConsoleInp::get_exists_product_name(&productsdb);
 
 	if (name == "0") return;
-	else if (confirm_menu_start("<- Are you sure? ->")) {
+	else if (ConfirmationMenu::confirm()) {
 		productsdb._delete(name);
 		ConsoleOut::show_info("Product was deleted", "\t", "\n\n");
 	}
@@ -396,7 +377,7 @@ void Session::edit_product_name(string* name) {
 	string new_name = ConsoleInp::get_non_existent_product_name(&productsdb, "New name: ");
 
 	if (new_name == "0") return;
-	else if (confirm_menu_start("Are you sure ?")) {
+	else if (ConfirmationMenu::confirm()) {
 		productsdb.update_name(*name, new_name);
 		*name = new_name;
 		ConsoleOut::show_info("Product was renamed", "\t", "\n\n");

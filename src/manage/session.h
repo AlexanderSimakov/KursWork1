@@ -31,15 +31,12 @@ private:
 	Menu *user_menu = nullptr;
 	Menu *account_edit_menu = nullptr;
 	Menu *product_edit_menu = nullptr;
-	Menu *confirm_operation_menu = nullptr;
 
 	void init_admin_menu();
 	void init_user_menu(); 
-	void init_confirm_operation_menu();
 
 	void admin_manage_accounts_start();
 	void admin_manage_products_start();
-	bool confirm_menu_start(string title);
 
 	void add_new_account(); 
 	void delete_account();
