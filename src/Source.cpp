@@ -3,7 +3,7 @@
 #include "manage/registration.h"
 #include "manage/authorization.h"
 #include "manage/session.h"
-#include "sqlwork/AccountsDB.h"
+#include "sqlwork/AccountsDB/AccountsDB.h"
 #include "sqlwork/ProductsDB.h"
 
 using namespace std;
