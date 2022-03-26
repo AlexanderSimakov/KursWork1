@@ -8,6 +8,7 @@
 #include "../basic/Product/Product.h"
 #include "../basic/Console/ConsoleInp.h"
 #include "../menu/menu.h"
+#include "../menu/confirm/ConfirmationMenu.h"
 #include "../basic/Console/ConsoleOut.h"
 
 using namespace std;
