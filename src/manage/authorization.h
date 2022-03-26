@@ -10,11 +10,5 @@ using namespace std;
 class Authorization
 {
 public:
-	Authorization(AccountsDB* db);
-	int start();
-	string get_login();
-
-private:
-	AccountsDB *db = nullptr;
-	string login = "";
+	static Account* start(AccountsDB* db);
 };

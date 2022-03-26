@@ -15,9 +15,8 @@ int main() {
 	accountsDB.init();
 	productsDB.init();
 
-	Authorization authorization(&accountsDB);
 	Session session(&productsDB, &accountsDB);
-
+	Account* account;
 	Menu main_menu("<- Main menu ->",
 				 { " Log in",
 				   " Create account",
@@ -31,12 +30,12 @@ int main() {
 		switch (choise)
 		{
 		case 0: 
-			role = authorization.start();
-			if (role == Role::USER) { 
-				session.start_as_user(authorization.get_login());
+			account = Authorization::start(&accountsDB);
+			if (account->get_role() == Role::USER) { 
+				session.start_as_user(account->get_login());
 			}
-			else if (role == Role::ADMIN) {
-				session.start_as_admin(authorization.get_login());
+			else if (account->get_role() == Role::ADMIN) {
+				session.start_as_admin(account->get_login());
 			}
 			break;
 		case 1:
