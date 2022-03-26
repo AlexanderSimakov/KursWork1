@@ -16,15 +16,14 @@ using namespace std;
 class Session
 {
 public:
-	Session(SQLWork *product_db, AccountsDB *accountsdb);
+	Session(ProductsDB *product_db, AccountsDB *accountsdb);
 	void start_as_admin(string login);
 	void start_as_user(string login);
 
 private:
 	AccountsDB *accountsdb;
-	ProductsDB productsdb;
+	ProductsDB *productsdb;
 	string session_account_login = "";
-	SQLWork *product_db = nullptr;
 	Menu *admin_menu = nullptr;
 	Menu *accounts_manage_menu = nullptr;
 	Menu *products_manage_menu = nullptr;

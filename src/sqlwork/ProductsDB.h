@@ -31,6 +31,10 @@ public:
     void show_sorted_by_amount_to_higher();
 
     bool is_product_exists(string name);
+    int get_amount(string name);
+    int get_price(string name);
+    string get_date(string name);
+    string get_registrant(string name);
 
     SQLWork *db;
 

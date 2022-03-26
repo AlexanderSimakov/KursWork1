@@ -18,7 +18,7 @@ int main() {
 
 	Registration registration(&accountsDB);
 	Authorization authorization(accountsDB.db);
-	Session session(productsDB.db, &accountsDB);
+	Session session(&productsDB, &accountsDB);
 
 	Menu main_menu("<- Main menu ->",
 				 { " Log in",

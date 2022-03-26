@@ -2,10 +2,9 @@
 #include "session.h"
 
 
-Session::Session(SQLWork* product_db, AccountsDB* accountsdb) {
-	this->product_db = product_db;
+Session::Session(ProductsDB* productsdb, AccountsDB* accountsdb) {
+	this->productsdb = productsdb;
 	this->accountsdb = accountsdb;
-	productsdb = ProductsDB(product_db);
 	init_admin_menu();
 	init_user_menu();
 }
@@ -64,13 +63,13 @@ void Session::start_as_user(string login) {
 	{
 		switch (user_menu->get_num_of_choisen_line())
 		{
-		case 0: productsdb.show_table(); ConsoleOut::pause(); break;
+		case 0: productsdb->show_table(); ConsoleOut::pause(); break;
 		case 1: find_products_by_name(); break;
 		case 2: find_products_by_name_of_registrant(); break;
 		case 3: find_products_by_date(); break;
-		case 4: productsdb.show_sorted_by_name(); break;
-		case 5: productsdb.show_sorted_by_price_to_higher(); break;
-		case 6: productsdb.show_sorted_by_amount_to_higher(); break;
+		case 4: productsdb->show_sorted_by_name(); break;
+		case 5: productsdb->show_sorted_by_price_to_higher(); break;
+		case 6: productsdb->show_sorted_by_amount_to_higher(); break;
 		case 7: case -1:
 			if (ConfirmationMenu::confirm()) 
 			{
@@ -282,16 +281,16 @@ void Session::admin_manage_products_start() {
 	{
 		switch (products_manage_menu->get_num_of_choisen_line())
 		{
-		case 0: productsdb.show_table(); ConsoleOut::pause(); break;
+		case 0: productsdb->show_table(); ConsoleOut::pause(); break;
 		case 1: add_new_product(); break;
 		case 2: delete_product(); break;
 		case 3: start_edit_product_menu(); break;
 		case 4: find_products_by_name(); break;
 		case 5: find_products_by_name_of_registrant(); break;
 		case 6: find_products_by_date(); break;
-		case 7: productsdb.show_sorted_by_name(); break;
-		case 8: productsdb.show_sorted_by_price_to_higher(); break;
-		case 9: productsdb.show_sorted_by_amount_to_higher(); break;
+		case 7: productsdb->show_sorted_by_name(); break;
+		case 8: productsdb->show_sorted_by_price_to_higher(); break;
+		case 9: productsdb->show_sorted_by_amount_to_higher(); break;
 		case 10: case -1: products_manage_menu->set_pointer_to_start(); return;
 		default: break;
 		}
@@ -302,7 +301,7 @@ void Session::add_new_product() {
 	Product product;
 	ConsoleOut::show_title("Add new product");
 
-	product.set_name(ConsoleInp::get_non_existent_product_name(&productsdb));
+	product.set_name(ConsoleInp::get_non_existent_product_name(productsdb));
 	if (product.get_name() == "0") return;
 
 	product.set_amount(ConsoleInp::get_number(true, "Amount: "));
@@ -321,7 +320,7 @@ void Session::add_new_product() {
 	product.set_registrant(registrant);
 	if (product.get_registrant() == "0") return;
 
-	productsdb.add_new(product);
+	productsdb->add_new(product);
 
 	ConsoleOut::show_info("Product was added", "\n\t", "\n\n");
 	ConsoleOut::pause();
@@ -329,13 +328,13 @@ void Session::add_new_product() {
 
 void Session::delete_product() {
 	ConsoleOut::show_title("Delete product", "", "\n\n");
-	productsdb.show_table();
+	productsdb->show_table();
 
-	string name = ConsoleInp::get_exists_product_name(&productsdb);
+	string name = ConsoleInp::get_exists_product_name(productsdb);
 
 	if (name == "0") return;
 	else if (ConfirmationMenu::confirm()) {
-		productsdb._delete(name);
+		productsdb->_delete(name);
 		ConsoleOut::show_info("Product was deleted", "\t", "\n\n");
 	}
 	else {
@@ -347,7 +346,7 @@ void Session::delete_product() {
 void Session::start_edit_product_menu() {
 	ConsoleOut::show_title("Edit product munu");
 
-	string name = ConsoleInp::get_exists_product_name(&productsdb);
+	string name = ConsoleInp::get_exists_product_name(productsdb);
 	if (name == "0") return;
 
 	product_edit_menu->set_title("<- Editing: " + name + " ->");
@@ -374,11 +373,11 @@ void Session::edit_product_name(string* name) {
 	ConsoleOut::show_title("Edit product name", "\t", "\n\n");
 	
 	cout << "Old name: " << *name << endl;
-	string new_name = ConsoleInp::get_non_existent_product_name(&productsdb, "New name: ");
+	string new_name = ConsoleInp::get_non_existent_product_name(productsdb, "New name: ");
 
 	if (new_name == "0") return;
 	else if (ConfirmationMenu::confirm()) {
-		productsdb.update_name(*name, new_name);
+		productsdb->update_name(*name, new_name);
 		*name = new_name;
 		ConsoleOut::show_info("Product was renamed", "\t", "\n\n");
 	}
@@ -391,12 +390,12 @@ void Session::edit_product_name(string* name) {
 void Session::edit_product_amount(string name) {
 	ConsoleOut::show_title("Edit amount", "\t", "\n\n");
 
-	cout << "Old amount: " << product_db->get_int("NAME", name, 1) << endl;
+	cout << "Old amount: " << productsdb->get_amount(name) << endl;
 	int amount = ConsoleInp::get_number(true, "New amount: ");
 
 	if (amount == 0) return;
 	else {
-		productsdb.update_amount(name, amount);
+		productsdb->update_amount(name, amount);
 		ConsoleOut::show_info("Amount was updated", "\t", "\n\n");
 	}
 	ConsoleOut::pause();
@@ -405,12 +404,12 @@ void Session::edit_product_amount(string name) {
 void Session::edit_product_price(string name) {
 	ConsoleOut::show_title("Edit product price", "\t", "\n\n");
 	
-	cout << "Old price: " << product_db->get_int("NAME", name, 2) << endl;
+	cout << "Old price: " << productsdb->get_price(name) << endl;
 	int price = ConsoleInp::get_number(true, "New price: ");
 
 	if (price == 0) return;
 	else {
-		productsdb.update_price(name, price);
+		productsdb->update_price(name, price);
 		ConsoleOut::show_info("Price was updated", "\t", "\n\n");
 	}
 	ConsoleOut::pause();
@@ -419,12 +418,12 @@ void Session::edit_product_price(string name) {
 void Session::edit_product_date(string name) {
 	ConsoleOut::show_title("Edit date", "\t", "\n\n");
 
-	cout << "Old date: " << product_db->get_text("NAME", name, 3) << endl;
+	cout << "Old date: " << productsdb->get_date(name) << endl;
 	string date = ConsoleInp::get_format_date("New date: ");
 
 	if (date == "0") return;
 	else {
-		productsdb.update_date(name, date);
+		productsdb->update_date(name, date);
 		ConsoleOut::show_info("Date was updated", "\t", "\n\n");
 	}
 	ConsoleOut::pause();
@@ -433,14 +432,14 @@ void Session::edit_product_date(string name) {
 void Session::edit_name_of_product_registrant(string name) {
 	ConsoleOut::show_title("Edit registrant name", "\t", "\n\n");
 
-	cout << "Old name: " << product_db->get_text("NAME", name, 4) << endl;
+	cout << "Old name: " << productsdb->get_registrant(name) << endl;
 	cout << "New name: ";
 	string reg_name;
 	getline(cin, reg_name);
 
 	if (reg_name == "0") return;
 	else {
-		productsdb.update_registrant(name, reg_name);
+		productsdb->update_registrant(name, reg_name);
 		ConsoleOut::show_info("Name was updated", "\t", "\n\n");
 	}
 	ConsoleOut::pause();
@@ -455,7 +454,7 @@ void Session::find_products_by_name() {
 	if (name == "0") return;
 
 	cout << endl;
-	productsdb.find_by_name(name);
+	productsdb->find_by_name(name);
 }
 
 void Session::find_products_by_name_of_registrant() {
@@ -467,7 +466,7 @@ void Session::find_products_by_name_of_registrant() {
 	if (name == "0") return;
 
 	cout << endl;
-	productsdb.find_by_registrant(name);
+	productsdb->find_by_registrant(name);
 }
 
 void Session::find_products_by_date() {
@@ -481,5 +480,5 @@ void Session::find_products_by_date() {
 	if (date == "0") return;
 
 	cout << endl;
-	productsdb.find_by_date(date);
+	productsdb->find_by_date(date);
 }
