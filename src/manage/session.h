@@ -8,6 +8,7 @@
 #include "../basic/Product/Product.h"
 #include "../basic/Console/ConsoleInp.h"
 #include "../menu/menu.h"
+#include "../menu/factory/MenuFactory.h"
 #include "../menu/confirm/ConfirmationMenu.h"
 #include "../basic/Console/ConsoleOut.h"
 
@@ -30,9 +31,6 @@ private:
 	Menu *user_menu = nullptr;
 	Menu *account_edit_menu = nullptr;
 	Menu *product_edit_menu = nullptr;
-
-	void init_admin_menu();
-	void init_user_menu(); 
 
 	void admin_manage_accounts_start();
 	void admin_manage_products_start();

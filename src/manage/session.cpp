@@ -5,56 +5,12 @@
 Session::Session(ProductsDB* productsdb, AccountsDB* accountsdb) {
 	this->productsdb = productsdb;
 	this->accountsdb = accountsdb;
-	init_admin_menu();
-	init_user_menu();
-}
-
-void Session::init_admin_menu() {
-	admin_menu = new Menu("<- Admin menu ->",
-		{ " Accounts",
-		  " Products",
-		  " Log Out" });
-	admin_menu->set_start_with_first_line(true);
-
-	accounts_manage_menu = new Menu("<- Accounts ->",
-		{ " Show",
-		  " Add new",
-		  " Edit",
-		  " Delete",
-		  " Confirm",
-		  " Block",
-		  " Exit" });
-
-	products_manage_menu = new Menu("<- Products ->",
-		{ " Show",
-		  " Add",
-		  " Delete",
-		  " Edit",
-		  " Find by name",
-		  " Find by name of registrant",
-		  " Find by date",
-		  " Sort by name",
-		  " Sort by price (to higher)",
-		  " Sort by amount (to higher)",
-		  " Exit" });
-
-	account_edit_menu = new Menu({ " login", " password", " role", " exit" });
-	account_edit_menu->set_start_with_first_line(true);
-
-	product_edit_menu = new Menu({ " Name", " Amount", " Price", " Date", " Registrant", " Exit" });
-	product_edit_menu->set_start_with_first_line(true);
-}
-
-void Session::init_user_menu() {
-	user_menu = new Menu("<- Products ->",
-		{ " Show",
-		  " Find by name",
-		  " Find by registrant name",
-		  " Find by date",
-		  " Sort by name",
-		  " Sort by price (to higher)",
-		  " Sort by amount (to higher)",
-		  " Log out" });
+	admin_menu = MenuFactory::create_admin_menu();
+	accounts_manage_menu = MenuFactory::create_accounts_manage_menu();
+	products_manage_menu = MenuFactory::create_products_manage_menu();
+	account_edit_menu = MenuFactory::create_account_edit_menu();
+	product_edit_menu = MenuFactory::create_product_edit_menu();
+	user_menu = MenuFactory::create_user_menu();
 }
 
 void Session::start_as_user(string login) {
