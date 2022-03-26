@@ -5,6 +5,7 @@
 #include "manage/session.h"
 #include "sqlwork/AccountsDB/AccountsDB.h"
 #include "sqlwork/ProductsDB/ProductsDB.h"
+#include "menu/factory/MenuFactory.h"
 
 using namespace std;
 
@@ -17,16 +18,11 @@ int main() {
 
 	Session session(&productsDB, &accountsDB);
 	Account* account;
-	Menu main_menu("<- Main menu ->",
-				 { " Log in",
-				   " Create account",
-				   " Exit" });
-	main_menu.set_start_with_first_line(true);
-
+	Menu* main_menu = MenuFactory::create_main_menu();
 
 	int choise = 0, role = -1;
 	while (true) {
-		choise = main_menu.get_num_of_choisen_line();
+		choise = main_menu->get_num_of_choisen_line();
 		switch (choise)
 		{
 		case 0: 

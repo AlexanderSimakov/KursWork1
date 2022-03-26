@@ -1,5 +1,14 @@
 #include "MenuFactory.h"
 
+Menu* MenuFactory::create_main_menu(){
+	Menu* menu = new Menu("<- Main menu ->",
+				 { " Log in",
+				   " Create account",
+				   " Exit" });
+	menu->set_start_with_first_line(true);
+	return menu;
+}
+
 Menu* MenuFactory::create_admin_menu(){
     Menu* menu = new Menu("<- Admin menu ->",
 		{ " Accounts",
