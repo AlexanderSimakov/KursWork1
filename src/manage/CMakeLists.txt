@@ -10,6 +10,7 @@ add_library(manage ${manage_source_files})
 
 target_link_libraries(manage sql)
 target_link_libraries(manage AccountsDB)
+target_link_libraries(manage ProductsDB)
 target_link_libraries(manage Account)
 target_link_libraries(manage Product)
 target_link_libraries(manage Console)

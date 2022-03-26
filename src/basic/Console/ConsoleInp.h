@@ -2,7 +2,7 @@
 #include <string>
 #include "../../sqlwork/SQLWORK.h"
 #include "../../sqlwork/AccountsDB/AccountsDB.h"
-#include "../../sqlwork/ProductsDB.h"
+#include "../../sqlwork/ProductsDB/ProductsDB.h"
 #include "ConsoleOut.h"
 #include "../Account/Account.h"
 

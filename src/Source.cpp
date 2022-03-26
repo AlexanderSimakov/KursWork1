@@ -4,7 +4,7 @@
 #include "manage/authorization.h"
 #include "manage/session.h"
 #include "sqlwork/AccountsDB/AccountsDB.h"
-#include "sqlwork/ProductsDB.h"
+#include "sqlwork/ProductsDB/ProductsDB.h"
 
 using namespace std;
 
