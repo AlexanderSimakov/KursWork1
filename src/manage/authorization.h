@@ -1,7 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "../sqlwork/SQLWORK.h"
+#include "../sqlwork/AccountsDB.h"
 #include "../basic/Console/ConsoleInp.h"
 #include "../basic/Console/ConsoleOut.h"
 
@@ -10,11 +10,11 @@ using namespace std;
 class Authorization
 {
 public:
-	Authorization(SQLWork* sql_db);
+	Authorization(AccountsDB* db);
 	int start();
 	string get_login();
 
 private:
-	SQLWork *sql_db = nullptr;
+	AccountsDB *db = nullptr;
 	string login = "";
 };

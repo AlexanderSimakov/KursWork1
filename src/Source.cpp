@@ -17,7 +17,7 @@ int main() {
 	productsDB.init();
 
 	Registration registration(&accountsDB);
-	Authorization authorization(accountsDB.db);
+	Authorization authorization(&accountsDB);
 	Session session(&productsDB, &accountsDB);
 
 	Menu main_menu("<- Main menu ->",

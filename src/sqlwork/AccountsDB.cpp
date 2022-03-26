@@ -88,3 +88,15 @@ bool AccountsDB::is_have_access(string login){
 bool AccountsDB::is_account_exists(string login){
 	return "" != db->get_text(LOGIN, login, 1);
 }
+
+string AccountsDB::get_salt(string login){
+	return db->get_text(LOGIN, login, 2);
+}
+
+string AccountsDB::get_hash(string login){
+	return db->get_text(LOGIN, login, 1);
+}
+
+Role AccountsDB::get_role(string login){
+	return (Role) db->get_int(LOGIN, login, 3);
+}

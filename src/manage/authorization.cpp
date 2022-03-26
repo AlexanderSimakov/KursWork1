@@ -1,28 +1,26 @@
 #pragma once
 #include "authorization.h"
 
-Authorization::Authorization(SQLWork* sql_db) {
-	this->sql_db = sql_db;
+Authorization::Authorization(AccountsDB* db) {
+	this->db = db;
 }
 
 int Authorization::start() {
-	string input_login, db_account_hash, db_account_salt, input_password;
+	string login, password;
 
 	ConsoleOut::show_title("Log In (0 - exit)");
 
 	while (true) {
-		input_login = ConsoleInp::get_login();
-		if (input_login == "0") return -1;
+		login = ConsoleInp::get_login();
+		if (login == "0") return -1;
 
-		db_account_hash = sql_db->get_text("LOGIN", input_login, 1);
-		db_account_salt = sql_db->get_text("LOGIN", input_login, 2);
-		input_password = ConsoleInp::get_password(db_account_hash, db_account_salt);
+		password = ConsoleInp::get_password(db->get_hash(login), db->get_salt(login));
 
-		if (input_password == "0") return -1;
-		else if (input_password == "-1") {
+		if (password == "0") return -1;
+		else if (password == "-1") {
 			ConsoleOut::show_error("Wrong password");
 		}
-		else if (sql_db->get_int("LOGIN", input_login, 4) == 0) {
+		else if (!db->is_have_access(login)) {
 			ConsoleOut::show_error("Account have no access");
 		}
 		else {
@@ -30,8 +28,8 @@ int Authorization::start() {
 		}
 	}
 
-	this->login = input_login;
-	return sql_db->get_int("LOGIN", input_login, 3);
+	this->login = login;
+	return db->get_role(login);
 }
 
 string Authorization::get_login() {

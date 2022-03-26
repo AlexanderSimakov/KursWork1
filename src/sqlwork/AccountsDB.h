@@ -23,6 +23,9 @@ public:
 
     bool is_have_access(string login);
     bool is_account_exists(string login);
+    string get_salt(string login);
+    string get_hash(string login);
+    Role get_role(string login);
     SQLWork *db;
 
 private:
