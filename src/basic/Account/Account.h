@@ -14,6 +14,9 @@ public:
     Account();
     Account(string login, string hash, string salt, Role role, Access access);
 
+    static Account* generate_empty();
+    bool is_empty();
+
     void set_login(string login);
     void set_hash(string hash);
     void set_salt(string salt);
