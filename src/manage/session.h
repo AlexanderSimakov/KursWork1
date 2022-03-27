@@ -17,13 +17,12 @@ using namespace std;
 class Session
 {
 public:
+	Session();
 	Session(ProductsDB *product_db, AccountsDB *accountsdb);
 	void start(Account* account);
 
 private:
 	AccountsDB *accountsdb;
-	ProductsDB *productsdb;
-	Account* session_account;
 	Menu *admin_menu = nullptr;
 	Menu *accounts_manage_menu = nullptr;
 	Menu *products_manage_menu = nullptr;
@@ -54,6 +53,11 @@ private:
 	void edit_product_price(string name);
 	void edit_product_date(string name); 
 	void edit_name_of_product_registrant(string name);
+
+protected:
+	ProductsDB *productsdb;
+	Account* session_account;
+
 	void find_products_by_name(); 
 	void find_products_by_name_of_registrant();
 	void find_products_by_date();

@@ -1,6 +1,7 @@
 #pragma once
 #include "session.h"
 
+Session::Session() { }
 
 Session::Session(ProductsDB* productsdb, AccountsDB* accountsdb) {
 	this->productsdb = productsdb;
