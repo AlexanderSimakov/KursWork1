@@ -28,11 +28,11 @@ string ConsoleInp::get_exists_login(AccountsDB* db, string line_for_user) {
 	while (true) {
 		login = get_login();
 
-		if (!db->is_account_exists(login)) {
-			ConsoleOut::show_error("There is no account with such login");
-		}
-		else {
+		if(login == "0" || db->is_account_exists(login)){
 			return login;
+		} 
+		else {
+			ConsoleOut::show_error("There is no account with such login");
 		}
 	}
 }
