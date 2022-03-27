@@ -21,8 +21,6 @@ Run program:
 cd src/
 ./CourseWork
 ```
-
-## Usage
-
+Linux only for now.
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
