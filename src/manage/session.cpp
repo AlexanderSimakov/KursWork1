@@ -13,8 +13,17 @@ Session::Session(ProductsDB* productsdb, AccountsDB* accountsdb) {
 	user_menu = MenuFactory::create_user_menu();
 }
 
-void Session::start_as_user(string login) {
-	this->session_account_login = login;
+void Session::start(Account* account){
+	session_account = account;
+	if (account->get_role() == Role::USER) { 
+		start_as_user();
+	}
+	else if (account->get_role() == Role::ADMIN) {
+		start_as_admin();
+	}
+}
+
+void Session::start_as_user() {
 	while (true) 
 	{
 		switch (user_menu->get_num_of_choisen_line())
@@ -37,8 +46,7 @@ void Session::start_as_user(string login) {
 	}
 }
 
-void Session::start_as_admin(string login) {
-	this->session_account_login = login;
+void Session::start_as_admin() {
 	while (true) 
 	{
 		switch (admin_menu->get_num_of_choisen_line())
@@ -152,7 +160,7 @@ void Session::edit_account_password(string login) {
 }
 
 void Session::edit_account_role(string login) {
-	if (login != session_account_login) {
+	if (login != session_account->get_login()) {
 		ConsoleOut::show_title("Edit role", "\t", "\n\n");
 		int new_role = ConsoleInp::get_number_from_range(-1, 1, "Role: ");
 
@@ -179,7 +187,7 @@ void Session::delete_account() {
 	string login = ConsoleInp::get_exists_login(accountsdb);
 
 	if (login == "0") return;
-	else if (login == session_account_login) {
+	else if (login == session_account->get_login()) {
 		ConsoleOut::show_error("You cannot delete your account", "\t", "\n");
 	}
 	else if (ConfirmationMenu::confirm()) {
@@ -199,7 +207,7 @@ void Session::confirm_account() {
 	string login = ConsoleInp::get_exists_login(accountsdb);
 
 	if (login == "0") return;
-	else if (login == session_account_login) {
+	else if (login == session_account->get_login()) {
 		ConsoleOut::show_error("You cannot confirm your account", "\n\t", "\n\n");
 	}
 	else if (accountsdb->is_have_access(login)) {
@@ -219,7 +227,7 @@ void Session::block_account() {
 	string login = ConsoleInp::get_exists_login(accountsdb);
 
 	if (login == "0") return;
-	else if (login == session_account_login) {
+	else if (login == session_account->get_login()) {
 		ConsoleOut::show_error("You cannot block your account", "\n\t", "\n\n");
 	}
 	else if (!accountsdb->is_have_access(login)) {

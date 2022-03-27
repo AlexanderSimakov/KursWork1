@@ -27,12 +27,7 @@ int main() {
 		{
 		case 0: 
 			account = Authorization::start(&accountsDB);
-			if (account->get_role() == Role::USER) { 
-				session.start_as_user(account->get_login());
-			}
-			else if (account->get_role() == Role::ADMIN) {
-				session.start_as_admin(account->get_login());
-			}
+			if (!account->is_empty()) session.start(account);
 			break;
 		case 1:
 			Registration::start(&accountsDB);

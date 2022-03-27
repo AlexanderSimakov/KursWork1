@@ -18,19 +18,21 @@ class Session
 {
 public:
 	Session(ProductsDB *product_db, AccountsDB *accountsdb);
-	void start_as_admin(string login);
-	void start_as_user(string login);
+	void start(Account* account);
 
 private:
 	AccountsDB *accountsdb;
 	ProductsDB *productsdb;
-	string session_account_login = "";
+	Account* session_account;
 	Menu *admin_menu = nullptr;
 	Menu *accounts_manage_menu = nullptr;
 	Menu *products_manage_menu = nullptr;
 	Menu *user_menu = nullptr;
 	Menu *account_edit_menu = nullptr;
 	Menu *product_edit_menu = nullptr;
+
+	void start_as_admin();
+	void start_as_user();
 
 	void admin_manage_accounts_start();
 	void admin_manage_products_start();
