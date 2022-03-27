@@ -2,7 +2,8 @@
 #include "menu/menu.h"
 #include "manage/registration.h"
 #include "manage/authorization.h"
-#include "manage/session.h"
+#include "manage/AdminSession.h"
+#include "manage/UserSession.h"
 #include "sqlwork/AccountsDB/AccountsDB.h"
 #include "sqlwork/ProductsDB/ProductsDB.h"
 #include "menu/factory/MenuFactory.h"
@@ -16,7 +17,8 @@ int main() {
 	accountsDB.init();
 	productsDB.init();
 
-	Session session(&productsDB, &accountsDB);
+	AdminSession admin_session(&accountsDB, &productsDB);
+	UserSession user_session(&productsDB);
 	Account* account;
 	Menu* main_menu = MenuFactory::create_main_menu();
 
@@ -27,7 +29,8 @@ int main() {
 		{
 		case 0: 
 			account = Authorization::start(&accountsDB);
-			if (!account->is_empty()) session.start(account);
+			if (account->get_role() == Role::ADMIN) admin_session.start(account);
+			else if (account->get_role() == Role::USER) user_session.start();
 			break;
 		case 1:
 			Registration::start(&accountsDB);

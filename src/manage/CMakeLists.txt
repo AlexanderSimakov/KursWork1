@@ -1,6 +1,10 @@
 set(manage_source_files
     authorization.cpp
     authorization.h
+    AdminSession.cpp
+    AdminSession.h
+    UserSession.cpp
+    UserSession.h
     registration.cpp
     registration.h
     session.cpp
