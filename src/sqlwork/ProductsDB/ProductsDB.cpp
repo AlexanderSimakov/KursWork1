@@ -18,12 +18,13 @@ void ProductsDB::init()
     db = new SQLWork(DATABASE_FILENAME);
 
     db->open();
-	db->create_table_if_not_exists({ SQL_cell{ NAME,     "TEXT PRIMARY KEY NOT NULL"},
-				SQL_cell{ AMOUNT,   "INT NOT NULL"},
-				SQL_cell{ PRICE,    "INT NOT NULL"},
-				SQL_cell{ DATE,     "TEXT NOT NULL"},
-				SQL_cell{ REGISTRANT, "TEXT NOT NULL"} },
-		        DATABASE_NAME);
+	db->create_table_if_not_exists( { 
+		SQL_cell{ NAME,     "TEXT PRIMARY KEY NOT NULL"},
+		SQL_cell{ AMOUNT,   "INT NOT NULL"},
+		SQL_cell{ PRICE,    "INT NOT NULL"},
+		SQL_cell{ DATE,     "TEXT NOT NULL"},
+		SQL_cell{ REGISTRANT, "TEXT NOT NULL"} },
+	    DATABASE_NAME);
 }
 
 void ProductsDB::show_table(string sql_end)
@@ -43,11 +44,12 @@ void ProductsDB::show_table()
 
 void ProductsDB::add_new(Product product)
 {
-    db->push_back({ "'" + product.get_name() + "'",
+    db->push_back( { 
+		"'" + product.get_name() + "'",
 		to_string(product.get_amount()),
 		to_string(product.get_price()),
 		"'" + product.get_date() + "'",
-		"'" + product.get_registrant() + "'" });
+		"'" + product.get_registrant() + "'" } );
 }
 
 void ProductsDB::_delete(string name)
@@ -122,22 +124,27 @@ void ProductsDB::show_sorted_by_amount_to_higher()
 	ConsoleOut::pause();
 }
 
-bool ProductsDB::is_product_exists(string name){
+bool ProductsDB::is_product_exists(string name)
+{
 	return db->get_text(NAME, name, 4) != "";
 }
 
-int ProductsDB::get_amount(string name){
+int ProductsDB::get_amount(string name)
+{
 	return db->get_int(NAME, name, 1);
 }
 
-int ProductsDB::get_price(string name){
+int ProductsDB::get_price(string name)
+{
 	return db->get_int(NAME, name, 2);
 }
 
-string ProductsDB::get_date(string name){
+string ProductsDB::get_date(string name)
+{
 	return db->get_text(NAME, name, 3);
 }
 
-string ProductsDB::get_registrant(string name){
+string ProductsDB::get_registrant(string name)
+{
 	return db->get_text(NAME, name, 4);
 }
