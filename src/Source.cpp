@@ -1,7 +1,7 @@
 #include <iostream>
 #include "menu/menu.h"
-#include "manage/registration.h"
-#include "manage/authorization.h"
+#include "manage/Registration/registration.h"
+#include "manage//Authorization/authorization.h"
 #include "manage/AdminSession/AdminSession.h"
 #include "manage/UserSession/UserSession.h"
 #include "sqlwork/AccountsDB/AccountsDB.h"
