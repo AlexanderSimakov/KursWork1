@@ -5,9 +5,9 @@ void Registration::start(AccountsDB* db) {
 	ConsoleOut::show_title("Creating an account (0 - exit)");
 	Account account;
 
-	account.set_login(ConsoleInp::get_free_login(db, "Login: "));
+	account.set_login(ConsoleInp::get_free_login(db));
 	if (account.get_login() == "0") return;
-	string pass = ConsoleInp::password_format_input("Password: ");
+	string pass = ConsoleInp::password_format_input();
 	if (pass == "0") return;
 	account.set_salt(Account::get_generated_salt());
 	account.set_hash(Account::get_generated_hash(pass, account.get_salt()));

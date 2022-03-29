@@ -69,10 +69,10 @@ void AdminSession::add_new_account(){
     Account account;
 	ConsoleOut::show_title("Add new account");
 
-	account.set_login(ConsoleInp::get_free_login(accountsDB, "Login: "));
+	account.set_login(ConsoleInp::get_free_login(accountsDB));
 	if (account.get_login() == "0") return;
 
-	string pass = ConsoleInp::password_format_input("Password: ");
+	string pass = ConsoleInp::password_format_input();
 	if (pass == "0") return;
 
 	account.set_role((Role)ConsoleInp::get_number_from_range(0, 1, "Role(0|1): "));
@@ -179,7 +179,7 @@ void AdminSession::start_account_editing(){
 void AdminSession::edit_account_login(string *login){
 	ConsoleOut::show_title("Edit login", "\t", "\n\n");
 	cout << "Old login: " << *login << endl;
-	string new_login = ConsoleInp::get_free_login(accountsDB, "New login: ");
+	string new_login = ConsoleInp::get_free_login(accountsDB);
 
 	if (new_login == "0") return;
 	else if (ConfirmationMenu::confirm()) {
@@ -195,7 +195,7 @@ void AdminSession::edit_account_login(string *login){
 
 void AdminSession::edit_account_password(string login){
     ConsoleOut::show_title("Edit password", "\t", "\n\n");
-	string pass = ConsoleInp::password_format_input("Password: ");
+	string pass = ConsoleInp::password_format_input();
 
 	if (pass == "0") return;
 	else if (ConfirmationMenu::confirm()) {
@@ -303,7 +303,7 @@ void AdminSession::edit_product_name(string *name){
     ConsoleOut::show_title("Edit product name", "\t", "\n\n");
 	
 	cout << "Old name: " << *name << endl;
-	string new_name = ConsoleInp::get_non_existent_product_name(productsdb, "New name: ");
+	string new_name = ConsoleInp::get_non_existent_product_name(productsdb);
 
 	if (new_name == "0") return;
 	else if (ConfirmationMenu::confirm()) {
@@ -349,7 +349,7 @@ void AdminSession::edit_product_date(string name){
     ConsoleOut::show_title("Edit date", "\t", "\n\n");
 
 	cout << "Old date: " << productsdb->get_date(name) << endl;
-	string date = ConsoleInp::get_format_date("New date: ");
+	string date = ConsoleInp::get_format_date();
 
 	if (date == "0") return;
 	else {
