@@ -1,15 +1,17 @@
 #include "MenuFactory.h"
 
-Menu* MenuFactory::create_main_menu(){
+Menu* MenuFactory::create_main_menu()
+{
 	Menu* menu = new Menu("<- Main menu ->",
-				 { " Log in",
-				   " Create account",
-				   " Exit" });
+		{ " Log in",
+		  " Create account",
+		  " Exit" });
 	menu->set_start_with_first_line(true);
 	return menu;
 }
 
-Menu* MenuFactory::create_admin_menu(){
+Menu* MenuFactory::create_admin_menu()
+{
     Menu* menu = new Menu("<- Admin menu ->",
 		{ " Accounts",
 		  " Products",
@@ -18,7 +20,8 @@ Menu* MenuFactory::create_admin_menu(){
     return menu;
 }
 
-Menu* MenuFactory::create_accounts_manage_menu(){
+Menu* MenuFactory::create_accounts_manage_menu()
+{
     return new Menu("<- Accounts ->",
 		{ " Show",
 		  " Add new",
@@ -29,7 +32,8 @@ Menu* MenuFactory::create_accounts_manage_menu(){
 		  " Exit" }); 
 }
 
-Menu* MenuFactory::create_products_manage_menu(){
+Menu* MenuFactory::create_products_manage_menu()
+{
     return new Menu("<- Products ->",
 		{ " Show",
 		  " Add",
@@ -44,7 +48,8 @@ Menu* MenuFactory::create_products_manage_menu(){
 		  " Exit" });
 }
 
-Menu* MenuFactory::create_user_menu(){
+Menu* MenuFactory::create_user_menu()
+{
     return new Menu("<- Products ->",
 		{ " Show",
 		  " Find by name",
@@ -56,14 +61,26 @@ Menu* MenuFactory::create_user_menu(){
 		  " Log out" });
 }
 
-Menu* MenuFactory::create_account_edit_menu(){
-    Menu* menu = new Menu({ " login", " password", " role", " exit" });
+Menu* MenuFactory::create_account_edit_menu()
+{
+    Menu* menu = new Menu({ 
+		" Login", 
+		" Password", 
+		" Role", 
+		" Exit" });
 	menu->set_start_with_first_line(true);
     return menu;
 }
 
-Menu* MenuFactory::create_product_edit_menu(){
-    Menu* menu = new Menu({ " Name", " Amount", " Price", " Date", " Registrant", " Exit" });
+Menu* MenuFactory::create_product_edit_menu()
+{
+    Menu* menu = new Menu({ 
+		" Name", 
+		" Amount", 
+		" Price", 
+		" Date", 
+		" Registrant", 
+		" Exit" });
 	menu->set_start_with_first_line(true);
     return menu;
 }
