@@ -1,8 +1,6 @@
 set(manage_source_files
     authorization.cpp
     authorization.h
-    AdminSession.cpp
-    AdminSession.h
     UserSession.cpp
     UserSession.h
     registration.cpp
@@ -11,6 +9,8 @@ set(manage_source_files
     session.h
 )
 add_library(manage ${manage_source_files})
+
+add_subdirectory(AdminSession)
 
 target_link_libraries(manage sql)
 target_link_libraries(manage AccountsDB)

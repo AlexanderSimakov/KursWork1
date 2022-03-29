@@ -1,10 +1,10 @@
 #pragma once
-#include "session.cpp"
-#include "../menu/menu.h"
-#include "../menu/confirm/ConfirmationMenu.h"
-#include "../menu/factory/MenuFactory.h"
-#include "../sqlwork/AccountsDB/AccountsDB.h"
-#include "../sqlwork/ProductsDB/ProductsDB.h"
+#include "../session.cpp"
+#include "../../menu/menu.h"
+#include "../../menu/confirm/ConfirmationMenu.h"
+#include "../../menu/factory/MenuFactory.h"
+#include "../../sqlwork/AccountsDB/AccountsDB.h"
+#include "../../sqlwork/ProductsDB/ProductsDB.h"
 class AdminSession : Session
 {
 public:
