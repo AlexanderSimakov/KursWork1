@@ -1,11 +1,13 @@
 #include "UserSession.h"
 
-UserSession::UserSession(ProductsDB* productsDB){
+UserSession::UserSession(ProductsDB* productsDB)
+{
     this->products_db = productsDB;
     user_menu = MenuFactory::create_user_menu();
 }
 
-void UserSession::start(){
+void UserSession::start()
+{
     while (true) 
 	{
 		switch (user_menu->get_num_of_choisen_line())

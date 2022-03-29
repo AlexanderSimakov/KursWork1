@@ -7,7 +7,7 @@
 class UserSession : Session
 {
 public:
-    UserSession(ProductsDB* productsDB);
+    UserSession(ProductsDB* products_db);
     void start();
 private:
     Menu* user_menu;
