@@ -14,9 +14,6 @@ public:
     Account();
     Account(string login, string hash, string salt, Role role, Access access);
 
-    static Account* generate_empty();
-    bool is_empty();
-
     void set_login(string login);
     void set_hash(string hash);
     void set_salt(string salt);
@@ -31,7 +28,8 @@ public:
 
     static string get_generated_salt();
     static string get_generated_hash(string password, string salt);
-   
+    static Account* generate_empty();
+    bool is_empty();
 
 private:
     static const int SALT_SIZE = 16; 
@@ -44,4 +42,3 @@ private:
 
     static string get_symbols_for_salt();
 };
-
