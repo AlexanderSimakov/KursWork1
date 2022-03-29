@@ -12,6 +12,7 @@ public:
     AccountsDB();
     AccountsDB(SQLWork *db);
     void init();
+    void close();
     void show_table();
     void add_new(Account account); 
     void _delete(string login);
@@ -26,7 +27,6 @@ public:
     string get_salt(string login);
     string get_hash(string login);
     Role get_role(string login);
-    SQLWork *db;
 
 private:
 	static const string DATABASE_FILENAME;
@@ -36,6 +36,8 @@ private:
     static const string SALT;
     static const string ROLE;
     static const string ACCESS;
+
+    SQLWork *db;
 };
 
 

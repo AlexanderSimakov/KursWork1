@@ -23,7 +23,8 @@ int main() {
 	Menu* main_menu = MenuFactory::create_main_menu();
 
 	int choise = 0, role = -1;
-	while (true) {
+	while (true) 
+	{
 		choise = main_menu->get_num_of_choisen_line();
 		switch (choise)
 		{
@@ -36,8 +37,8 @@ int main() {
 			Registration::start(&accountsDB);
 			break;
 		case 2: case -1:
-			accountsDB.db->close();
-			productsDB.db->close();
+			accountsDB.close();
+			productsDB.close();
 			return 0;
 		default:
 			break;

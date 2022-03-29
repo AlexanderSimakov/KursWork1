@@ -12,6 +12,7 @@ public:
     ProductsDB();
     ProductsDB(SQLWork *db);
     void init();
+    void close();
 
     void show_table();
     void add_new(Product product);

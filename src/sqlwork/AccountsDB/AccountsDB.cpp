@@ -35,6 +35,10 @@ void AccountsDB::init()
 	}
 }
 
+void AccountsDB::close(){
+	db->close();
+}
+
 void AccountsDB::show_table()
 {
     ConsoleOut::show_title("Accounts", "    ");

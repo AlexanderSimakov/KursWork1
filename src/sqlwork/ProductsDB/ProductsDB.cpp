@@ -27,6 +27,10 @@ void ProductsDB::init()
 	    DATABASE_NAME);
 }
 
+void ProductsDB::close(){
+	db->close();
+}
+
 void ProductsDB::show_table(string sql_end)
 {
 	db->show_table("SELECT * FROM ", " " + sql_end,
