@@ -56,7 +56,7 @@ void AdminSession::start_products_managing(){
 		case 2: delete_product(); break;
 		case 3: start_product_editing(); break;
 		case 4: find_products_by_name(); break;
-		case 5: find_products_by_name_of_registrant(); break;
+		case 5: find_products_by_registrant(); break;
 		case 6: find_products_by_date(); break;
 		case 7: products_db->show_sorted_by_name(); break;
 		case 8: products_db->show_sorted_by_price_to_higher(); break;

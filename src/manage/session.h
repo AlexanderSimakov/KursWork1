@@ -16,6 +16,6 @@ protected:
 	Account* session_account;
 
 	inline void find_products_by_name(); 
-	inline void find_products_by_name_of_registrant();
+	inline void find_products_by_registrant();
 	inline void find_products_by_date();
 };

@@ -14,7 +14,7 @@ void UserSession::start()
 		{
 		case 0: products_db->show_table(); ConsoleOut::pause(); break;
 		case 1: find_products_by_name(); break;
-		case 2: find_products_by_name_of_registrant(); break;
+		case 2: find_products_by_registrant(); break;
 		case 3: find_products_by_date(); break;
 		case 4: products_db->show_sorted_by_name(); break;
 		case 5: products_db->show_sorted_by_price_to_higher(); break;
