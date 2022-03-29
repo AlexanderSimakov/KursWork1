@@ -12,6 +12,17 @@ Account::Account(string login, string hash, string salt, Role role, Access acces
     this->access = access;
 }
 
+Account* Account::generate_empty()
+{
+    return new Account("empty", "empty", "empty", Role::USER, Access::NO);
+}
+
+bool Account::is_empty()
+{
+    return login == "empty" && hash == "empty" && salt == "empty" && 
+           role == Role::USER && access == Access::NO;
+}
+
 void Account::set_login(string login)
 { 
     this->login = login; 

@@ -1,8 +1,9 @@
 #include "ConfirmationMenu.h"
 
-Menu ConfirmationMenu::menu = Menu({" Yes", " No"});
+Menu ConfirmationMenu::menu = Menu( {" Yes", " No"} );
 
-bool ConfirmationMenu::confirm(string title){
+bool ConfirmationMenu::confirm(string title)
+{
     menu.set_title(title);
     while (true) 
 	{

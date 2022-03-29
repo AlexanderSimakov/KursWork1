@@ -43,7 +43,6 @@ private:
 	HANDLE std_handle;
 	DWORD cWrittenChars;
 #endif
-
 	void print_lines();
 	void print_title();
 	void print_pointer();

@@ -28,7 +28,8 @@ public:
 
     static string get_generated_salt();
     static string get_generated_hash(string password, string salt);
-   
+    static Account* generate_empty();
+    bool is_empty();
 
 private:
     static const int SALT_SIZE = 16; 
@@ -41,4 +42,3 @@ private:
 
     static string get_symbols_for_salt();
 };
-

@@ -4,8 +4,6 @@
 #include <vector>
 #include <iostream>
 
-
-
 using namespace std;
 
 struct SQL_cell
@@ -13,7 +11,6 @@ struct SQL_cell
 	string NAME = "";
 	string TYPE = "";
 };
-
 
 class SQLWork
 {
@@ -25,9 +22,7 @@ public:
 	void push_back(vector<string> field);
 	void update(string fild_for_update, string new_value, string rule);
 	void delete_field(string rule);
-	
-	void show_table(string sql_befor_db_name, string sql_after_db_name, vector<string> out_strings, vector<int> num_of_columns, vector<int> lenght_of_columns);
-	string get_date_mounth_ago(string mounth_amount);
+	void show_table(string sql_before_db_name, string sql_after_db_name, vector<string> out_strings, vector<int> num_of_columns, vector<int> lenght_of_columns);
 
 	int get_int(string db_field, string field_for_search, int num_of_value);
 	string get_text(string db_field, string field_for_search, int num_of_value);
