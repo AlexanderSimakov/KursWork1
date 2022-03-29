@@ -10,5 +10,5 @@ using namespace std;
 class Authorization
 {
 public:
-	static Account* start(AccountsDB* db);
+	static Account* start(AccountsDB* accounts_db);
 };
