@@ -11,5 +11,5 @@ using namespace std;
 class Registration
 {
 public:
-	static void start(AccountsDB* db);
+	static void start(AccountsDB* accounts_db);
 };
