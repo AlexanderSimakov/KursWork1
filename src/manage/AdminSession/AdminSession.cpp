@@ -233,7 +233,7 @@ void AdminSession::edit_role(string login)
 		if (new_role == -1) return;
 		else if (ConfirmationMenu::confirm()) 
 		{
-			accounts_db->update_role(login, new_role);
+			accounts_db->update_role(login, (Role)new_role);
 			ConsoleOut::show_info("Role was changed", "\t", "\n\n");
 		}
 		else ConsoleOut::show_info("Role was't changed", "\t", "\n\n");

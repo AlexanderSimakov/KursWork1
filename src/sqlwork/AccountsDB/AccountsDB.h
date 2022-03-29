@@ -19,7 +19,7 @@ public:
     void block(string login);
     void update_login(string old_login, string new_login);
     void update_password(string login, string password);
-    void update_role(string login, int role);
+    void update_role(string login, Role role);
 
     bool is_have_access(string login);
     bool is_account_exists(string login);
