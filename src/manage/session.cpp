@@ -10,7 +10,7 @@ void Session::find_products_by_name() {
 	if (name == "0") return;
 
 	cout << endl;
-	productsdb->find_by_name(name);
+	products_db->find_by_name(name);
 }
 
 void Session::find_products_by_name_of_registrant() {
@@ -22,7 +22,7 @@ void Session::find_products_by_name_of_registrant() {
 	if (name == "0") return;
 
 	cout << endl;
-	productsdb->find_by_registrant(name);
+	products_db->find_by_registrant(name);
 }
 
 void Session::find_products_by_date() {
@@ -36,5 +36,5 @@ void Session::find_products_by_date() {
 	if (date == "0") return;
 
 	cout << endl;
-	productsdb->find_by_date(date);
+	products_db->find_by_date(date);
 }

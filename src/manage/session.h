@@ -12,7 +12,7 @@ using namespace std;
 class Session
 {
 protected:
-	ProductsDB *productsdb;
+	ProductsDB *products_db;
 	Account* session_account;
 
 	inline void find_products_by_name(); 
