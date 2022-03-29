@@ -3,7 +3,7 @@
 #include "manage/registration.h"
 #include "manage/authorization.h"
 #include "manage/AdminSession/AdminSession.h"
-#include "manage/UserSession.h"
+#include "manage/UserSession/UserSession.h"
 #include "sqlwork/AccountsDB/AccountsDB.h"
 #include "sqlwork/ProductsDB/ProductsDB.h"
 #include "menu/factory/MenuFactory.h"
