@@ -1,6 +1,6 @@
 set(ProductsDB_source_files
     ProductsDB.cpp
-    ProductsDB.h
+    ProductsDB.hpp
 )
 
 add_library(ProductsDB ${ProductsDB_source_files})

@@ -1,4 +1,4 @@
-#include "AdminSession.h"
+#include "AdminSession.hpp"
 
 AdminSession::AdminSession(AccountsDB* accounts_db, ProductsDB* productsDB)
 {

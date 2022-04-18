@@ -1,5 +1,5 @@
 set(Registration_source_files
-    registration.h
+    registration.hpp
     registration.cpp
 )
 add_library(Registration ${Registration_source_files})

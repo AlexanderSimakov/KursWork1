@@ -1,8 +1,8 @@
 #pragma once
-#include "../SQLWORK.h"
+#include "../SQLWORK.hpp"
 #include <string>
-#include "../../basic/Console/ConsoleOut.h"
-#include "../../basic/Product/Product.h"
+#include "../../basic/Console/ConsoleOut.hpp"
+#include "../../basic/Product/Product.hpp"
 
 using namespace std;
 

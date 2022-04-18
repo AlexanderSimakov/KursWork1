@@ -1,6 +1,6 @@
 set(ConfirmationMenu_source_files
     ConfirmationMenu.cpp
-    ConfirmationMenu.h
+    ConfirmationMenu.hpp
 )
 add_library(ConfirmationMenu ${ConfirmationMenu_source_files})
 

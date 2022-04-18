@@ -1,4 +1,4 @@
-#include "UserSession.h"
+#include "UserSession.hpp"
 
 UserSession::UserSession(ProductsDB* productsDB)
 {

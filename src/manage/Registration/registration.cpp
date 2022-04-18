@@ -1,5 +1,5 @@
 #pragma once
-#include "registration.h"
+#include "registration.hpp"
 
 void Registration::start(AccountsDB* accounts_db) 
 {

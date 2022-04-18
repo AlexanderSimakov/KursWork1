@@ -1,4 +1,4 @@
-#include "ConfirmationMenu.h"
+#include "ConfirmationMenu.hpp"
 
 Menu ConfirmationMenu::menu = Menu( {" Yes", " No"} );
 

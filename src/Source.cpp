@@ -1,12 +1,12 @@
 #include <iostream>
-#include "menu/menu.h"
-#include "manage/Registration/registration.h"
-#include "manage//Authorization/authorization.h"
-#include "manage/AdminSession/AdminSession.h"
-#include "manage/UserSession/UserSession.h"
-#include "sqlwork/AccountsDB/AccountsDB.h"
-#include "sqlwork/ProductsDB/ProductsDB.h"
-#include "menu/factory/MenuFactory.h"
+#include "menu/menu.hpp"
+#include "manage/Registration/registration.hpp"
+#include "manage//Authorization/authorization.hpp"
+#include "manage/AdminSession/AdminSession.hpp"
+#include "manage/UserSession/UserSession.hpp"
+#include "sqlwork/AccountsDB/AccountsDB.hpp"
+#include "sqlwork/ProductsDB/ProductsDB.hpp"
+#include "menu/factory/MenuFactory.hpp"
 
 using namespace std;
 

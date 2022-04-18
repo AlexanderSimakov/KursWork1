@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-#include "../menu.h"
+#include "../menu.hpp"
 
 using namespace std;
 

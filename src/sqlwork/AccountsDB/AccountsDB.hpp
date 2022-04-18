@@ -1,7 +1,7 @@
 #pragma once
-#include "../SQLWORK.h"
-#include "../../basic/Console/ConsoleOut.h"
-#include "../../basic/Account/Account.h"
+#include "../SQLWORK.hpp"
+#include "../../basic/Console/ConsoleOut.hpp"
+#include "../../basic/Account/Account.hpp"
 #include <string>
 
 using namespace std;

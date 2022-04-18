@@ -1,10 +1,10 @@
 #pragma once 
 #include <string>
-#include "../../sqlwork/SQLWORK.h"
-#include "../../sqlwork/AccountsDB/AccountsDB.h"
-#include "../../sqlwork/ProductsDB/ProductsDB.h"
-#include "ConsoleOut.h"
-#include "../Account/Account.h"
+#include "../../sqlwork/SQLWORK.hpp"
+#include "../../sqlwork/AccountsDB/AccountsDB.hpp"
+#include "../../sqlwork/ProductsDB/ProductsDB.hpp"
+#include "ConsoleOut.hpp"
+#include "../Account/Account.hpp"
 
 class ConsoleInp
 {
