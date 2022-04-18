@@ -84,6 +84,7 @@ void SQLWork::show_table(string sql_before_db_name, string sql_after_db_name, ve
 	string sql = sql_before_db_name + DATA_BASE_NAME + sql_after_db_name;
 	sqlite3_prepare_v2(dataBase, sql.c_str(), -1, &stmt, NULL);
 
+    // show table title
 	for (int i = 0; i < out_strings.size(); i++) 
 	{
 		cout << " " << out_strings[i];
@@ -92,12 +93,14 @@ void SQLWork::show_table(string sql_before_db_name, string sql_after_db_name, ve
 	}
 	cout << endl;
 
+    // show table content
 	string text;
 	while ((int)sqlite3_step(stmt) == SQLITE_ROW) 
 	{
 		for (int i = 0; i < out_strings.size(); i++) 
 		{
-			cout << " " << reinterpret_cast<const char*>(sqlite3_column_text(stmt, num_of_columns[i]));
+            text = reinterpret_cast<const char*>(sqlite3_column_text(stmt, num_of_columns[i]));
+			cout << " " << text;
 			print_spaces(lenght_of_columns[i] - text.size() - 2);
 			cout << "|";
 		}
