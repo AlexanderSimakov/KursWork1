@@ -1,5 +1,5 @@
 set(UserSession_source_files
-    UserSession.h
+    UserSession.hpp
     UserSession.cpp
 )
 add_library(UserSession ${UserSession_source_files})

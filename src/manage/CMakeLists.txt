@@ -1,6 +1,6 @@
 set(manage_source_files
     session.cpp
-    session.h
+    session.hpp
 )
 add_library(manage ${manage_source_files})
 

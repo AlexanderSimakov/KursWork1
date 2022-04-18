@@ -1,5 +1,5 @@
 #pragma once
-#include "SQLWORK.h"
+#include "SQLWORK.hpp"
 
 SQLWork::SQLWork(string FILE_NAME) 
 {

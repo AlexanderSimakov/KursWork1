@@ -1,5 +1,5 @@
 #pragma once
-#include "ConsoleOut.h"
+#include "ConsoleOut.hpp"
 
 void ConsoleOut::pause()
 {

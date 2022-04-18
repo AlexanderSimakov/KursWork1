@@ -1,6 +1,6 @@
 set(sqlwork_source_files
     SQLWORK.cpp
-    SQLWORK.h
+    SQLWORK.hpp
 )
 add_library(sqlwork ${sqlwork_source_files})
 

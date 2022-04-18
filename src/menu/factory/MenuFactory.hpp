@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "../menu.h"
+#include "../menu.hpp"
 
 class MenuFactory
 {

@@ -1,7 +1,7 @@
 set(Console_source_files
-    ConsoleOut.h
+    ConsoleOut.hpp
     ConsoleOut.cpp
-    ConsoleInp.h
+    ConsoleInp.hpp
     ConsoleInp.cpp
 )
 add_library(Console ${Console_source_files})

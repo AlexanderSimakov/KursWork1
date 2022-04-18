@@ -1,5 +1,5 @@
 #pragma once
-#include "authorization.h"
+#include "authorization.hpp"
 
 Account* Authorization::start(AccountsDB* accounts_db) 
 {

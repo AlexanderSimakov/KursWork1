@@ -1,5 +1,5 @@
 set(Authorization_source_files
-    authorization.h
+    authorization.hpp
     authorization.cpp
 )
 add_library(Authorization ${Authorization_source_files})

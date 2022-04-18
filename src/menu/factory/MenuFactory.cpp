@@ -1,4 +1,4 @@
-#include "MenuFactory.h"
+#include "MenuFactory.hpp"
 
 Menu* MenuFactory::create_main_menu()
 {

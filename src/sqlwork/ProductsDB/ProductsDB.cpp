@@ -1,4 +1,4 @@
-#include "ProductsDB.h"
+#include "ProductsDB.hpp"
 
 const string ProductsDB::DATABASE_FILENAME = "products.db";
 const string ProductsDB::DATABASE_NAME = "PRODUCTS";

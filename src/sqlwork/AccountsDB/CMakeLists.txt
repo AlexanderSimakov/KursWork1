@@ -1,5 +1,5 @@
 set(AccountsDB_source_files
-    AccountsDB.h
+    AccountsDB.hpp
     AccountsDB.cpp
 )
 add_library(AccountsDB ${AccountsDB_source_files})

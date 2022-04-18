@@ -1,5 +1,5 @@
 set(AdminSession_source_files
-    AdminSession.h
+    AdminSession.hpp
     AdminSession.cpp
 )
 add_library(AdminSession ${AdminSession_source_files})

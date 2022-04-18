@@ -1,4 +1,4 @@
-#include "AccountsDB.h"
+#include "AccountsDB.hpp"
 
 const string AccountsDB::DATABASE_FILENAME = "accounts.db";
 const string AccountsDB::DATABASE_NAME = "ACCOUNTS";
